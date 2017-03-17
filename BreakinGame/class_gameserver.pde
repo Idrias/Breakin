@@ -1,25 +1,14 @@
-class GameServer extends Server {
-  
-  ArrayList<GameObject> gos;
-  
-  GameServer(int port) {
-    super(GAME, port);
-    gos = new ArrayList<GameObject>();
-  }
+class GameServer {
+  NetServer netServer;
   
   GameServer() {
-    this(4242);
+    netServer = new NetServer(BREAKINGAME);
   }
   
   void update() {
-    for(GameObject go : gos) {
-      go.update();
-    }
-    
-    write("ye;Hello;World!;b;end");
+    netServer.addEntity( ACTORTYPE_DUMMY );
+    for(NetworkEntity ne : netServer.networkEntities) ne.pos = new PVector(random(0,width), random(0,height));
+    netServer.pushEntities();
   }
   
-  void addObject(float posX, float posY, float speedX, float speedY) {
-    gos.add( new Dummy(posX, posY, speedX, speedY, CREATE_SERVERSIDE) );
-  }
 }

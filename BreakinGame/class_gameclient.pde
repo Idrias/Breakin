@@ -1,34 +1,45 @@
-class GameClient extends Client {
-  
+class GameClient {
+  NetClient netClient;
   ArrayList<GameObject> gos;
-  String messageBuffer = "";
   
-  GameClient(String ip, int port) { super(GAME, ip, port); gos = new ArrayList<GameObject>();}
-  GameClient(String ip) { this(ip, 4242); }
-  GameClient() { this("127.0.0.1", 4242); }
-  
-  void checkMail() {
-    while ( available() > 0 ) {
-      
-      String[] newMessages = (messageBuffer + readString()).split(";");  
-      int newMessageCount = newMessages.length;
-      
-      if(newMessageCount>0) {
-        // New messages arrived!
-        newMessages[0] = messageBuffer + newMessages[0];  // Add the buffered rest of last time we received a message
-      }
-      
-      for(int i = 0; i < newMessageCount; i++) {
-        println(newMessages[i]);
-      }
-     println();  
-   }
+  GameClient() {
+    netClient = new NetClient(BREAKINGAME);
+    gos = new ArrayList<GameObject>();
   }
   
+  void update() {
+    netClient.receive();
+    fetch_nes();
+    handle_gos();
+  }
   
-  void draw() {
+  void handle_gos() {
     for(GameObject go : gos) {
+      // Reihenfolge einzelner GOS problematisch?
+      go.update();
       go.draw();
+    }    
+  }
+  
+  void fetch_nes() {
+    for(NetworkEntity ne : netClient.get_entities()) {
+      int ne_id = ne.get_id();
+      boolean found = false;
+      
+      for(GameObject go : gos) {
+        if(ne_id == go.ne.get_id()) { go.ne = ne; found = true;}
+      }
+  
+      if(!found) {
+        switch(ne.get_type()) {
+          case ACTORTYPE_DUMMY:
+            gos.add(new Dummy(ne));
+            break;
+        }
+      }
     }
   }
+  
+  
+  
 }

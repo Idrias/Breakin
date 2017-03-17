@@ -1,28 +1,21 @@
 void setup() {
-  size(600, 900);
-  setupVars();
-  
-  d = new Dummy(200, 200, 3, 3, 24);
-  print(typeof(d));
+  setup_gvars();
+  frameRate(60);
+  size(600, 600);
 }
-  Dummy d;
-  
+
 void draw() {
-  background(#D1FC6E);
-  d.update();
+  background(0);
+  int a = millis();
+  gameServer.update();
+  int b = millis();
+  gameClient.update();
+  int c = millis();
   
-  if(gameserver != null && gameclient != null) {
-  if(frameCount%60==0) gameserver.update();
-  delay(100);
-  gameclient.checkMail();
-  }
-}
-
-void keyPressed() {
-  switch(key) {
-    case 's': gameserver = new GameServer(); println("New GameServer created!"); break;
-    case 'c': gameclient = new GameClient(); println("New GameClient created!"); break;
-    case 'e': gameclient.stop(); gameserver.stop(); println("SERVER AND CLIENT CLOSED"); exit(); break;
-  }
-
+  servertime += b-a;
+  clienttime += c-a;
+  println("GameServer took " + (b-a) + " ms.");
+  println("GameClient took " + (c-a) + " ms.");
+  println("Servertime: " + servertime + "ms | Clienttime: " + clienttime + "ms");
+  println();
 }
