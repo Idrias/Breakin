@@ -1,13 +1,19 @@
 import processing.net.*;
+import java.io.*;
+import java.util.Map;
 
-BreakinGame GAME;
-GameServer gameserver;
-GameClient gameclient;
+final String NET_SPLITSTRING = "-NEXT-";
+final int ACTORTYPE_DUMMY = 3;
 
-final int CREATE_SERVERSIDE = -1;
-int uidcount;
+int servertime = 0;
+int clienttime = 0;
 
-void setupVars() {
-  GAME = this;
-  uidcount = 0;
+BreakinGame BREAKINGAME;
+GameServer gameServer;
+GameClient gameClient;
+
+void setup_gvars() {
+  BREAKINGAME = this;
+  gameServer = new GameServer();
+  gameClient = new GameClient();
 }
