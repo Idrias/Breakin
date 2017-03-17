@@ -1,3 +1,5 @@
+import processing.opengl.*;
+
 PImage desert;
 float[] y_Image = new float[2];
 float scrollSpeed = 2;
@@ -12,6 +14,9 @@ void setup() {
 
 
 void draw() {
+  
+  println(frameRate);
+  
   image(desert, 0, y_Image[0], displayWidth, displayHeight);
   image(desert, 0, y_Image[1], displayWidth, displayHeight);
   
