@@ -20,9 +20,7 @@ static class NetworkContainer implements Serializable {
     try {
       ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
       ObjectOutputStream objectStream = new ObjectOutputStream(byteStream);
-
       objectStream.writeObject(this);
-
       objectStream.close();
       byteStream.close();
 
@@ -46,12 +44,12 @@ static class NetworkContainer implements Serializable {
 
       return nc;
     }
-    
+
     catch(UTFDataFormatException e) {
       println("ERROR: UTFDataFormatException during decompress!");
       return null;
     }
-    
+
     catch(InvalidClassException e) {
       println("ERROR: InvalidClassException during decompress");
       return null;

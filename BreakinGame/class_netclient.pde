@@ -1,12 +1,9 @@
 class NetClient extends Client {
-
-  ArrayList<NetworkEntity> networkEntities;
   String messageBuffer = "";
 
   //////// Constructors
   NetClient(String ip, int port, BreakinGame g) { 
     super(g, ip, port);
-    networkEntities = new ArrayList<NetworkEntity>();
   }
   NetClient(String ip, BreakinGame g) { 
     this(ip, 4242, g);
@@ -16,7 +13,7 @@ class NetClient extends Client {
   }
   //////// End of constructors
 
-  void receive() {      
+  ArrayList<NetworkEntity> receive() {      
     if ( available() > 0 ) {
       byte[] incomingBytes = readBytes(); 
       String incomingString = "";
@@ -44,7 +41,7 @@ class NetClient extends Client {
       }
 
       while (newMessages.contains("")) newMessages.remove("");
-      
+
       for (String msg : newMessages) {
         byte[] bytes = null;
         try {
@@ -53,15 +50,14 @@ class NetClient extends Client {
         catch(UnsupportedEncodingException e) {
           println("Fatal Error: Unsupported Encoding!");
         }
-        
+
         NetworkContainer nc = NetworkContainer.decompress(bytes);
-        if(nc != null) networkEntities = nc.nes;
+        if (nc != null) return nc.nes;
       }
     }
+    return null;
   }
-  
-  
+
+
   ////////////////////////////////////////////////////////
-  
-  ArrayList<NetworkEntity> get_entities() {return networkEntities;}
 }
