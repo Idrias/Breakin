@@ -1,5 +1,5 @@
 class NetClient extends Client {
-  
+
   ArrayList<NetworkEntity> networkEntities;
   String messageBuffer = "";
 
@@ -54,12 +54,8 @@ class NetClient extends Client {
           println("Fatal Error: Unsupported Encoding!");
         }
         
-        NetworkEntity ne = NetworkEntity.decompress(bytes);
-        if (ne!=null) {
-          int index = Helper.getEntityIndexByID(networkEntities, ne.uniqueID);
-          if(index == -1) networkEntities.add(ne);
-          else { networkEntities.set(index, ne); }
-        }
+        NetworkContainer nc = NetworkContainer.decompress(bytes);
+        if(nc != null) networkEntities = nc.nes;
       }
     }
   }

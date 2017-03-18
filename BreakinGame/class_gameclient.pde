@@ -15,7 +15,6 @@ class GameClient {
   
   void handle_gos() {
     for(GameObject go : gos) {
-      // Reihenfolge einzelner GOS problematisch?
       go.update();
       go.draw();
     }    

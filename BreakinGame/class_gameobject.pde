@@ -15,14 +15,14 @@ abstract class GameObject {
 }
 
 
-class Dummy extends GameObject { 
+
+class Dummy extends GameObject {
   
   Dummy(NetworkEntity ne) {
     super(ne);
   }
-  
-  void update() {
-  
+ 
+  void update() { 
   }
   
   void draw() {

@@ -16,10 +16,10 @@ class NetServer extends Server {
 
   void pushEntities() {
     println("Server pushing " + networkEntities.size() + " entities. ");
-    for(NetworkEntity ne : networkEntities) {
-      write(ne.compress());
-      splitMSG();
-    }
+    
+    NetworkContainer nc = new NetworkContainer();
+    nc.set_nes(networkEntities);
+    write(nc.compress());
     splitMSG();
   }
   
