@@ -55,6 +55,8 @@ void setup() {
   bgmPlayer.setLoopPoints(0, 52561);
   bgmPlayer.loop();
   fft = new FFT(bgmPlayer.bufferSize(), bgmPlayer.sampleRate());
+  
+  setupTrail();
 }
 
 
@@ -62,7 +64,6 @@ void draw() {
   println(frameRate);
 
   background(255);
-
   drawWaves();
   colorMode(RGB, 255);
 
@@ -103,8 +104,9 @@ void draw() {
   
   //drawTrail(mouseX + 16, mouseY + 18, 15, 5, displayWidth/100, displayWidth/200, new PVector(255,40,40),new int[15], new int[15]);
   
-  drawTrail(mouseX, mouseY);
   
+  
+drawTrail(mouseX + 16, mouseY + 18);
   translate(mouseX + 32, mouseY + 36); //Ursprung wird an die Ecke unten Rechts vom Taco cursor gesetzt
   if (mousePressed) {
     rotate(-7*TWO_PI/360);
