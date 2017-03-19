@@ -1,9 +1,9 @@
 void setup() {
-  size(600, 600);
+  fullScreen(P2D);
   frameRate(144);
   setup_gvars();
   
-  audio.play("Music:Trump");
+  audio.play("Music:MainMenu");
 }
 
 void draw() {

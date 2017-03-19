@@ -10,6 +10,9 @@ GameServer gameServer;
 GameClient gameClient;
 AudioManager audio;
 
+PFont defaultFont;
+PImage defaultButtonTexture;
+
 // Settings //
 float NETWORK_UPDATERATE = 20;           // How often per second do we want to send updates from server to client?
 boolean CLIENTSIDE_PREDICTIONS = true;   // Should the gameclient predict movements?
@@ -18,11 +21,24 @@ boolean CLIENTSIDE_PREDICTIONS = true;   // Should the gameclient predict moveme
 
 void setup_gvars() {
   BREAKINGAME = this;
+  defaultButtonTexture = loadImage("/Assets/Graphics/Static Sprites/Button.png");
+  
+  audio = new AudioManager();
+  load_audio();
+  
   gameServer = new GameServer();
   gameClient = new GameClient();
-  audio = new AudioManager();
   
-  load_audio();
+  
+  shapeMode(CENTER);
+  textureMode(NORMAL);
+  imageMode(CENTER);
+  textAlign(CENTER, CENTER);
+  
+  
+  defaultFont = createFont("/Assets/Graphics/Fonts/komikax.ttf", displayHeight/27);
+  textFont(defaultFont);
+  //noCursor();
 }
 
 
@@ -51,8 +67,6 @@ void load_audio() {
     println("Adding file " + name + " from " + location + ".");
     audio.addAudio(name, location);
   }
-  
-  audio.play("SFX:Menu:Next");
   ///////////// AUDIO LOADED  
 }
 

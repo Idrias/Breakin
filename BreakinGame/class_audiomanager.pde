@@ -35,10 +35,43 @@ class AudioManager {
 
   void play(String name) {
     try { 
-      audios.get(name).play();
+      AudioPlayer a = audios.get(name);
+      a.pause();
+      a.rewind();
+      a.play();
     }
     catch(NullPointerException e) {
       println("Could not find audio " + name + " for playing!");
+    }
+  }
+  
+  void stop(String name) {
+    try { 
+      AudioPlayer a = audios.get(name);
+      a.pause();
+      a.rewind();
+    }
+    catch(NullPointerException e) {
+      println("Could not find audio " + name + " for stopping!");
+    }
+  }
+  
+  void pause(String name) {
+    try { 
+      AudioPlayer a = audios.get(name);
+      a.pause();
+    }
+    catch(NullPointerException e) {
+      println("Could not find audio " + name + " for pausing!");
+    }
+  }
+  
+  void playNoRewind(String name) {
+    try { 
+      audios.get(name).play();
+    }
+    catch(NullPointerException e) {
+      println("Could not find audio " + name + " for playing (no rewind)!");
     }
   }
 
@@ -74,7 +107,7 @@ class AudioManager {
         if(a.position() != 0) a.play();
       }
       catch(NullPointerException e) {
-        println("Could not find audio " + name + " for stopping!");
+        println("Could not find audio " + name + " for resuming!");
       }
     }
   }

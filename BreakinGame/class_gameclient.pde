@@ -1,7 +1,12 @@
 class GameClient {
 
   NetClient netClient;
+  MainMenu mainmenu;
   ArrayList<GameObject> gos;
+
+  final int PHASE_MAINMENU = 3;
+  final int PHASE_PREPAREMENU = 2;
+  int gamePhase = PHASE_PREPAREMENU;
 
   GameClient() {
     netClient = new NetClient(BREAKINGAME);
@@ -10,8 +15,20 @@ class GameClient {
 
   void update() {
     background(0);
-    fetch_nes();
-    handle_gos();
+
+    switch(gamePhase) {
+      case PHASE_PREPAREMENU:
+        mainmenu = new MainMenu();
+        gamePhase = PHASE_MAINMENU;
+        break;
+  
+      case PHASE_MAINMENU:
+        mainmenu.draw();
+        break;
+    }
+
+    //fetch_nes();
+    //handle_gos();
   }
 
   void handle_gos() {
