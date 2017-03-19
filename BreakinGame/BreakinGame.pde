@@ -7,5 +7,7 @@ void setup() {
 void draw() {
   gameServer.update();
   gameClient.update();
-  printFPS();
+  //printFPS();
+  
+
 }
