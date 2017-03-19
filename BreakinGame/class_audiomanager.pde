@@ -1,4 +1,6 @@
 import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.effects.*;
 
 class AudioManager {
   HashMap<String, AudioPlayer> audios;
@@ -44,7 +46,7 @@ class AudioManager {
       println("Could not find audio " + name + " for playing!");
     }
   }
-  
+
   void stop(String name) {
     try { 
       AudioPlayer a = audios.get(name);
@@ -55,7 +57,7 @@ class AudioManager {
       println("Could not find audio " + name + " for stopping!");
     }
   }
-  
+
   void pause(String name) {
     try { 
       AudioPlayer a = audios.get(name);
@@ -65,7 +67,7 @@ class AudioManager {
       println("Could not find audio " + name + " for pausing!");
     }
   }
-  
+
   void playNoRewind(String name) {
     try { 
       audios.get(name).play();
@@ -104,11 +106,15 @@ class AudioManager {
     for (String name : audios.keySet()) {
       try {
         AudioPlayer a = audios.get(name);
-        if(a.position() != 0) a.play();
+        if (a.position() != 0) a.play();
       }
       catch(NullPointerException e) {
         println("Could not find audio " + name + " for resuming!");
       }
     }
+  }
+
+  AudioPlayer getAudioPlayer(String name) {
+    return audios.get(name);
   }
 }
