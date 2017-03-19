@@ -47,7 +47,7 @@ void load_audio() {
   //////// LOAD AUDIO
   String[] audioFiles = new String[]{
     "Music:Trump", "/Assets/Audio/Music/Trump.mp3",
-    "Music:MainMenu", "/Assets/Audio/Music/bgmMainMenu.mp3",
+    //"Music:MainMenu", "/Assets/Audio/Music/bgmMainMenu.mp3",
     "SFX:Game:Bounce", "/Assets/Audio/SFX/game/Bounce.mp3",
     "SFX:Game:BrickBurst", "/Assets/Audio/SFX/game/BrickBurst.mp3",
     "SFX:Game:MexicanAttack1", "/Assets/Audio/SFX/game/MexicanAttack_1.mp3",
@@ -67,6 +67,7 @@ void load_audio() {
     println("Adding file " + name + " from " + location + ".");
     audio.addAudio(name, location);
   }
+  audio.addAudio("Music:MainMenu", "/Assets/Audio/Music/bgmMainMenu.mp3", 512);
   ///////////// AUDIO LOADED  
 }
 
