@@ -1,5 +1,4 @@
 class GameClient {
-
   NetClient netClient;
   ArrayList<GameObject> gos;
 
