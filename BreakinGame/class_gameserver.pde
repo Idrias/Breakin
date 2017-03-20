@@ -8,7 +8,7 @@ class GameServer {
     netServer = new NetServer(BREAKINGAME);
     gameObjects = new ArrayList<GameObject>();
     netDeltaT = 1000 / NETWORK_UPDATERATE;
-    while(gameObjects.size() < 1000) add_go(ACTORTYPE_DUMMY, new PVector(random(0, width), random(0, height)), new PVector(random(-0.5, 0.5), random(-0.5, 0.5)));
+    while(gameObjects.size() < 700) add_go(ACTORTYPE_DUMMY, new PVector(random(0, width), random(0, height)), new PVector(random(-0.5, 0.5), random(-0.5, 0.5)));
   }
 
   void update() {      
