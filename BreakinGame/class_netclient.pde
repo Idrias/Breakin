@@ -1,9 +1,11 @@
 class NetClient extends Client {
   String messageBuffer = "";
+  HashMap<String, int[]> sendingList;
 
   //////// Constructors
   NetClient(String ip, int port, BreakinGame g) { 
     super(g, ip, port);
+    sendingList = new HashMap<String, int[]>();
   }
   NetClient(String ip, BreakinGame g) { 
     this(ip, 4242, g);
@@ -13,49 +15,25 @@ class NetClient extends Client {
   }
   //////// End of constructors
 
-  ArrayList<NetworkEntity> receive() {      
+  NetworkContainer receive() {      
     if ( available() > 0 ) {
-      byte[] incomingBytes = readBytes(); 
-      String incomingString = "";
-
-      try {
-        // We need to work with the message as string. To not corrupt the byte[] object data we have to use a "bijective" encoding (ISO-8859-1)!
-        // http://stackoverflow.com/a/21032684
-        // For the incoming string add the leftover from last time + the bytes converted to string
-        incomingString = messageBuffer + new String(incomingBytes, "ISO-8859-1");
-      } 
-      catch(UnsupportedEncodingException e) {
-        println("Fatal Error: Unsupported Encoding!");
-      }
-
-      ArrayList<String> newMessages = new ArrayList<String>(); 
-      for (String message : incomingString.split(NET_SPLITSTRING)) newMessages.add(message);       
-      int newMessageCount = newMessages.size();
-
-      if (incomingString.endsWith(NET_SPLITSTRING)) {
-        messageBuffer = "";
-      } else {
-        messageBuffer = newMessages.get(newMessageCount-1);
-        newMessages.remove(newMessageCount-1);
-        newMessageCount--;
-      }
-
-      while (newMessages.contains("")) newMessages.remove("");
-
-      for (String msg : newMessages) {
-        byte[] bytes = null;
-        try {
-          bytes = msg.getBytes("ISO-8859-1");
-        } 
-        catch(UnsupportedEncodingException e) {
-          println("Fatal Error: Unsupported Encoding!");
-        }
-
-        NetworkContainer nc = NetworkContainer.decompress(bytes);
-        if (nc != null) return nc.nes;
-      }
+      DecompressResult dr = Helper.getNetworkContainerFromByteArray(messageBuffer,readBytes());
+      messageBuffer = dr.get_messageBuffer();
+      return dr.get_networkContainer();
     }
-    return null;
+    return new NetworkContainer();
+  }
+  
+  void addToSendingList(String command, int[] values) {
+    sendingList.put(command, values);
+  }
+  
+  void pushSendingList() {
+    NetworkContainer nc = new NetworkContainer();
+    nc.set_commands(sendingList);
+    write(nc.compress());
+    write(NET_SPLITSTRING);
+    sendingList = new HashMap<String, int[]>();
   }
 
 

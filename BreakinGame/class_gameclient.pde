@@ -26,8 +26,11 @@ class GameClient {
         break;
     }
 
-    //fetch_nes();
-    //handle_gos();
+    fetch_nes();
+    handle_gos();
+    
+    netClient.addToSendingList("Hi", new int[]{1, 2, 3, 4});
+    netClient.pushSendingList();
   }
 
   void handle_gos() {
@@ -38,7 +41,7 @@ class GameClient {
   }
 
   void fetch_nes() {
-    ArrayList<NetworkEntity> nes = netClient.receive();
+    ArrayList<NetworkEntity> nes = netClient.receive().nes;
     if (nes == null) return;
 
     for (NetworkEntity ne : nes) {

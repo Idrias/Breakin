@@ -2,10 +2,11 @@ import processing.net.*;
 import java.io.*;
 import java.util.Map;
 
-final String NET_SPLITSTRING = "-NEXT-";
-final int ACTORTYPE_DUMMY = 3;
+final static String NET_SPLITSTRING = "-NEXT-";
+final static int ACTORTYPE_DUMMY = 3;
+final static int ID_SERVER = 42;
 
-BreakinGame BREAKINGAME;
+static BreakinGame BREAKINGAME;
 GameServer gameServer;
 GameClient gameClient;
 AudioManager audio;

@@ -1,7 +1,12 @@
 static class NetworkContainer implements Serializable {
   ArrayList<NetworkEntity> nes = null;
-  HashMap<String, Integer> commands = null;
-
+  HashMap<String, int[]> commands = null;
+  
+  NetworkContainer() {
+    nes = new ArrayList<NetworkEntity>();
+    commands = new HashMap<String, int[]>();
+  }
+  
   void set_nes(ArrayList<NetworkEntity> nes) { 
     this.nes = nes;
   }
@@ -9,10 +14,10 @@ static class NetworkContainer implements Serializable {
     return nes;
   }
 
-  void set_commands(HashMap<String, Integer> commands) {
+  void set_commands(HashMap<String, int[]> commands) {
     this.commands = commands;
   }
-  HashMap<String, Integer> get_commands() {
+  HashMap<String, int[]> get_commands() {
     return commands;
   }
 

@@ -18,6 +18,8 @@ class GameServer {
       netServer.pushEntities( getNetworkEntities() ); 
       lastNetUpdate = millis();
     }
+    
+    netServer.receive();
   }
 
   void add_go(int type, PVector pos, PVector speed) {
@@ -35,5 +37,9 @@ class GameServer {
     ArrayList<NetworkEntity> nes = new ArrayList<NetworkEntity>();
     for (GameObject go : gameObjects) nes.add(go.ne);
     return nes;
+  }
+  
+  void handleNewClient(Client client) {
+    int id = netServer.handleNewClient(client);
   }
 }
