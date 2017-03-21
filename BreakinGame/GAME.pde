@@ -207,7 +207,12 @@ class GameServer {
     
     ////////////////////////////////////////////////
     // Receive messages from clients
-    netServer.receive();
+    if(frameCount % 10 != 0) return;
+    println("Frame " + frameCount + ":");
+    for(NetworkContainer nc : netServer.receive()) {
+      println(nc.commands.toString());
+    }
+    println();
     ////////////////////////////////////////////////
     
     
