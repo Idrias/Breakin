@@ -202,13 +202,13 @@ class NetClient extends Client {
   }
   //////// End of constructors
 
-  NetworkContainer receive() {      
+  ArrayList<NetworkContainer> receive() {      
     if ( available() > 0 ) {
       DecompressResult dr = Helper.getNetworkContainerFromByteArray(messageBuffer,readBytes());
       messageBuffer = dr.get_messageBuffer();
-      return dr.get_networkContainer();
+      return dr.get_networkContainers();
     }
-    return new NetworkContainer();
+    return new ArrayList<NetworkContainer>();
   }
   
   void addToSendingList(String command, int[] values) {
@@ -286,11 +286,10 @@ class NetServer extends Server {
       String messageBuffer = clientMessageBuffers.get(sender);
 
       if (messageBuffer != null) {
-
         DecompressResult dr = Helper.getNetworkContainerFromByteArray(messageBuffer, sender.readBytes());
         clientMessageBuffers.put(sender, dr.get_messageBuffer());
 
-        returnVals.add(dr.get_networkContainer());
+        for(NetworkContainer nc : dr.get_networkContainers()) {returnVals.add(nc);} 
       } else {
         // The client is not registered in clientMessageBuffers. Therefore we won't accept the message!
         sender.readString();

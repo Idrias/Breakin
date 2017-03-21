@@ -284,7 +284,9 @@ static class Helper {
     }
 
     while (newMessages.contains("")) newMessages.remove("");
-
+    
+    ArrayList<NetworkContainer> returnedContainers = new ArrayList<NetworkContainer>();
+    
     for (String msg : newMessages) {
       byte[] bytes = null;
       try {
@@ -298,23 +300,23 @@ static class Helper {
       // bottleneck?;
       
       NetworkContainer nc = NetworkContainer.decompress(bytes);
-      if (nc != null) return BREAKINGAME.new DecompressResult(nc, messageBuffer);
+      if (nc != null) returnedContainers.add(nc);
     }
     
-    return BREAKINGAME.new DecompressResult(new NetworkContainer(), messageBuffer);
+    return BREAKINGAME.new DecompressResult(returnedContainers, messageBuffer);
   }
 }
 
 
 class DecompressResult {
-  NetworkContainer networkContainer;
+  ArrayList<NetworkContainer> networkContainers;
   String messageBuffer;
   
-  DecompressResult(NetworkContainer networkContainer, String messageBuffer) {
-    this.networkContainer = networkContainer;
+  DecompressResult(ArrayList<NetworkContainer> networkContainers, String messageBuffer) {
+    this.networkContainers = networkContainers;
     this.messageBuffer = messageBuffer;
   }
   
-  NetworkContainer get_networkContainer() { return networkContainer; }
+  ArrayList<NetworkContainer> get_networkContainers() { return networkContainers; }
   String get_messageBuffer() { return messageBuffer; }
 }

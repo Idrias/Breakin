@@ -136,7 +136,14 @@ class GameClient {
   }
 
   void fetch_nes() {
-    ArrayList<NetworkEntity> nes = netClient.receive().nes;
+    ArrayList<NetworkEntity> nes = null;
+    
+    ArrayList<NetworkContainer> containers = netClient.receive();
+    int numberContainers = containers.size();
+    // TODO
+    if(numberContainers > 1) {
+      nes = containers.get(containers.size()-1).nes;
+    }
     if (nes == null) return;
 
     for (NetworkEntity ne : nes) {
