@@ -10,7 +10,7 @@ abstract class GameObject {
   }
 
   GameObject(int actorType, int networkID) {
-    // Wenn der Client erstellt: NetworkEntity muss generiert werden!
+    // Wenn der Server erstellt: NetworkEntity muss generiert werden!
     this(new NetworkEntity(actorType, networkID));
   }
 
@@ -49,6 +49,8 @@ abstract class GameObject {
   abstract void update();
   abstract void draw();
 }
+
+
 
 
 
@@ -140,8 +142,8 @@ class GameClient {
     
     ArrayList<NetworkContainer> containers = netClient.receive();
     int numberContainers = containers.size();
-    // TODO
-    if(numberContainers > 1) {
+    
+    if(numberContainers >= 1) {
       nes = containers.get(containers.size()-1).nes;
     }
     if (nes == null) return;
@@ -196,7 +198,7 @@ class GameServer {
     netServer = new NetServer(BREAKINGAME);
     gameObjects = new ArrayList<GameObject>();
     netDeltaT = 1000 / NETWORK_UPDATERATE;
-    while(gameObjects.size() < 50) add_go(ACTORTYPE_DUMMY, new PVector(random(0, width), random(0, height)), new PVector(random(-0.5, 0.5), random(-0.5, 0.5)));
+    while(gameObjects.size() < 1000) add_go(ACTORTYPE_DUMMY, new PVector(random(0, width), random(0, height)), new PVector(random(-0.5, 0.5), random(-0.5, 0.5)));
   }
 
   void update() {
@@ -214,12 +216,9 @@ class GameServer {
     
     ////////////////////////////////////////////////
     // Receive messages from clients
-    if(frameCount % 10 != 0) return;
-    println("Frame " + frameCount + ":");
     for(NetworkContainer nc : netServer.receive()) {
-      println(nc.commands.toString());
+      //println(nc.commands.toString());
     }
-    println();
     ////////////////////////////////////////////////
     
     
