@@ -25,7 +25,7 @@ void setup() {
   hoverPlayer = hoverSFX.loadFile("hover.wav");  //Minim ist ein Hurensohn und muckt bei .ogg files rum
   nextPlayer = nextSFX.loadFile("next.wav");
   backPlayer = backSFX.loadFile("back.wav");
-  bgmPlayer = bgm.loadFile("bgmMainMenu.mp3", 1024);    //noch in arbeit >> schlagzeug und square suckt derbst .>>
+  bgmPlayer = bgm.loadFile("bgmMainMenu.mp3", 512);    //noch in arbeit >> schlagzeug und square suckt derbst .>>
 
   //Modes usw
   fullScreen(P2D);

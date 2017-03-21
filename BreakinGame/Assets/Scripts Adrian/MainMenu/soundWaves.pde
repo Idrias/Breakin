@@ -4,7 +4,7 @@ import ddf.minim.effects.*;
 
 FFT fft;
 
-int bufferSize = 1024;
+int bufferSize = 256;
 int fftSize = floor(bufferSize*.5f)+1;
 float ai = TWO_PI/fftSize;
 float bgRotation = 180;
@@ -16,11 +16,11 @@ void drawWaves() {
   bgRotation += 0.2;
   colorMode(HSB, fftSize, 100, 100);
   background(0, 0, 100);
-  fft.forward(bgmPlayer.right);
+  fft.forward(bgmPlayer.mix);
   for (int i = 0; i < fftSize; i++) {
     float band = fft.getBand(i);
-    fill(i, 150+100*(band/10), 100, 100);
-    arc(0, 0, 300+band * 10*(i+1), 300+band * 10*(i+1), ai*i, ai*(i+1));
+    fill(i, 150+100*(band/10), 100, 150);
+    arc(0, 0, 200+band * 20*(i+1), 200+band * 20*(i+1), ai*i, ai*(i+1));
   }
   popMatrix();
 }

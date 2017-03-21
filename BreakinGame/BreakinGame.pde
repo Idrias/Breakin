@@ -1,6 +1,7 @@
 void setup() {
   fullScreen(P2D);
-  frameRate(144);
+  frameRate(60);
+  noCursor();
   setup_gvars();
   
   audio.play("Music:MainMenu");
@@ -10,12 +11,11 @@ void draw() {
   gameServer.update();
   gameClient.update();
   //printFPS();
-
 }
 
 
 
-
+/*
 void keyPressed() {
   switch(key) {
     case 's':
@@ -31,3 +31,4 @@ void keyPressed() {
       audio.play("Music:Trump");
   }
 }
+*/
