@@ -363,4 +363,5 @@ void keyPressed() {
 
 void keyReleased() {
   if(int(key) < 256) keysDown[int(key)] = 0;
+  if(key == 't') gameClient.disconnect();
 }

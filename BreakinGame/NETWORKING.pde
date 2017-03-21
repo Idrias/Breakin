@@ -37,7 +37,7 @@ static class NetworkEntity implements Serializable {
   int get_type() { 
     return actorType;
   }
-
+  
   byte[] compress() {
     try {
       ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
@@ -148,6 +148,11 @@ static class NetworkContainer implements Serializable {
 
       return nc;
     }
+    
+    catch(StreamCorruptedException e) {
+      println("ERROR: StreamCorruptedException during decompress!");
+      return null;
+    }
 
     catch(UTFDataFormatException e) {
       println("ERROR: UTFDataFormatException during decompress!");
@@ -216,6 +221,7 @@ class NetClient extends Client {
   }
   
   void pushSendingList() {
+    if(!active()) return;
     NetworkContainer nc = new NetworkContainer();
     nc.set_commands(sendingList);
     write(nc.compress());
