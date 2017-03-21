@@ -31,10 +31,10 @@ class MainMenu {
     s2Buttons = new Button[]{startSP, difficulty, backTo1};
     s4Buttons = new Button[]{graphics, audioButton, language, backTo1};
     
-    fft = new FFT(audio.getAudioPlayer("Music:MainMenu").bufferSize(), audio.getAudioPlayer("Music:MainMenu").sampleRate());
+    fft = new FFT(audio.getAudioPlayer("Music:Trump").bufferSize(), audio.getAudioPlayer("Music:Trump").sampleRate());
     
     audio.stopAll();
-    audio.loop("Music:MainMenu");
+    audio.loop("Music:Trump");
   }
 
 
@@ -81,7 +81,7 @@ class MainMenu {
     bgRotation += 0.2;
     colorMode(HSB, fftSize, 100, 100);
     //background(0, 0, 100);
-    fft.forward(audio.getAudioPlayer("Music:MainMenu").right);
+    fft.forward(audio.getAudioPlayer("Music:Trump").right);
     for (int i = 0; i < fftSize; i++) {
       float band = fft.getBand(i);
       fill(i, 150+100*(band/10), 100, 100);

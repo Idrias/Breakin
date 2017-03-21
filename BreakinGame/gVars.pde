@@ -14,6 +14,9 @@ AudioManager audio;
 PFont defaultFont;
 PImage defaultButtonTexture;
 
+ArrayList<Client> newClients;
+ArrayList<Client> disconnectedClients;
+
 // Settings //
 float NETWORK_UPDATERATE = 20;           // How often per second do we want to send updates from server to client?
 boolean CLIENTSIDE_PREDICTIONS = true;   // Should the gameclient predict movements?
@@ -21,7 +24,13 @@ boolean CLIENTSIDE_PREDICTIONS = true;   // Should the gameclient predict moveme
 
 
 void setup_gvars() {
+  
   BREAKINGAME = this;
+  
+  newClients = new ArrayList<Client>();
+  disconnectedClients = new ArrayList<Client>();
+  
+  
   defaultButtonTexture = loadImage("/Assets/Graphics/Static Sprites/Button.png");
   
   audio = new AudioManager();

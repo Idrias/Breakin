@@ -1,83 +1,93 @@
 class NetServer extends Server {
   int uniqueID_count = 0;
-  int clientID_count = 0;
-  HashMap<String, String> clientMessageBuffers;
+  HashMap<Client, String> clientMessageBuffers;
 
+  ////////////////////////////////////////////////
   // Constructors
   NetServer(int port, BreakinGame g) {
     super(g, port);
-    clientMessageBuffers = new HashMap<String, String>();
+    clientMessageBuffers = new HashMap<Client, String>();
   }
   NetServer(BreakinGame g) { 
     this(4242, g);
   }
   // End of constructors
+  ////////////////////////////////////////////////
 
 
-  void splitMSG() { 
-    write(NET_SPLITSTRING);
-  }
-
+  ////////////////////////////////////////////////
+  // Send networkEntitites as NetworkContainer to all clients!
   void pushEntities(ArrayList<NetworkEntity> networkEntities) {
-    //println("Server pushing " + networkEntities.size() + " entities. ");
-
     NetworkContainer nc = new NetworkContainer();
     nc.set_nes(networkEntities);
+    byte[] bytes = nc.compress();
+    write(bytes);
+    write(NET_SPLITSTRING);
+  }
+  ////////////////////////////////////////////////
 
-    byte[] c = nc.compress();
-    write(c);
-    splitMSG();
+
+  ////////////////////////////////////////////////
+  // Receive messages from clients
+  ArrayList<NetworkContainer> receive() {
+
+    ArrayList<NetworkContainer> returnVals = new ArrayList<NetworkContainer>();
+    Client sender;
+
+    while (true) {
+      sender = available();
+      if (sender == null) break;
+
+      String messageBuffer = clientMessageBuffers.get(sender);
+
+      if (messageBuffer != null) {
+
+        DecompressResult dr = Helper.getNetworkContainerFromByteArray(messageBuffer, sender.readBytes());
+        clientMessageBuffers.put(sender, dr.get_messageBuffer());
+
+        returnVals.add(dr.get_networkContainer());
+      } else {
+        // The client is not registered in clientMessageBuffers. Therefore we won't accept the message!
+        sender.readString();
+      }
+    }
+
+    return returnVals;
+  }
+  ////////////////////////////////////////////////
+
+
+  ////////////////////////////////////////////////
+  // Handle arriving / departing clients
+  void addNewClient(Client client) {
+    clientMessageBuffers.put(client, "");
+  }
+  void removeDisconnectedClient(Client client) {
+    clientMessageBuffers.remove(client);
   }
 
+  ////////////////////////////////////////////////
+  // Get an unique network id for gameObjects
   int generate_uniqueID() {
     uniqueID_count++;
     return uniqueID_count;
   }
-
-  int generate_clientID() {
-    clientID_count++;
-    return clientID_count;
-  }
-
-
-  ArrayList<NetworkContainer> receive() {
-
-    ArrayList<NetworkContainer> returnVals = new ArrayList<NetworkContainer>();
-
-    Client sender = available();
-    
-    // cant do a while loop here cause it will break the client class...
-    // TODO take whole client as id
-    
-    if (sender != null) {
-
-      if (millis()%1000 > 990) println(sender, frameCount);
-
-
-        String messageBuffer = clientMessageBuffers.get(sender.ip());
-        if (messageBuffer != null) {
-          DecompressResult dr = Helper.getNetworkContainerFromByteArray(messageBuffer, sender.readBytes());
-          clientMessageBuffers.put(sender.ip(), dr.get_messageBuffer());
-          returnVals.add(dr.get_networkContainer());
-        } else {
-        }; // the messageBuffer has not been initialized, which means that the ip+clientid is not known!
-
-      sender = available();
-    }
-    return returnVals;
-  }
-
-
-  int handleNewClient(Client client) {
-    int id = generate_clientID();
-    return id;
-  }
+  ////////////////////////////////////////////////
 }
 
-// SERVER EVENT //
+
+
+// SERVER EVENTS ///////
+
+// New client connected event
 void serverEvent(Server server, Client client) {
-
-  // TODO could be unsafe 
-  //if(gameServer == null) return;
-  gameServer.handleNewClient(client);
+  println("NEW CLIENT CONNECTED: HELLO " + client);
+  newClients.add(client);
 }
+
+// Client left server event
+void disconnectEvent(Client client) {
+  println("CLIENT LEFT: GOODBYE " + client);
+  disconnectedClients.add(client);
+}
+////////////////////////
