@@ -37,7 +37,7 @@ static class NetworkEntity implements Serializable {
   int get_type() { 
     return actorType;
   }
-  
+
   byte[] compress() {
     try {
       ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
@@ -100,12 +100,17 @@ static class NetworkEntity implements Serializable {
 static class NetworkContainer implements Serializable {
   ArrayList<NetworkEntity> nes = null;
   HashMap<String, int[]> commands = null;
-  
+
+  // Usually we want to send NetworkCotnainers to all clients.
+  // If this is set only a specific client is the destination!
+  String destinationIP = "";
+  int destinationID = -1;
+
   NetworkContainer() {
     nes = new ArrayList<NetworkEntity>();
     commands = new HashMap<String, int[]>();
   }
-  
+
   void set_nes(ArrayList<NetworkEntity> nes) { 
     this.nes = nes;
   }
@@ -119,6 +124,18 @@ static class NetworkContainer implements Serializable {
   HashMap<String, int[]> get_commands() {
     return commands;
   }
+  void set_destination(String ip, int id) {
+    this.destinationIP = ip;
+    this.destinationID = id;
+  }
+  int get_destinationID() { 
+    return destinationID;
+  }
+  String get_destinationIP() { 
+    return destinationIP;
+  }
+
+
 
   byte[] compress() {
     try {
@@ -148,7 +165,7 @@ static class NetworkContainer implements Serializable {
 
       return nc;
     }
-    
+
     catch(StreamCorruptedException e) {
       println("ERROR: StreamCorruptedException during decompress!");
       return null;
@@ -193,6 +210,7 @@ static class NetworkContainer implements Serializable {
 class NetClient extends Client {
   String messageBuffer = "";
   HashMap<String, int[]> sendingList;
+  int playerID = -1;
 
   //////// Constructors
   NetClient(String ip, int port, BreakinGame g) { 
@@ -209,19 +227,62 @@ class NetClient extends Client {
 
   ArrayList<NetworkContainer> receive() {      
     if ( available() > 0 ) {
-      DecompressResult dr = Helper.getNetworkContainerFromByteArray(messageBuffer,readBytes());
+      DecompressResult dr = Helper.getNetworkContainerFromByteArray(messageBuffer, readBytes());
       messageBuffer = dr.get_messageBuffer();
-      return dr.get_networkContainers();
+
+      ArrayList<NetworkContainer> containers = dr.get_networkContainers(); // not null
+
+      for (int i=0; i<containers.size(); i++) {
+        NetworkContainer c = containers.get(i);
+        String destinationIP = c.get_destinationIP();
+        int destinationID = c.get_destinationID();
+        
+        // BEGIN IF DESTINATION CHECK
+        if (destinationIP.isEmpty()) {
+          // All is good. This container is intended for all clients!
+        }      
+        else {
+          // Woah there! This container is for a specific client only! Let's check if it's for me!
+          if (destinationIP.equals(this.ip())) {
+            // Container is for my ip!
+            if(playerID == -1) {
+              // My playerID is not set yet. This must be the message to set it!
+              playerID = destinationID;
+              println("Client set playerID: " + playerID);
+            }
+            
+            else if(playerID == destinationID) {
+              // The container is for my ip and also for my id. Means this is for me!
+              // TODO do stuff?
+            }
+            
+            else {
+              // This container is for my ip, but not for my id. Might be an error or there is more than one client on my machine!
+              // I'm not the only one???
+              // Hellooooooo?? Anybody theeere?!
+              containers.remove(i);
+              i--;
+            }
+            
+          } else {
+            // Nope! This container is not for me! Dump it!
+            containers.remove(i);
+            i--;
+          }
+        }
+        ///// ENDIF
+      }
+      return containers;
     }
     return new ArrayList<NetworkContainer>();
   }
-  
+
   void addToSendingList(String command, int[] values) {
     sendingList.put(command, values);
   }
-  
+
   void pushSendingList() {
-    if(!active()) return;
+    if (!active()) return;
     NetworkContainer nc = new NetworkContainer();
     nc.set_commands(sendingList);
     write(nc.compress());
@@ -267,13 +328,21 @@ class NetServer extends Server {
 
 
   ////////////////////////////////////////////////
+  // Send NetworkContainer to all clients!
+  void pushNetworkContainer(NetworkContainer nc) {
+    byte[] bytes = nc.compress();
+    write(bytes);
+    write(NET_SPLITSTRING);
+  }
+  ////////////////////////////////////////////////
+
+
+  ////////////////////////////////////////////////
   // Send networkEntitites as NetworkContainer to all clients!
   void pushEntities(ArrayList<NetworkEntity> networkEntities) {
     NetworkContainer nc = new NetworkContainer();
     nc.set_nes(networkEntities);
-    byte[] bytes = nc.compress();
-    write(bytes);
-    write(NET_SPLITSTRING);
+    pushNetworkContainer(nc);
   }
   ////////////////////////////////////////////////
 
@@ -295,7 +364,9 @@ class NetServer extends Server {
         DecompressResult dr = Helper.getNetworkContainerFromByteArray(messageBuffer, sender.readBytes());
         clientMessageBuffers.put(sender, dr.get_messageBuffer());
 
-        for(NetworkContainer nc : dr.get_networkContainers()) {returnVals.add(nc);} 
+        for (NetworkContainer nc : dr.get_networkContainers()) {
+          returnVals.add(nc);
+        }
       } else {
         // The client is not registered in clientMessageBuffers. Therefore we won't accept the message!
         sender.readString();

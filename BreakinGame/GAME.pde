@@ -249,8 +249,12 @@ class GameServer {
     ////////////////////////////////////////////////
     // Handle arriving and departing clients ///////
     for(Client c : newClients) {
+      int clientID = netServer.generate_uniqueID();
+      NetworkContainer infoContainer = new NetworkContainer();
+      infoContainer.set_destination(c.ip(), clientID);
+      netServer.pushNetworkContainer(infoContainer);
       netServer.addNewClient(c);
-      players.add( new Player(c, netServer.generate_uniqueID()));
+      players.add( new Player(c, clientID));
     }
     for(Client c : disconnectedClients) {
       netServer.removeDisconnectedClient(c);
