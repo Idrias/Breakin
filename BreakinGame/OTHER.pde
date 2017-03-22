@@ -13,8 +13,10 @@ static BreakinGame BREAKINGAME;
 GameServer gameServer;
 GameClient gameClient;
 AudioManager audio;
+SpriteManager sprite;
 
 PFont defaultFont;
+PFont Arial;
 PImage defaultButtonTexture;
 
 ArrayList<Client> newClients;
@@ -25,16 +27,29 @@ float NETWORK_UPDATERATE = 20;           // How often per second do we want to s
 boolean CLIENTSIDE_PREDICTIONS = true;   // Should the gameclient predict movements?
 //////////////
 
+//Graphic settins
+enum graphics {
+    None, 
+    Off, 
+    On, 
+    Low, 
+    Medium, 
+    High
+}
 
 void setup_gvars() {
-  
+  Arial = createFont("FFScala", 32);
+  defaultButtonTexture = loadImage("/Assets/Graphics/Static Sprites/Button.png");
+  sprite = new SpriteManager();
+  load_sprites();
+
   BREAKINGAME = this;
   
   newClients = new ArrayList<Client>();
   disconnectedClients = new ArrayList<Client>();
   
   
-  defaultButtonTexture = loadImage("/Assets/Graphics/Static Sprites/Button.png");
+  
   
   audio = new AudioManager();
   load_audio();
@@ -92,7 +107,25 @@ void printFPS() {
 
 
 
+void load_sprites() {
+  String[] imageFiles = new String[]{
 
+    //Static
+    "Static:BreakinLogo", "/Assets/Graphics/Static_Sprites/Breakin.png", 
+    "Static:Tacursor", "/Assets/Graphics/Static_Sprites/Tacursor.png", 
+
+    //Animated
+    "Anim:Mexican", "/Assets/Graphics/Spritesheets/Juan_2.png", 
+    "Anim:DestructedWallBrick", "/Assets/Graphics/Spritesheets//DestructedWallBrick_3.png"
+  };
+
+  for (int i = 1; i < imageFiles.length; i += 2) {
+    String name = imageFiles[i-1];
+    String location = imageFiles[i];
+    println("Adding sprite " + name + " from " + location + ".");
+    sprite.addSprite(name, location);
+  }
+}
 
 
 
@@ -326,7 +359,58 @@ class DecompressResult {
 
 
 
+class SpriteManager {
 
+  HashMap<String, PImage> sprites;
+  HashMap<String, PImage[]> animations;
+
+  SpriteManager() {
+    sprites = new HashMap<String, PImage>();
+    animations = new HashMap<String, PImage[]>();
+  }
+
+  void addSprite(String name, String path) {
+    if (name.charAt(0) == 'S') {                    //STATIC SPRITE
+      sprites.put(name, loadImage(path));
+    } else {                                        //ANIMATED SPRITE
+
+      char c = ' ';
+      int i = 0;
+
+      do {
+        c = path.charAt(i);
+        i++;
+      } while (c != '.');
+
+      int a = Character.getNumericValue(path.charAt(i - 2));
+      
+      PImage[] frames = new PImage[a*a];
+      int W = loadImage(path).width/a;
+      int H = loadImage(path).height/a;
+      for (int j = 0; j < frames.length; j++) {
+        int x = j%a*W;
+        int y = j/a*H;
+      frames[j] = loadImage(path).get(x, y, W, H);
+      }
+      animations.put(name, frames);
+    }
+  }
+
+  void dispSprite(String name, int x, int y) {
+    image(sprites.get(name), x, y);
+  }
+  void dispSprite(String name, int x, int y, float w, float h) {
+    image(sprites.get(name), x, y, w, h);
+  }
+  
+  void dispAnimation(String name, int x, int y, int speed, int frames){
+    image(animations.get(name)[(millis() / speed)%frames], x, y);
+  }
+  
+  void dispAnimation(String name, int x, int y, float w, float h, int speed, int frames){
+    image(animations.get(name)[(millis() / speed)%frames], x, y, w, h);
+  }
+}
 
 
 
