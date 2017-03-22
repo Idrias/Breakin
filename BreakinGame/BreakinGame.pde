@@ -1,6 +1,6 @@
 void setup() {
   fullScreen(P2D);
-  frameRate(60);
+  frameRate(144);
   noCursor();
   setup_gvars();
 }
@@ -8,5 +8,5 @@ void setup() {
 void draw() {
   gameServer.update();
   gameClient.update();
+  printFPS();
 }
-

@@ -39,7 +39,7 @@ enum graphics {
 
 void setup_gvars() {
   Arial = createFont("FFScala", 32);
-  defaultButtonTexture = loadImage("/Assets/Graphics/Static Sprites/Button.png");
+  defaultButtonTexture = loadImage("/Assets/Graphics/Static_Sprites/Button.png");
   sprite = new SpriteManager();
   load_sprites();
 

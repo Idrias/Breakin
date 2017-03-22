@@ -415,13 +415,16 @@ class MainMenu {
       if (i != -1) screen = i;
     }
     
+    pushMatrix();
     translate(mouseX + 32, mouseY + 36); //Ursprung wird an die Ecke unten Rechts vom Taco cursor gesetzt
     if (mousePressed) {
       rotate(-7*TWO_PI/360);
     }
     tint(255);
     sprite.dispSprite("Static:Tacursor", -16, -18, 32, 35);
-  }
+    popMatrix();  
+
+}
 
 
   ///////////////////////////////////////////////////////////////////////////////////////
@@ -439,7 +442,7 @@ class MainMenu {
     bgRotation += 0.2;
     colorMode(HSB, fftSize, 100, 100);
 
-    fft.forward(audio.getAudioPlayer("Music:MainMenu").right);
+    //fft.forward(audio.getAudioPlayer("Music:MainMenu").right);
 
     //background(0, 0, 100);
     fft.forward(audio.getAudioPlayer("Music:Trump").right);
