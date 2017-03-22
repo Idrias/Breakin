@@ -12,6 +12,7 @@ AudioManager audio;
 SpriteManager sprite;
 
 PFont defaultFont;
+PFont Arial;
 PImage defaultButtonTexture;
 
 // Settings //
@@ -49,6 +50,7 @@ void setup_gvars() {
 
 
   defaultFont = createFont("/Assets/Graphics/Fonts/komikax.ttf", displayHeight/27);
+  Arial = createFont("FFScala", 32);
   textFont(defaultFont);
   //noCursor();
 }

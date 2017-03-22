@@ -99,17 +99,15 @@ class InputBox {
   int posX, posY, sizeX, sizeY;
   String lastInput = new String();
   String currentInput = new String();
-  PFont myFont;
   char c;
   boolean canType, numOnly;
 
   InputBox(int _posX, int _posY, int _sizeX, int _sizeY, boolean _numOnly) {
-    posX = _posX;
-    posY = _posY;
-    sizeX = _sizeX;
-    sizeY = _sizeY;
+    posX    = _posX;
+    posY    = _posY;
+    sizeX   = _sizeX;
+    sizeY   = _sizeY;
     numOnly = _numOnly;
-    myFont = createFont("FFScala", 32);
   }
 
   void disp() {
@@ -125,7 +123,7 @@ class InputBox {
     endShape();
 
     textAlign(LEFT);
-    textFont(myFont);
+    textFont(Arial);
     fill(30, 30, 30);
     text(currentInput, posX - sizeX / 2 + 10, posY + 10);
 
@@ -133,13 +131,13 @@ class InputBox {
     if (canType) {
       if (!keyPressed)c = ' ';
       if (keyPressed && key != c) {
-        
+
         //if(numOnly){
         //  if(key == ('1' || '2' || '3' || '4' || '5' || '6' || '7' || '8' || '9' || '0' || '.'))
         //}
-        
-        
-        
+
+
+
         c = key;
         if (key == BACKSPACE && currentInput.length() > 0)
         {
@@ -165,7 +163,7 @@ class InputBox {
 
   boolean isOver(int mx, int my) 
   {
-    if (mx > posX - sizeX/2
+    if (mx  > posX - sizeX/2
       && mx < posX + sizeX/2
       && my > posY - sizeY/2
       && my < posY + sizeY/2) {
@@ -173,5 +171,77 @@ class InputBox {
     } else { 
       return false;
     }
+  }
+}
+
+
+class Window {
+
+  int posX, posY, sizeX, sizeY;
+
+  Window(int _posX, int _posY, int _sizeX, int _sizeY) {
+    posX  = _posX;
+    posY  = _posY;
+    sizeX = _sizeX;
+    sizeY = _sizeY;
+  }
+
+  void disp() {
+    stroke(120);
+    fill(230, 140);
+    rect(posX - sizeX / 2, posY - sizeY / 2, sizeX, sizeY, 12);
+    stroke(0);
+  }
+}
+
+class Label {
+  int     posX, posY, size, sSize;
+  PFont   font;
+  color   iro, kage;
+  String  text;
+  boolean shadow, border;
+
+
+  Label (int _posX, int _posY, int _size, PFont _font, color _iro, String _text) {
+    posX = _posX;
+    posY = _posY;
+    size = _size;
+    font = _font;
+    iro  = _iro;
+    text = _text;
+  }
+
+  Label (int _posX, int _posY, int _size, PFont _font, color _iro, String _text, boolean _shadow, int _sSize, boolean _border, color _kage) {
+    posX   = _posX;
+    posY   = _posY;
+    size   = _size;
+    font   = _font;
+    iro    = _iro;
+    text   = _text;
+    shadow = _shadow;
+    border = _border;
+    kage   = _kage;
+    sSize  = _sSize;
+  }
+
+  void disp() {
+
+    textFont(font, size);
+
+    fill(kage, 255);
+
+    if (border) {
+      text(text, posX + 1, posY);
+      text(text, posX - 1, posY);
+      text(text, posX, posY + 1);
+      text(text, posX, posY - 1);
+    }
+
+    if (shadow) {
+      text(text, posX + sSize, posY + sSize);
+    }
+    
+    fill(iro, 255);
+    text(text, posX, posY);
   }
 }

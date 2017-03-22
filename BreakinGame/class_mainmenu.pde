@@ -13,7 +13,10 @@ class MainMenu {
   // Screen 4 3: -> Screen4 -> Language
   int screen = 1;
   Button[] s1Buttons, s2Buttons, s3Buttons, s31Buttons, s32Buttons, s4Buttons, s41Buttons;
+  Label createRoom, joinRoom, enterIp, enterName, players;
   InputBox inputName, inputIP;
+  Window s1Window, s41Window, s31Window;
+  
 
   MainMenu() {
     Button single, multi, settings, credits, quit, startSP, difficulty, backTo1, backTo4, graphics, audioButton, language, trailQuali, bgQuali, animations, vSync, resolution, fullScreen, create, connect, start, join;
@@ -38,7 +41,7 @@ class MainMenu {
     vSync    = new Button(67*displayWidth/99, displayHeight/2+2*displayHeight/12, displayWidth/3, displayHeight/15, 41, "VSYNC: ON", true, defaultButtonTexture);
     resolution=new Button(32*displayWidth/99, displayHeight/2+3*displayHeight/12, displayWidth/3, displayHeight/15, 41, "RESOLUTION: " + displayWidth + "x" + displayHeight, true, defaultButtonTexture);
     fullScreen=new Button(67*displayWidth/99, displayHeight/2+3*displayHeight/12, displayWidth/3, displayHeight/15, 41, "FULLSCREEN", true, defaultButtonTexture);
-    backTo4 =  new Button(displayWidth/2, displayHeight/2+5*displayHeight/12, displayWidth/3, displayHeight/15, 4, "BACK", false, defaultButtonTexture);
+    backTo4 =  new Button(   displayWidth/2, displayHeight/2+5*displayHeight/12, displayWidth/3, displayHeight/15, 4, "BACK", false, defaultButtonTexture);
 
     create =   new Button(displayWidth/2, displayHeight/2 +     displayHeight/12, displayWidth/3, displayHeight/15, 31, "CREATE ROOM", true, defaultButtonTexture);
     connect =  new Button(displayWidth/2, displayHeight/2 + 2 * displayHeight/12, displayWidth/3, displayHeight/15, 32, "JOIN ROOM", true, defaultButtonTexture);
@@ -58,9 +61,23 @@ class MainMenu {
 
     audio.stopAll();
     audio.loop("Music:MainMenu");
+    
+    
+    inputName = new InputBox(displayWidth/2 - 17 * displayWidth/48 + displayWidth/10, displayHeight/2 - 2 * displayHeight/48 + displayHeight/40, displayWidth/5, displayHeight/30, false);
+    inputIP   = new InputBox(displayWidth/2 - 17 * displayWidth/48 + displayWidth/10, displayHeight/2 + 2 * displayHeight/48 + displayHeight/40, displayWidth/5, displayHeight/30, false);
 
-    inputName = new InputBox(displayWidth/2, displayHeight/2 + 3 * displayHeight/12, 300, 40, false);
-    inputIP   = new InputBox(displayWidth/2, displayHeight/2 + 4 * displayHeight/12, 300, 40, true);
+    s1Window  = new Window(displayWidth/2, displayHeight/2 + 3 * displayHeight/12 + displayHeight/100, 9 * displayWidth / 24, 11 * displayHeight / 24);
+    s41Window = new Window(displayWidth/2, displayHeight/2 + 3 * displayHeight/12 + displayHeight/100, 35 * displayWidth / 48, 11 * displayHeight / 24);
+    s31Window = new Window(displayWidth/2, displayHeight/2 + 2 * displayHeight/12 + displayHeight/100, 35 * displayWidth / 48, 15 * displayHeight / 24);
+    
+    
+    createRoom = new Label(displayWidth/2 - 17 * displayWidth/48, displayHeight/2 - 4 * displayHeight/48, 50, defaultFont, color (255), "CREATE ROOM", true, 3, false, color(0));
+    enterIp =    new Label(displayWidth/2 - 17 * displayWidth/48, displayHeight/2 + 2 * displayHeight/48, 44, Arial, color (255), "IP Adress:", false, 0, true, color(0));
+    enterName =  new Label(displayWidth/2 - 17 * displayWidth/48, displayHeight/2 - 2 * displayHeight/48, 44, Arial, color (255), "Playername:", false, 0, true, color(0));
+    players =    new Label(displayWidth/2 - 17 * displayWidth/48, displayHeight/2 + 10 * displayHeight/48, 44, Arial, color (255), "Players:", false, 0, true, color(0));
+    //enterIp = new Label(displayWidth/2, displayHeight/2, 44, Arial, color (255), "IP Adress:", false, 0, true, color(0));
+    
+    //createLabels = new Label[]{enterIp};
   }
 
 
@@ -77,28 +94,41 @@ class MainMenu {
 
     switch(screen) {
     case 1:
+      s1Window.disp();
       renderButtons = s1Buttons;
       break;
     case 2:
+      s1Window.disp();
       renderButtons = s2Buttons;
       break;
     case 3:
+      s1Window.disp();
       renderButtons = s3Buttons;
       break;
     case 31:
+      s31Window.disp();
       inputName.disp();
       inputIP.disp();
+      
+      createRoom.disp();
+      enterName.disp();
+      enterIp.disp();
+      players.disp();
+      
       renderButtons = s31Buttons;
       break;
     case 32:
+      s31Window.disp();
       inputName.disp();
       inputIP.disp();
       renderButtons = s32Buttons;
       break;
     case 4:
+      s1Window.disp();
       renderButtons = s4Buttons;
       break;
     case 41:
+      s41Window.disp();
       renderButtons = s41Buttons;
       break;
     case 441:
@@ -108,6 +138,9 @@ class MainMenu {
     case 6: 
       exit();
     }
+    
+    //enterIp.disp();
+        
     //Sample Animation
     //sprite.dispAnimation("Anim:DestructedWallBrick", 150, 100, 100, 50, 45, 9); //PosX, PosY, Width, Height, Animation Speed, Animation Frames
 
@@ -115,7 +148,7 @@ class MainMenu {
       int i = b.disp();
       if (i != -1) screen = i;
     }
-
+    
     translate(mouseX + 32, mouseY + 36); //Ursprung wird an die Ecke unten Rechts vom Taco cursor gesetzt
     if (mousePressed) {
       rotate(-7*TWO_PI/360);
