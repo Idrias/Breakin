@@ -203,10 +203,8 @@ public class MainMenu {
 		bgRotation += 0.2;
 		G.p.colorMode(PApplet.HSB, fftSize, 100, 100);
 
-		// fft.forward(audio.getAudioPlayer("Music:MainMenu").right);
-
-		// background(0, 0, 100);
-		fft.forward(G.audio.getAudioPlayer("Music:Trump").right);
+		fft.forward(G.audio.getAudioPlayer("Music:MainMenu").right);
+		G.p.background(0x000000); // HEX BLACK (can change)
 
 		for (int i = 0; i < fftSize; i++) {
 			float band = fft.getBand(i);

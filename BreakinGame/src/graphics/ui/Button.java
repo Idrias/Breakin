@@ -27,7 +27,7 @@ public class Button {
 		newMenu = _newMenu;
 		text = _text;
 		SFX = _SFX;
-		img = _texture; //TODO .copy()
+		img = _texture.copy();
 	}
 
 

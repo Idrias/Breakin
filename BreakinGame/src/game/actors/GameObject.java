@@ -60,6 +60,12 @@ public abstract class GameObject {
 
 
 
+	public NetworkEntity get_networkEntity() {
+		return ne;
+	}
+
+
+
 	public PVector get_speed() {
 		return ne.get_speed() == null ? new PVector(0, 0) : ne.get_speed();
 	}

@@ -66,6 +66,9 @@ public class GameServer {
 		// Update the gameObjects
 		for (GameObject go : gameObjects)
 			go.update();
+		
+		if(gameObjects.size() > 0)
+		gameObjects.remove((int)G.p.random(gameObjects.size())); // TESTING DEBUG REMOVE TODO 
 		////////////////////////////////////////////////
 		////////////////////////////////////////////////
 		// Send update to clients

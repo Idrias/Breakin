@@ -69,6 +69,7 @@ public class G {
 		// load some resources
 		arial = p.createFont("", 32);
 		defaultFont = p.createFont("/Assets/Graphics/Fonts/komikax.ttf", p.height / 27);
+		defaultButtonTexture = p.loadImage("/Assets/Graphics/Static_Sprites/Button.png");
 
 		// load many more resources
 		sprite = new SpriteManager();

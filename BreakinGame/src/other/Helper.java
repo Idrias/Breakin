@@ -74,9 +74,6 @@ public class Helper {
 				G.println("Fatal Error: Unsupported Encoding!");
 			}
 
-			// TODO possible problem: will only do one message per call!
-			// bottleneck?;
-
 			NetworkContainer nc = NetworkContainer.decompress(bytes);
 			if (nc != null) returnedContainers.add(nc);
 		}

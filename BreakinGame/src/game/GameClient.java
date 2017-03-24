@@ -65,7 +65,11 @@ public class GameClient {
 			nes = containers.get(containers.size() - 1).nes;
 		}
 		if (nes == null) return;
+
+		ArrayList<Integer> IDs = new ArrayList<Integer>();
+
 		for (NetworkEntity ne : nes) {
+			IDs.add(ne.get_id());
 			int ne_id = ne.get_id();
 			boolean found = false;
 			for (GameObject go : gos) {
@@ -81,6 +85,17 @@ public class GameClient {
 					break;
 				}
 			}
+		}
+
+		for (int i = 0; i < gos.size(); i++) {
+			// Remove local GameObjects whose NetworkEntities aren't in the list
+			// anymore!
+			GameObject go = gos.get(i);
+			if (!IDs.contains(go.get_networkEntity().get_id())) {
+				gos.remove(i);
+				i--;
+			}
+
 		}
 	}
 
