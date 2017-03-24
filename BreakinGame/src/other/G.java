@@ -107,8 +107,6 @@ public class G {
 			String location = audioFiles[i];
 			audio.addAudio(name, location);
 		}
-
-		audio.addAudio("Music:MainMenu", "/Assets/Audio/Music/bgmMainMenu.mp3", 512);
 	}
 
 
