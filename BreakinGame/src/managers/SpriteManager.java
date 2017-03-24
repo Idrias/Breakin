@@ -21,10 +21,10 @@ public class SpriteManager {
 
 
 	public void addSprite(String name, String path) {
-		if (name.charAt(0) == 'S') { // STATIC SPRITE
+		if (name.charAt(0) == 'S') {                   // STATIC SPRITE
 			sprites.put(name, G.p.loadImage(path));
 		}
-		else { // ANIMATED SPRITE
+		else {                                         // ANIMATED SPRITE
 
 			char c = ' ';
 			int i = 0;

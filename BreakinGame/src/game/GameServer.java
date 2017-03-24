@@ -27,8 +27,8 @@ public class GameServer {
 		gameObjects = new ArrayList<GameObject>();
 		players = new ArrayList<Player>();
 		netDeltaT = 1000 / G.NETWORK_UPDATERATE;
-		while (gameObjects.size() < 1000)
-			add_go(G.ACTORTYPE_DUMMY, new PVector(G.p.random(0, G.p.width), G.p.random(0, G.p.height)), new PVector(G.p.random(-0.5f, 0.5f), G.p.random(-0.5f, 0.5f)));
+		//while (gameObjects.size() < 1000)
+		//	add_go(G.ACTORTYPE_DUMMY, new PVector(G.p.random(0, G.p.width), G.p.random(0, G.p.height)), new PVector(G.p.random(-0.5f, 0.5f), G.p.random(-0.5f, 0.5f)));
 	}
 
 

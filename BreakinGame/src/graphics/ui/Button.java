@@ -16,7 +16,8 @@ public class Button {
 	int r = 0, g = 255, b = 0;
 	int u = 0, v = 1;
 
-
+	boolean active = true;
+  
 
 	public Button(int _posX, int _posY, int _sizeX, int _sizeY, int _newMenu, String _text, boolean _SFX,
 			PImage _texture) {
@@ -28,6 +29,19 @@ public class Button {
 		text = _text;
 		SFX = _SFX;
 		img = _texture.copy();
+	}
+	
+	public Button(int _posX, int _posY, int _sizeX, int _sizeY, int _newMenu, String _text, boolean _SFX, boolean _active,
+			PImage _texture) {
+		posX = _posX;
+		posY = _posY;
+		sizeX = _sizeX;
+		sizeY = _sizeY;
+		newMenu = _newMenu;
+		text = _text;
+		SFX = _SFX;
+		img = _texture.copy();
+		active = _active;
 	}
 
 

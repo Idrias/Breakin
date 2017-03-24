@@ -48,7 +48,7 @@ public class MainMenu {
 
 	public MainMenu() {
 
-		Button single, multi, settings, credits, quit, startSP, difficulty, backTo1, backTo4, graphics, audioButton, language, trailQuali, bgQuali, animations, vSync, resolution, fullScreen, create, connect, start, join;
+		Button single, multi, settings, credits, quit, startSP, difficulty, backTo1, backTo3, backTo4, graphics, audioButton, language, trailQuali, bgQuali, animations, vSync, resolution, fullScreen, create, connect, start, join;
 		// Create Buttons Position X Position Y Size X Size Y
 		single = new Button(displayWidth / 2, displayHeight / 2 + displayHeight / 12, displayWidth / 3, displayHeight / 15, 2, "SINGLEPLAYER", true, defaultButtonTexture);
 		multi = new Button(displayWidth / 2, displayHeight / 2 + 2 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 3, "MULTIPLAYER", true, defaultButtonTexture);
@@ -74,14 +74,15 @@ public class MainMenu {
 
 		create = new Button(displayWidth / 2, displayHeight / 2 + displayHeight / 12, displayWidth / 3, displayHeight / 15, 31, "CREATE ROOM", true, defaultButtonTexture);
 		connect = new Button(displayWidth / 2, displayHeight / 2 + 2 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 32, "JOIN ROOM", true, defaultButtonTexture);
-		start = new Button(displayWidth / 2, displayHeight / 2 + 2 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 311, "START GAME", true, defaultButtonTexture);
+		start = new Button(67 * displayWidth / 99, displayHeight / 2 + displayHeight / 12, displayWidth / 3, displayHeight / 15, 311, "START GAME", true, defaultButtonTexture);
 		join = new Button(displayWidth / 2, displayHeight / 2 + 2 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 321, "CONNECT", true, defaultButtonTexture);
-
+		backTo3 = new Button(displayWidth / 2, displayHeight / 2 + 5 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 3, "BACK", false, defaultButtonTexture);
+		
 		s1Buttons = new Button[] { single, multi, settings, credits, quit };
 		s2Buttons = new Button[] { startSP, difficulty, backTo1 };
 		s3Buttons = new Button[] { create, connect, backTo1 };
-		s31Buttons = new Button[] { start, backTo1 };
-		s32Buttons = new Button[] { join, backTo1 };
+		s31Buttons = new Button[] { start, backTo3 };
+		s32Buttons = new Button[] { join, backTo3 };
 		s4Buttons = new Button[] { graphics, audioButton, language, backTo1 };
 
 		s41Buttons = new Button[] { trailQuali, bgQuali, animations, vSync, resolution, fullScreen, backTo4 };
@@ -89,7 +90,7 @@ public class MainMenu {
 		fft = new FFT(G.audio.getAudioPlayer("Music:MainMenu").bufferSize(), G.audio.getAudioPlayer("Music:MainMenu").sampleRate());
 
 		G.audio.stopAll();
-		G.audio.loop("Music:MainMenu");
+		//G.audio.loop("Music:MainMenu");
 
 		inputName = new InputBox(displayWidth / 2 - 17 * displayWidth / 48 + displayWidth / 10, displayHeight / 2 - 2 * displayHeight / 48 + displayHeight / 40, displayWidth / 5, displayHeight / 30, false);
 		inputIP = new InputBox(displayWidth / 2 - 17 * displayWidth / 48 + displayWidth / 10, displayHeight / 2 + 2 * displayHeight / 48 + displayHeight / 40, displayWidth / 5, displayHeight / 30, false);
@@ -102,17 +103,10 @@ public class MainMenu {
 		enterIp = new Label(displayWidth / 2 - 17 * displayWidth / 48, displayHeight / 2 + 2 * displayHeight / 48, 44, G.arial, G.p.color(255), "IP Adress:", false, 0, true, G.p.color(0));
 		enterName = new Label(displayWidth / 2 - 17 * displayWidth / 48, displayHeight / 2 - 2 * displayHeight / 48, 44, G.arial, G.p.color(255), "Playername:", false, 0, true, G.p.color(0));
 		players = new Label(displayWidth / 2 - 17 * displayWidth / 48, displayHeight / 2 + 10 * displayHeight / 48, 44, G.arial, G.p.color(255), "Players:", false, 0, true, G.p.color(0));
-		// enterIp = new Label(displayWidth/2, displayHeight/2, 44, Arial, color
-		// (255), "IP Adress:", false, 0, true, color(0));
-
-		// createLabels = new Label[]{enterIp};
-
 	}
 
-
-
 	public void draw() {
-		G.p.background(255);
+		G.p.background(70);
 
 		drawWaves();
 		G.p.tint(255);
@@ -204,11 +198,11 @@ public class MainMenu {
 		G.p.colorMode(PApplet.HSB, fftSize, 100, 100);
 
 		fft.forward(G.audio.getAudioPlayer("Music:MainMenu").right);
-		G.p.background(0x000000); // HEX BLACK (can change)
+		//G.p.background(0x000000); // HEX BLACK (can change)
 
 		for (int i = 0; i < fftSize; i++) {
 			float band = fft.getBand(i);
-			G.p.fill(i, 150 + 100 * (band / 10), 100, 160);
+			G.p.fill(i, 150 + 100 * (band / 10), 100, 255);
 			G.p.arc(0, 0, 300 + band * 3 * (i + 1), 300 + band * 3 * (i + 1), ai * i, ai * (i + 1));
 		}
 		G.p.popMatrix();
