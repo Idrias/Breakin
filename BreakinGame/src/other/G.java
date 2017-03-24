@@ -44,7 +44,7 @@ public class G {
 	final public static int ACTORTYPE_DUMMY = 3;
 	final public static int ID_SERVER = 42;
 
-	enum graphics {
+	public static enum graphics {
 		None, Off, On, Low, Medium, High
 	}
 
