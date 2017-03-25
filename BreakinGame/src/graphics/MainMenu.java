@@ -25,10 +25,10 @@ public class MainMenu {
 	// Screen 4 2: -> Screen4 -> Sound
 	// Screen 4 3: -> Screen4 -> Language
 	int screen = 1;
-	Button[] s1Buttons, s2Buttons, s3Buttons, s31Buttons, s32Buttons, s4Buttons, s41Buttons;
-	Label createRoom, joinRoom, enterIp, enterName, players;
-	InputBox inputName, inputIP;
-	Window s1Window, s41Window, s31Window;
+	Button[] s1Buttons, s2Buttons, s3Buttons, s31Buttons, s32Buttons, s321Buttons, s4Buttons, s41Buttons;
+	Label createRoom, joinRoom, enterIp, enterPort, enterHost, enterPlayer, players, waitingRoom;
+	InputBox inputHost, inputPlayer, inputIP, inputPort;
+	Window s1Window, s41Window, s31Window, s32Window;
 
 	///////////////////////////////////////////////////////////////////////////////////////
 	int bufferSize = 512;
@@ -48,72 +48,93 @@ public class MainMenu {
 
 	public MainMenu() {
 
-		Button single, multi, settings, credits, quit, startSP, difficulty, backTo1, backTo3, backTo4, graphics, audioButton, language, trailQuali, bgQuali, animations, vSync, resolution, fullScreen, create, connect, start, join;
+		Button single, multi, settings, credits, quit, startSP, difficulty, difficultyMP, KI, music, backTo1, backTo3, backTo3_1, backTo4, graphics, audioButton, 
+			   language, trailQuali, bgQuali, animations, vSync, resolution, fullScreen, create, connect, start, join;
 		// Create Buttons Position X Position Y Size X Size Y
-		single = new Button(displayWidth / 2, displayHeight / 2 + displayHeight / 12, displayWidth / 3, displayHeight / 15, 2, "SINGLEPLAYER", true, defaultButtonTexture);
-		multi = new Button(displayWidth / 2, displayHeight / 2 + 2 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 3, "MULTIPLAYER", true, defaultButtonTexture);
-		settings = new Button(displayWidth / 2, displayHeight / 2 + 3 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 4, "SETTINGS", true, defaultButtonTexture);
-		credits = new Button(displayWidth / 2, displayHeight / 2 + 4 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 1, "CREDITS", true, defaultButtonTexture);
-		quit = new Button(displayWidth / 2, displayHeight / 2 + 5 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 6, "QUIT", false, defaultButtonTexture);
+		single =       new Button(displayWidth / 2, displayHeight / 2 +     displayHeight / 12, displayWidth / 3, displayHeight / 15, 2, "SINGLEPLAYER", true, defaultButtonTexture);
+		multi =        new Button(displayWidth / 2, displayHeight / 2 + 2 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 3, "MULTIPLAYER", true, defaultButtonTexture);
+		settings =     new Button(displayWidth / 2, displayHeight / 2 + 3 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 4, "SETTINGS", true, defaultButtonTexture);
+		credits =      new Button(displayWidth / 2, displayHeight / 2 + 4 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 1, "CREDITS", true, defaultButtonTexture);
+		quit =		   new Button(displayWidth / 2, displayHeight / 2 + 5 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 6, "QUIT", false, defaultButtonTexture);
 
-		startSP = new Button(displayWidth / 2, displayHeight / 2 + displayHeight / 12, displayWidth / 3, displayHeight / 15, 2, "START GAME", true, defaultButtonTexture);
-		difficulty = new Button(displayWidth / 2, displayHeight / 2 + 2 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 7, "DIFFICULTY: NORMAL", true, defaultButtonTexture);
-		backTo1 = new Button(displayWidth / 2, displayHeight / 2 + 5 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 1, "BACK", false, defaultButtonTexture);
+		startSP =      new Button(displayWidth / 2, displayHeight / 2 +     displayHeight / 12, displayWidth / 3, displayHeight / 15, 2, "START GAME", true, defaultButtonTexture);
+		difficulty =   new Button(displayWidth / 2, displayHeight / 2 + 2 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 7, "DIFFICULTY: NORMAL", true, defaultButtonTexture);
+		backTo1 =      new Button(displayWidth / 2, displayHeight / 2 + 5 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 1, "BACK", false, defaultButtonTexture);
 
-		graphics = new Button(displayWidth / 2, displayHeight / 2 + displayHeight / 12, displayWidth / 3, displayHeight / 15, 41, "GRAPHICS", true, defaultButtonTexture);
-		audioButton = new Button(displayWidth / 2, displayHeight / 2 + 2 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 4, "SOUND", true, defaultButtonTexture);
-		language = new Button(displayWidth / 2, displayHeight / 2 + 3 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 4, "LANGUAGE", true, defaultButtonTexture);
+		graphics =     new Button(displayWidth / 2, displayHeight / 2 +     displayHeight / 12, displayWidth / 3, displayHeight / 15, 41, "GRAPHICS", true, defaultButtonTexture);
+		audioButton =  new Button(displayWidth / 2, displayHeight / 2 + 2 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 4, "SOUND", true, defaultButtonTexture);
+		language =     new Button(displayWidth / 2, displayHeight / 2 + 3 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 4, "LANGUAGE", true, defaultButtonTexture);
 
-		trailQuali = new Button(32 * displayWidth / 99, displayHeight / 2 + displayHeight / 12, displayWidth / 3, displayHeight / 15, 411, "TRAIL QUALITY: HIGH", true, defaultButtonTexture);
-		bgQuali = new Button(67 * displayWidth / 99, displayHeight / 2 + displayHeight / 12, displayWidth / 3, displayHeight / 15, 41, "BACKGROUND QUALITY: HIGH", true, defaultButtonTexture);
-		animations = new Button(32 * displayWidth / 99, displayHeight / 2 + 2 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 41, "ANIMATIONS: ON", true, defaultButtonTexture);
-		vSync = new Button(67 * displayWidth / 99, displayHeight / 2 + 2 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 41, "VSYNC: ON", true, defaultButtonTexture);
-		resolution = new Button(32 * displayWidth / 99, displayHeight / 2 + 3 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 41, "RESOLUTION: " + displayWidth + "x" + displayHeight, true, defaultButtonTexture);
-		fullScreen = new Button(67 * displayWidth / 99, displayHeight / 2 + 3 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 41, "FULLSCREEN", true, defaultButtonTexture);
-		backTo4 = new Button(displayWidth / 2, displayHeight / 2 + 5 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 4, "BACK", false, defaultButtonTexture);
-
-		create = new Button(displayWidth / 2, displayHeight / 2 + displayHeight / 12, displayWidth / 3, displayHeight / 15, 31, "CREATE ROOM", true, defaultButtonTexture);
-		connect = new Button(displayWidth / 2, displayHeight / 2 + 2 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 32, "JOIN ROOM", true, defaultButtonTexture);
-		start = new Button(67 * displayWidth / 99, displayHeight / 2 + displayHeight / 12, displayWidth / 3, displayHeight / 15, 311, "START GAME", true, defaultButtonTexture);
-		join = new Button(displayWidth / 2, displayHeight / 2 + 2 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 321, "CONNECT", true, defaultButtonTexture);
-		backTo3 = new Button(displayWidth / 2, displayHeight / 2 + 5 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 3, "BACK", false, defaultButtonTexture);
+		trailQuali =   new Button(32 * displayWidth / 99, displayHeight / 2 +     displayHeight / 12, displayWidth / 3, displayHeight / 15, 411, "TRAIL QUALITY: HIGH", true, false, defaultButtonTexture);
+		bgQuali =      new Button(67 * displayWidth / 99, displayHeight / 2 +     displayHeight / 12, displayWidth / 3, displayHeight / 15, 41, "BACKGROUND QUALITY: HIGH", true, false, defaultButtonTexture);
+		animations =   new Button(32 * displayWidth / 99, displayHeight / 2 + 2 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 41, "ANIMATIONS: ON", true, false, defaultButtonTexture);
+		vSync = 	   new Button(67 * displayWidth / 99, displayHeight / 2 + 2 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 41, "VSYNC: ON", true, false, defaultButtonTexture);
+		resolution =   new Button(32 * displayWidth / 99, displayHeight / 2 + 3 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 41, "RESOLUTION: " + displayWidth + "x" + displayHeight, true, false, defaultButtonTexture);
+		fullScreen =   new Button(67 * displayWidth / 99, displayHeight / 2 + 3 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 41, "FULLSCREEN", true, false, defaultButtonTexture);
+		backTo4 = 	   new Button(     displayWidth / 2,  displayHeight / 2 + 5 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 4, "BACK", false, defaultButtonTexture);
 		
-		s1Buttons = new Button[] { single, multi, settings, credits, quit };
-		s2Buttons = new Button[] { startSP, difficulty, backTo1 };
-		s3Buttons = new Button[] { create, connect, backTo1 };
-		s31Buttons = new Button[] { start, backTo3 };
-		s32Buttons = new Button[] { join, backTo3 };
-		s4Buttons = new Button[] { graphics, audioButton, language, backTo1 };
-
+		create = 	   new Button(displayWidth / 2, displayHeight / 2 +     displayHeight / 12, displayWidth / 3, displayHeight / 15, 31, "CREATE ROOM", true, defaultButtonTexture);
+		connect = 	   new Button(displayWidth / 2, displayHeight / 2 + 2 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 32, "JOIN ROOM", true, defaultButtonTexture);
+		join = 		   new Button(displayWidth / 2, displayHeight / 2 + 4 * displayHeight / 12, displayWidth / 4, displayHeight / 15, 321, "CONNECT", true, defaultButtonTexture);
+		backTo3_1 =    new Button(displayWidth / 2, displayHeight / 2 + 5 * displayHeight / 12, displayWidth / 4, displayHeight / 15, 3, "BACK", false, defaultButtonTexture);
+		
+		start =        new Button(72 * displayWidth / 100, displayHeight / 2 - displayHeight / 12, displayWidth / 4, displayHeight / 15, 311, "START GAME", true, defaultButtonTexture);
+		difficultyMP = new Button(72 * displayWidth / 100, displayHeight / 2, 					   displayWidth / 4, displayHeight / 15, 7, "DIFFICULTY: NORMAL", true, defaultButtonTexture);
+		KI =           new Button(72 * displayWidth / 100, displayHeight / 2 + displayHeight / 12, displayWidth / 4, displayHeight / 15, 7, "GRENZWACHE: OFF", true, false, defaultButtonTexture);
+		music =        new Button(72 * displayWidth / 100, displayHeight / 2+2*displayHeight / 12, displayWidth / 4, displayHeight / 15, 7, "Track 1", true, false, defaultButtonTexture);
+		backTo3 =      new Button(72 * displayWidth / 100, displayHeight / 2+5*displayHeight / 12, displayWidth / 4, displayHeight / 15, 3, "BACK", false, defaultButtonTexture);
+		
+		
+		
+		s1Buttons =  new Button[] { single, multi, settings, credits, quit };
+		s2Buttons =  new Button[] { startSP, difficulty, backTo1 };
+		s3Buttons =  new Button[] { create, connect, backTo1 };
+		s31Buttons = new Button[] { start, difficultyMP, KI, music, backTo3 };
+		s32Buttons = new Button[] { join, backTo3_1 };
+		s321Buttons= new Button[] { backTo3_1 };
+		s4Buttons =  new Button[] { graphics, audioButton, language, backTo1 };
 		s41Buttons = new Button[] { trailQuali, bgQuali, animations, vSync, resolution, fullScreen, backTo4 };
+		
 
 		fft = new FFT(G.audio.getAudioPlayer("Music:MainMenu").bufferSize(), G.audio.getAudioPlayer("Music:MainMenu").sampleRate());
-
+		
 		G.audio.stopAll();
 		//G.audio.loop("Music:MainMenu");
-
-		inputName = new InputBox(displayWidth / 2 - 17 * displayWidth / 48 + displayWidth / 10, displayHeight / 2 - 2 * displayHeight / 48 + displayHeight / 40, displayWidth / 5, displayHeight / 30, false);
-		inputIP = new InputBox(displayWidth / 2 - 17 * displayWidth / 48 + displayWidth / 10, displayHeight / 2 + 2 * displayHeight / 48 + displayHeight / 40, displayWidth / 5, displayHeight / 30, false);
-
-		s1Window = new Window(displayWidth / 2, displayHeight / 2 + 3 * displayHeight / 12 + displayHeight / 100, 9 * displayWidth / 24, 11 * displayHeight / 24);
+		
+		inputHost = new InputBox(displayWidth / 2 - 17 * displayWidth / 48 + displayWidth / 10, displayHeight / 2 - 2 * displayHeight / 48 + displayHeight / 40, displayWidth / 5, displayHeight / 30, false);
+		inputPort = new InputBox(displayWidth / 2 - 17 * displayWidth / 48 + displayWidth / 10, displayHeight / 2 + 2 * displayHeight / 48 + displayHeight / 40, displayWidth / 5, displayHeight / 30, false);
+		inputPlayer=new InputBox(displayWidth / 2, displayHeight / 2 + 8  * displayHeight / 48 + displayHeight / 200, displayWidth / 4, displayHeight / 30, false);
+		inputIP   = new InputBox(displayWidth / 2, displayHeight / 2 + 12 * displayHeight / 48 + displayHeight / 200, displayWidth / 4, displayHeight / 30, false);
+		
+		
+		s1Window  = new Window(displayWidth / 2, displayHeight / 2 + 3 * displayHeight / 12 + displayHeight / 100, 9 * displayWidth / 24, 11 * displayHeight / 24);
 		s41Window = new Window(displayWidth / 2, displayHeight / 2 + 3 * displayHeight / 12 + displayHeight / 100, 35 * displayWidth / 48, 11 * displayHeight / 24);
 		s31Window = new Window(displayWidth / 2, displayHeight / 2 + 2 * displayHeight / 12 + displayHeight / 100, 35 * displayWidth / 48, 15 * displayHeight / 24);
-
+		s32Window = new Window(displayWidth / 2, displayHeight / 2 + 3 * displayHeight / 12 + displayHeight / 100, 7 * displayWidth / 24, 11 * displayHeight / 24);
+		
+		//Titles
 		createRoom = new Label(displayWidth / 2 - 17 * displayWidth / 48, displayHeight / 2 - 4 * displayHeight / 48, 50, G.defaultFont, G.p.color(255), "CREATE ROOM", true, 3, false, G.p.color(0));
-		enterIp = new Label(displayWidth / 2 - 17 * displayWidth / 48, displayHeight / 2 + 2 * displayHeight / 48, 44, G.arial, G.p.color(255), "IP Adress:", false, 0, true, G.p.color(0));
-		enterName = new Label(displayWidth / 2 - 17 * displayWidth / 48, displayHeight / 2 - 2 * displayHeight / 48, 44, G.arial, G.p.color(255), "Playername:", false, 0, true, G.p.color(0));
-		players = new Label(displayWidth / 2 - 17 * displayWidth / 48, displayHeight / 2 + 10 * displayHeight / 48, 44, G.arial, G.p.color(255), "Players:", false, 0, true, G.p.color(0));
+		waitingRoom= new Label(displayWidth / 2 - 17 * displayWidth / 48, displayHeight / 2 - 4 * displayHeight / 48, 50, G.defaultFont, G.p.color(255), "WAITING FOR PLAYERS", true, 3, false, G.p.color(0));
+		joinRoom =   new Label(displayWidth / 2 - 6 *  displayWidth / 48, displayHeight / 2 + 4*displayHeight / 48, 50, G.defaultFont, G.p.color(255), "JOIN ROOM", true, 3, false, G.p.color(0));
+		
+		//Subtitles
+		enterHost =  new Label(displayWidth / 2 - 17 * displayWidth / 48, displayHeight / 2 - 2 * displayHeight / 48, 44, G.arial, G.p.color(255), "Playername:", false, 0, true, G.p.color(0));
+		enterPort =  new Label(displayWidth / 2 - 17 * displayWidth / 48, displayHeight / 2 + 2 * displayHeight / 48, 44, G.arial, G.p.color(255), "Port:", false, 0, true, G.p.color(0));
+		enterPlayer= new Label(displayWidth / 2 - 6 *  displayWidth / 48, displayHeight / 2 + 7 * displayHeight / 48, 44, G.arial, G.p.color(255), "Name:", false, 0, true, G.p.color(0));
+		enterIp =    new Label(displayWidth / 2 - 6 *  displayWidth / 48, displayHeight / 2 + 11* displayHeight / 48, 44, G.arial, G.p.color(255), "Name:", false, 0, true, G.p.color(0));
+		
+		players =    new Label(displayWidth / 2 - 17 * displayWidth / 48, displayHeight / 2 + 10 * displayHeight / 48, 44, G.arial, G.p.color(255), "Players:", false, 0, true, G.p.color(0));
 	}
-
+	
 	public void draw() {
 		G.p.background(70);
-
+		
 		drawWaves();
 		G.p.tint(255);
 		G.sprite.dispSprite("Static:BreakinLogo", displayWidth / 2, 3 * displayHeight / 12, (float)(displayWidth / 1.5), (float)displayWidth / 5);
-
+		
 		Button[] renderButtons = new Button[] {};
-
+		
 		switch (screen) {
 		case 1:
 			s1Window.disp();
@@ -129,21 +150,32 @@ public class MainMenu {
 			break;
 		case 31:
 			s31Window.disp();
-			inputName.disp();
-			inputIP.disp();
+			inputHost.disp();
+			inputPort.disp();
 
 			createRoom.disp();
-			enterName.disp();
-			enterIp.disp();
+			enterHost.disp();
+			enterPort.disp();
 			players.disp();
 
 			renderButtons = s31Buttons;
 			break;
 		case 32:
-			s31Window.disp();
-			inputName.disp();
+			s32Window.disp();
+			
+			inputPlayer.disp();
 			inputIP.disp();
+			
+			joinRoom.disp();
+			enterIp.disp();
+			enterPlayer.disp();
 			renderButtons = s32Buttons;
+			break;
+			
+		case 321:
+			s31Window.disp();
+			waitingRoom.disp();
+			renderButtons = s321Buttons;
 			break;
 		case 4:
 			s1Window.disp();
@@ -160,8 +192,6 @@ public class MainMenu {
 		case 6:
 			G.p.exit();
 		}
-
-		// enterIp.disp();
 
 		// Sample Animation
 		// sprite.dispAnimation("Anim:DestructedWallBrick", 150, 100, 100, 50,
