@@ -35,6 +35,5 @@ public class ProcessingMain extends PApplet {
 	public void draw() {
 		G.gameServer.update();
 		G.gameClient.update();
-		G.printFPS();
 	}
 }

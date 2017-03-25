@@ -10,7 +10,7 @@ public class Resources {
 				
 				//SFX
 				"SFX:Game:Bounce", "/Assets/Audio/SFX/game/Bounce.mp3",
-				"SFX:Game:BrickBurst", "/Assegame/MexicanAttack_1.mp3",
+				"SFX:Game:BrickBurst", "/Assets/game/MexicanAttack_1.mp3",
 				"SFX:Game:MexicanAttack2", "/Assets/Audio/SFX/gts/Audio/SFX/game/BrickBurst.mp3",
 				"SFX:Game:MexicanAttack1","/Assets/Audio/SFX/ame/MexicanAttack_2.mp3", 
 				"SFX:Game:MexicanAttack3", "/Assets/Audio/SFX/game/MexicanAttack_3.mp3", 

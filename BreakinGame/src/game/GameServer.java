@@ -17,6 +17,10 @@ public class GameServer {
 	NetServer netServer;
 	ArrayList<GameObject> gameObjects;
 	ArrayList<Player> players;
+
+	final int PHASE_INACTIVE = 1, PHASE_LOBBY = 3, PHASE_INGAME = 4;
+	
+	int phase = PHASE_INACTIVE;
 	int lastNetUpdate = 0;
 	float netDeltaT;
 
@@ -27,13 +31,28 @@ public class GameServer {
 		gameObjects = new ArrayList<GameObject>();
 		players = new ArrayList<Player>();
 		netDeltaT = 1000 / G.NETWORK_UPDATERATE;
-		//while (gameObjects.size() < 1000)
-		//	add_go(G.ACTORTYPE_DUMMY, new PVector(G.p.random(0, G.p.width), G.p.random(0, G.p.height)), new PVector(G.p.random(-0.5f, 0.5f), G.p.random(-0.5f, 0.5f)));
 	}
 
 
 
 	public void update() {
+		switch (phase) {
+		
+		case PHASE_INACTIVE:
+			return;
+			
+		case PHASE_LOBBY:
+			return;
+		
+
+		}
+
+	}
+
+
+
+	private void updateACTIVE() {
+		// TODO private void vs void?
 		////////////////////////////////////////////////
 		// Handle arriving and departing clients ///////
 		for (Client c : G.newClients) {
@@ -66,9 +85,11 @@ public class GameServer {
 		// Update the gameObjects
 		for (GameObject go : gameObjects)
 			go.update();
-		
-		if(gameObjects.size() > 0)
-		gameObjects.remove((int)G.p.random(gameObjects.size())); // TESTING DEBUG REMOVE TODO 
+
+		if (gameObjects.size() > 0) gameObjects.remove((int) G.p.random(gameObjects.size())); // TESTING
+																								// DEBUG
+																								// REMOVE
+																								// TODO
 		////////////////////////////////////////////////
 		////////////////////////////////////////////////
 		// Send update to clients
@@ -77,6 +98,7 @@ public class GameServer {
 			lastNetUpdate = G.p.millis();
 		}
 		////////////////////////////////////////////////
+
 	}
 
 
@@ -99,5 +121,18 @@ public class GameServer {
 		for (GameObject go : gameObjects)
 			nes.add(go.ne());
 		return nes;
+	}
+	
+	
+
+	public void activate(int port) {
+		netServer = new NetServer(port, G.p);
+		gameObjects.clear();
+		players.clear();
+		phase = PHASE_LOBBY;
+	}
+	
+	public void deactivate() {
+		phase = PHASE_INACTIVE;
 	}
 }
