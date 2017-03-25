@@ -47,6 +47,10 @@ public class G {
 	public static enum graphics {
 		None, Off, On, Low, Medium, High
 	}
+	
+	public enum difficulty {
+		easy, normal, hard
+	}
 
 	// Settings
 	final public static float NETWORK_UPDATERATE = 20; // How often per second

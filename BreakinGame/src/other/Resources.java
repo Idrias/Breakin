@@ -20,6 +20,7 @@ public class Resources {
 				"SFX:Menu:Back", "/Assets/Audio/SFX/menu/back.wav", 
 				"SFX:Menu:Hover", "/Assets/Audio/SFX/menu/hover.wav",
 				"SFX:Menu:Next", "/Assets/Audio/SFX/menu/next.wav",
+				"SFX:Menu:Buzzer", "/Assets/Audio/SFX/menu/buzzer.wav",
 				
 				//Music
 				"Music:Trump", "/Assets/Audio/Music/Trump.mp3", 

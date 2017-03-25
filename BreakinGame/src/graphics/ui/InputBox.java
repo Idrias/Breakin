@@ -40,7 +40,7 @@ public class InputBox {
 		G.p.endShape();
 
 		G.p.textAlign(PApplet.LEFT);
-		// textFont(Arial);
+		G.p.textFont(G.arial);
 		G.p.fill(30, 30, 30);
 		G.p.text(currentInput, posX - sizeX / 2 + 10, posY + 10);
 
