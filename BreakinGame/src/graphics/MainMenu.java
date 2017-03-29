@@ -56,15 +56,15 @@ public class MainMenu {
 		settings =     new Button(displayWidth / 2, displayHeight / 2 + 3 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 4, "SETTINGS", true, defaultButtonTexture);
 		credits =      new Button(displayWidth / 2, displayHeight / 2 + 4 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 1, "CREDITS", true, defaultButtonTexture);
 		quit =		   new Button(displayWidth / 2, displayHeight / 2 + 5 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 6, "QUIT", false, defaultButtonTexture);
-
+		
 		startSP =      new Button(displayWidth / 2, displayHeight / 2 +     displayHeight / 12, displayWidth / 3, displayHeight / 15, 2, "START GAME", true, defaultButtonTexture);
 		difficulty =   new Button(displayWidth / 2, displayHeight / 2 + 2 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 7, "DIFFICULTY: NORMAL", true, defaultButtonTexture);
 		backTo1 =      new Button(displayWidth / 2, displayHeight / 2 + 5 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 1, "BACK", false, defaultButtonTexture);
-
+		
 		graphics =     new Button(displayWidth / 2, displayHeight / 2 +     displayHeight / 12, displayWidth / 3, displayHeight / 15, 41, "GRAPHICS", true, defaultButtonTexture);
 		audioButton =  new Button(displayWidth / 2, displayHeight / 2 + 2 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 4, "SOUND", true, defaultButtonTexture);
 		language =     new Button(displayWidth / 2, displayHeight / 2 + 3 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 4, "LANGUAGE", true, defaultButtonTexture);
-
+		
 		trailQuali =   new Button(32 * displayWidth / 99, displayHeight / 2 +     displayHeight / 12, displayWidth / 3, displayHeight / 15, 411, "TRAIL QUALITY: HIGH", true, false, defaultButtonTexture);
 		bgQuali =      new Button(67 * displayWidth / 99, displayHeight / 2 +     displayHeight / 12, displayWidth / 3, displayHeight / 15, 41, "BACKGROUND QUALITY: HIGH", true, false, defaultButtonTexture);
 		animations =   new Button(32 * displayWidth / 99, displayHeight / 2 + 2 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 41, "ANIMATIONS: ON", true, false, defaultButtonTexture);
@@ -121,7 +121,7 @@ public class MainMenu {
 		enterHost =  new Label(displayWidth / 2 - 17 * displayWidth / 48, displayHeight / 2 - 2 * displayHeight / 48, 44, G.arial, G.p.color(255), "Playername:", false, 0, true, G.p.color(0));
 		enterPort =  new Label(displayWidth / 2 - 17 * displayWidth / 48, displayHeight / 2 + 2 * displayHeight / 48, 44, G.arial, G.p.color(255), "Port:", false, 0, true, G.p.color(0));
 		enterPlayer= new Label(displayWidth / 2 - 6 *  displayWidth / 48, displayHeight / 2 + 7 * displayHeight / 48, 44, G.arial, G.p.color(255), "Name:", false, 0, true, G.p.color(0));
-		enterIp =    new Label(displayWidth / 2 - 6 *  displayWidth / 48, displayHeight / 2 + 11* displayHeight / 48, 44, G.arial, G.p.color(255), "Name:", false, 0, true, G.p.color(0));
+		enterIp =    new Label(displayWidth / 2 - 6 *  displayWidth / 48, displayHeight / 2 + 11* displayHeight / 48, 44, G.arial, G.p.color(255), "IP Adress:", false, 0, true, G.p.color(0));
 		
 		players =    new Label(displayWidth / 2 - 17 * displayWidth / 48, displayHeight / 2 + 10 * displayHeight / 48, 44, G.arial, G.p.color(255), "Players:", false, 0, true, G.p.color(0));
 	}
