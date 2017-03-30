@@ -110,7 +110,7 @@ public class NetClient extends Client {
 	public void pushSendingList() {
 		if (!active()) return;
 		NetworkContainer nc = new NetworkContainer();
-		nc.set_commands(sendingList);
+		//TODO nc.set_commands(sendingList);
 		write(nc.compress());
 		write(G.NET_SPLITSTRING);
 		sendingList = new HashMap<String, int[]>();

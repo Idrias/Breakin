@@ -8,8 +8,9 @@ import processing.core.PApplet;
 public class InputBox {
 
 	int posX, posY, sizeX, sizeY;
-	String lastInput = new String();
-	String currentInput = new String();
+	String lastInput = new String(); // TODO remove? unused?
+	String currentInput = new String(); // can also be = ""
+	String allowedSpecialKeys = ":.$€";
 	char c;
 	boolean canType, numOnly;
 
@@ -61,8 +62,11 @@ public class InputBox {
 				if (key == PApplet.BACKSPACE && currentInput.length() > 0) {
 					currentInput = currentInput.substring(0, currentInput.length() - 1);
 				}
+
 				else {
-					currentInput = currentInput + key;
+					if (Character.isLetterOrDigit(key) || allowedSpecialKeys.contains("" + key)) {
+						if (numOnly && Character.isDigit(key) || !numOnly) currentInput = currentInput + key;
+					}
 				}
 			}
 		}
@@ -86,5 +90,11 @@ public class InputBox {
 		else {
 			return false;
 		}
+	}
+
+
+
+	public String get_content() {
+		return currentInput;
 	}
 }

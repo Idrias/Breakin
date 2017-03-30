@@ -2,6 +2,8 @@ package main;
 
 import other.G;
 import processing.core.PApplet;
+import processing.net.Client;
+import processing.net.Server;
 
 
 
@@ -35,5 +37,17 @@ public class ProcessingMain extends PApplet {
 	public void draw() {
 		G.gameServer.update();
 		G.gameClient.update();
+	}
+
+
+
+	public void serverEvent(Server s, Client c) {
+		G.newClients.add(c);
+	}
+
+
+
+	public void disconnectEvent(Client c) {
+		G.disconnectedClients.add(c);
 	}
 }

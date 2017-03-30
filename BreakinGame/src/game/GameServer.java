@@ -19,7 +19,7 @@ public class GameServer {
 	ArrayList<Player> players;
 
 	final int PHASE_INACTIVE = 1, PHASE_LOBBY = 3, PHASE_INGAME = 4;
-	
+
 	int phase = PHASE_INACTIVE;
 	int lastNetUpdate = 0;
 	float netDeltaT;
@@ -37,22 +37,25 @@ public class GameServer {
 
 	public void update() {
 		switch (phase) {
-		
+
 		case PHASE_INACTIVE:
 			return;
-			
-		case PHASE_LOBBY:
-			return;
-		
 
+		case PHASE_LOBBY:
+			break;
+
+		case PHASE_INGAME:
+			break;
 		}
 
+		updateACTIVE();
 	}
 
 
 
 	private void updateACTIVE() {
 		// TODO private void vs void?
+
 		////////////////////////////////////////////////
 		// Handle arriving and departing clients ///////
 		for (Client c : G.newClients) {
@@ -62,7 +65,9 @@ public class GameServer {
 			netServer.pushNetworkContainer(infoContainer);
 			netServer.addNewClient(c);
 			players.add(new Player(c, clientID));
+			G.println("added new client!");
 		}
+
 		for (Client c : G.disconnectedClients) {
 			netServer.removeDisconnectedClient(c);
 			for (int i = 0; i < players.size(); i++) {
@@ -72,25 +77,27 @@ public class GameServer {
 				}
 			}
 		}
+
 		G.newClients.clear();
 		G.disconnectedClients.clear();
 		////////////////////////////////////////////////
+
+
 		////////////////////////////////////////////////
 		// Receive messages from clients
 		for (NetworkContainer nc : netServer.receive()) {
 			G.println(nc.toString());
 		}
 		////////////////////////////////////////////////
+
+
 		////////////////////////////////////////////////
 		// Update the gameObjects
 		for (GameObject go : gameObjects)
 			go.update();
-
-		if (gameObjects.size() > 0) gameObjects.remove((int) G.p.random(gameObjects.size())); // TESTING
-																								// DEBUG
-																								// REMOVE
-																								// TODO
 		////////////////////////////////////////////////
+
+
 		////////////////////////////////////////////////
 		// Send update to clients
 		if (G.p.millis() - lastNetUpdate >= netDeltaT) {
@@ -119,19 +126,22 @@ public class GameServer {
 	ArrayList<NetworkEntity> getNetworkEntities() {
 		ArrayList<NetworkEntity> nes = new ArrayList<NetworkEntity>();
 		for (GameObject go : gameObjects)
-			nes.add(go.ne());
+			nes.add(go.get_ne());
 		return nes;
 	}
-	
-	
+
+
 
 	public void activate(int port) {
+
 		netServer = new NetServer(port, G.p);
 		gameObjects.clear();
 		players.clear();
 		phase = PHASE_LOBBY;
 	}
-	
+
+
+
 	public void deactivate() {
 		phase = PHASE_INACTIVE;
 	}

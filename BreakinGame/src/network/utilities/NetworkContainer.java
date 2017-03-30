@@ -21,7 +21,7 @@ public class NetworkContainer implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	public ArrayList<NetworkEntity> nes = null; // TODO not public
-	HashMap<String, int[]> commands = null;
+	HashMap<String, String[]> commands = null;
 
 	// Usually we want to send NetworkCotnainers to all clients.
 	// If this is set only a specific client is the destination!
@@ -32,7 +32,7 @@ public class NetworkContainer implements Serializable {
 
 	public NetworkContainer() {
 		nes = new ArrayList<NetworkEntity>();
-		commands = new HashMap<String, int[]>();
+		commands = new HashMap<String, String[]>();
 	}
 
 
@@ -43,7 +43,7 @@ public class NetworkContainer implements Serializable {
 
 
 
-	public void set_commands(HashMap<String, int[]> commands) {
+	public void set_commands(HashMap<String, String[]> commands) {
 		this.commands = commands;
 	}
 
@@ -62,7 +62,7 @@ public class NetworkContainer implements Serializable {
 
 
 
-	public HashMap<String, int[]> get_commands() {
+	public HashMap<String, String[]> get_commands() {
 		return commands;
 	}
 
