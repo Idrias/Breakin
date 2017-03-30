@@ -47,7 +47,6 @@ public class NetClient extends Client {
 		
 		
 		if (available() > 0) {
-			G.println("HELLO");
 			DecompressResult dr = Helper.getNetworkContainerFromByteArray(messageBuffer, readBytes());
 			messageBuffer = dr.get_messageBuffer();
 
@@ -102,7 +101,6 @@ public class NetClient extends Client {
 			}
 
 			if(containers.size()>0) latestContainer = containers.get(containers.size() - 1);
-			G.println(""+latestContainer.get_commands().size());
 			return containers;
 		}
 		return new ArrayList<NetworkContainer>();

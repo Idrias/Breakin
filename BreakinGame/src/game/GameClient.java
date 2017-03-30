@@ -18,10 +18,14 @@ public class GameClient {
 	NetClient netClient;
 	MainMenu mainmenu;
 	ArrayList<GameObject> gos;
+
 	final int PHASE_MAINMENU = 3;
 	final int PHASE_PREPAREMENU = 2;
 	int gamePhase = PHASE_PREPAREMENU;
 
+
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 	public GameClient(String ip, int port) {
@@ -39,6 +43,9 @@ public class GameClient {
 
 
 
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	
 	public void update() {
 
 		if (netClient != null && netClient.active()) {
@@ -48,6 +55,7 @@ public class GameClient {
 			handle_all();
 			netClient.pushPendingCommands();
 		}
+		else if(netClient != null && !netClient.active()) disconnect();
 
 
 		switch (gamePhase) {
@@ -62,11 +70,6 @@ public class GameClient {
 			break;
 		}
 
-
-		// fetch_nes();
-		// handle_gos();
-		// netClient.addToSendingList("Hi", new int[] { 1, 2, 3, 4 });
-		// netClient.pushSendingList();
 	}
 
 
@@ -79,9 +82,9 @@ public class GameClient {
 	}
 
 
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	////////////////////////////////////////////////////////////////////////////////////
-
+	
 	void handle_all() {
 		NetworkContainer nc = netClient.getLatestContainer();
 		if (nc == null) return;
@@ -145,24 +148,22 @@ public class GameClient {
 			switch (commandType) {
 			case NetworkCommand.PLAYERINFO:
 				G.playerNames = stringParams;
-				G.println("" + stringParams);
 				break;
 			}
 		}
 
 	}
 
-	////////////////////////////////////////////////////////////////////////////////////
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
+	
 	public void connect(String name, String ip) {
 
 		// Find a creative name for the player if they didn't choose one
 		if (name == null || name.equals("")) name = "" + Integer.toHexString(G.p.millis());
 
 		String[] addressparts = ip.split(":");
-		G.println("addressparts: " + addressparts);
 		// TODO NOT SAFE FROM EXCEPTIONS
 
 		try {
@@ -182,13 +183,8 @@ public class GameClient {
 			return;
 		}
 
-		G.println("Connect finished.");
-		G.println("Playername: " + name);
-		for (int i = 0; i < addressparts.length; i++) {
-			G.println("Addresspart: " + addressparts[i]);
-		}
-		
-		if(netClient != null && netClient.active()) {
+
+		if (netClient != null && netClient.active()) {
 			ArrayList<String> stringParams = new ArrayList<String>();
 			stringParams.add(name);
 			netClient.addToPendingCommands(new NetworkCommand(NetworkCommand.MYNAMEIS, stringParams, null));
@@ -199,7 +195,8 @@ public class GameClient {
 
 
 	public void disconnect() {
-		netClient.stop();
+		if(netClient != null && netClient.active()) netClient.stop();
+		netClient = null;
 		gos.clear();
 		gamePhase = PHASE_PREPAREMENU;
 	}

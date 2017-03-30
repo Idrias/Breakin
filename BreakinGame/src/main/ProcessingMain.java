@@ -50,4 +50,16 @@ public class ProcessingMain extends PApplet {
 	public void disconnectEvent(Client c) {
 		G.disconnectedClients.add(c);
 	}
+
+
+
+	public void keyPressed() {
+		switch (G.p.key) {
+		case '#':
+			G.gameServer.deactivate();
+			G.gameClient.disconnect();
+			G.setup(this);
+		}
+
+	}
 }

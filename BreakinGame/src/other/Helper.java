@@ -2,6 +2,8 @@ package other;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import game.GameClient;
+import game.GameServer;
 import game.Player;
 import network.utilities.DecompressResult;
 import network.utilities.NetworkContainer;
@@ -94,4 +96,5 @@ public class Helper {
 
 		return new DecompressResult(returnedContainers, messageBuffer);
 	}
+
 }

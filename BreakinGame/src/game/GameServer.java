@@ -29,9 +29,12 @@ public class GameServer {
 
 
 
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 	public GameServer() {
-		//TODO FREE PORT ON SERVER STOP
-		//netServer = new NetServer(G.p);
+		// TODO FREE PORT ON SERVER STOP
+		// netServer = new NetServer(G.p);
 		gameObjects = new ArrayList<GameObject>();
 		players = new ArrayList<Player>();
 		pendingCommands = new ArrayList<NetworkCommand>();
@@ -39,6 +42,8 @@ public class GameServer {
 	}
 
 
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public void update() {
 		switch (phase) {
@@ -57,6 +62,7 @@ public class GameServer {
 	}
 
 
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	private void updateACTIVE() {
 		// TODO private void vs void?
@@ -93,15 +99,15 @@ public class GameServer {
 		for (NetworkContainer container : netServer.receive()) {
 			int senderID = container.get_senderID();
 			// Check commands
-			for(NetworkCommand nc : container.get_commands()) {
+			for (NetworkCommand nc : container.get_commands()) {
 				int commandType = nc.get_commandType();
 				ArrayList<String> stringParams = nc.get_stringParams();
 				ArrayList<Float> floatParams = nc.get_floatParams();
-				
-				switch(commandType) {
+
+				switch (commandType) {
 				case NetworkCommand.MYNAMEIS:
 					int index = Helper.getPlayerIndexByID(players, senderID);
-					if(index != -1 && stringParams.size() == 1) players.get(index).set_name(stringParams.get(0));
+					if (index != -1 && stringParams.size() == 1) players.get(index).set_name(stringParams.get(0));
 					break;
 				}
 			}
@@ -130,6 +136,7 @@ public class GameServer {
 	}
 
 
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void formCommands() {
 		NetworkCommand nc = new NetworkCommand(NetworkCommand.PLAYERINFO, getPlayerNames(), null);
@@ -137,6 +144,7 @@ public class GameServer {
 	}
 
 
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void add_go(int type, PVector pos, PVector speed) {
 		switch (type) {
@@ -149,6 +157,8 @@ public class GameServer {
 		}
 	}
 
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 	ArrayList<NetworkEntity> getNetworkEntities() {
@@ -175,6 +185,9 @@ public class GameServer {
 
 
 
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 	public void activate(int port) {
 		netServer = new NetServer(port, G.p);
 		gameObjects.clear();
@@ -186,7 +199,7 @@ public class GameServer {
 
 
 	public void deactivate() {
-		netServer.stop();
+		if(netServer != null && netServer.active()) netServer.stop();
 		phase = PHASE_INACTIVE;
 	}
 }
