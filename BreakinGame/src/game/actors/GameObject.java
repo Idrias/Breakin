@@ -60,7 +60,7 @@ public abstract class GameObject {
 
 
 
-	public NetworkEntity get_networkEntity() {
+	public NetworkEntity get_ne() {
 		return ne;
 	}
 
@@ -74,12 +74,6 @@ public abstract class GameObject {
 
 	public PVector get_pos() {
 		return ne.get_pos() == null ? new PVector(0, 0) : ne.get_pos();
-	}
-
-
-
-	public NetworkEntity ne() {
-		return ne;
 	}
 
 

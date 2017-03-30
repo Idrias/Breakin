@@ -44,7 +44,7 @@ public class G {
 	final public static int ACTORTYPE_DUMMY = 3;
 	final public static int ID_SERVER = 42;
 
-	enum graphics {
+	public static enum graphics {
 		None, Off, On, Low, Medium, High
 	}
 	
@@ -66,7 +66,7 @@ public class G {
 
 
 	static public void setup(PApplet p) {
-
+		//
 		// setup reference to PApplet
 		G.p = p;
 
@@ -78,7 +78,7 @@ public class G {
 		// load many more resources
 		sprite = new SpriteManager();
 		load_sprites();
-
+		
 		audio = new AudioManager();
 		load_audio();
 
