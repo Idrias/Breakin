@@ -211,7 +211,7 @@ public class MainMenu {
 		}
 
 		if (screen != lastScreen) {
-			// we changed screens!
+			// we changed screens! //
 			// TODO open server etc
 
 			if (lastScreen == SCREEN_JOINROOM && screen == SCREEN_PLAYERLOBBY) {
