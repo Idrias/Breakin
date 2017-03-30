@@ -2,6 +2,7 @@ package other;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import game.Player;
 import network.utilities.DecompressResult;
 import network.utilities.NetworkContainer;
 import network.utilities.NetworkEntity;
@@ -26,6 +27,19 @@ public class Helper {
 			else
 				index++;
 		return -1;
+	}
+
+
+
+	public static int getPlayerIndexByID(ArrayList<Player> players, int id) {
+		int index = 0;
+		for (Player p : players)
+			if (p.get_playerID() == id)
+				return index;
+			else
+				index++;
+		return -1;
+
 	}
 
 

@@ -23,13 +23,15 @@ public class G {
 	public static PApplet p;
 
 	/// Important Objects
-	//public static Helper h;
+	// public static Helper h;
 	public static GameServer gameServer;
 	public static GameClient gameClient;
 	public static AudioManager audio;
 	public static SpriteManager sprite;
 
 	// Some more global variables
+	public static ArrayList<String> playerNames;
+
 	// Resources
 	public static PFont defaultFont;
 	public static PFont arial;
@@ -47,7 +49,7 @@ public class G {
 	public static enum graphics {
 		None, Off, On, Low, Medium, High
 	}
-	
+
 	public enum difficulty {
 		easy, normal, hard
 	}
@@ -70,6 +72,9 @@ public class G {
 		// setup reference to PApplet
 		G.p = p;
 
+
+		playerNames = new ArrayList<String>();
+
 		// load some resources
 		arial = p.createFont("", 32);
 		defaultFont = p.createFont("/Assets/Graphics/Fonts/komikax.ttf", p.height / 27);
@@ -78,16 +83,17 @@ public class G {
 		// load many more resources
 		sprite = new SpriteManager();
 		load_sprites();
-		
+
 		audio = new AudioManager();
 		load_audio();
 
 		// instantiate some objects we need
-		//h = new Helper();
+		// h = new Helper();
 		newClients = new ArrayList<Client>();
 		disconnectedClients = new ArrayList<Client>();
 		gameServer = new GameServer();
 		gameClient = new GameClient();
+
 	}
 
 

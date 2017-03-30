@@ -228,12 +228,11 @@ public class MainMenu {
 					port = Integer.parseInt(inputIP.get_content());
 				}
 				catch (NumberFormatException e) {
-					port = 0;
+					port = 4242;
 				}
 				
 				G.gameServer.activate(port);
-				G.p.delay(100);
-				G.gameClient.connect(inputPlayer.get_content(), "");
+				G.gameClient.connect(inputPlayer.get_content(), "127.0.0.1:"+port);
 			}
 
 		}

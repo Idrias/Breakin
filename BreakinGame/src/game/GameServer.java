@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import game.actors.Dummy;
 import game.actors.GameObject;
 import network.NetServer;
+import network.utilities.NetworkCommand;
 import network.utilities.NetworkContainer;
 import network.utilities.NetworkEntity;
 import other.G;
+import other.Helper;
 import processing.core.PVector;
 import processing.net.Client;
 
@@ -17,6 +19,7 @@ public class GameServer {
 	NetServer netServer;
 	ArrayList<GameObject> gameObjects;
 	ArrayList<Player> players;
+	ArrayList<NetworkCommand> pendingCommands;
 
 	final int PHASE_INACTIVE = 1, PHASE_LOBBY = 3, PHASE_INGAME = 4;
 
@@ -27,9 +30,11 @@ public class GameServer {
 
 
 	public GameServer() {
-		netServer = new NetServer(G.p);
+		//TODO FREE PORT ON SERVER STOP
+		//netServer = new NetServer(G.p);
 		gameObjects = new ArrayList<GameObject>();
 		players = new ArrayList<Player>();
+		pendingCommands = new ArrayList<NetworkCommand>();
 		netDeltaT = 1000 / G.NETWORK_UPDATERATE;
 	}
 
@@ -85,8 +90,21 @@ public class GameServer {
 
 		////////////////////////////////////////////////
 		// Receive messages from clients
-		for (NetworkContainer nc : netServer.receive()) {
-			G.println(nc.toString());
+		for (NetworkContainer container : netServer.receive()) {
+			int senderID = container.get_senderID();
+			// Check commands
+			for(NetworkCommand nc : container.get_commands()) {
+				int commandType = nc.get_commandType();
+				ArrayList<String> stringParams = nc.get_stringParams();
+				ArrayList<Float> floatParams = nc.get_floatParams();
+				
+				switch(commandType) {
+				case NetworkCommand.MYNAMEIS:
+					int index = Helper.getPlayerIndexByID(players, senderID);
+					if(index != -1 && stringParams.size() == 1) players.get(index).set_name(stringParams.get(0));
+					break;
+				}
+			}
 		}
 		////////////////////////////////////////////////
 
@@ -101,11 +119,21 @@ public class GameServer {
 		////////////////////////////////////////////////
 		// Send update to clients
 		if (G.p.millis() - lastNetUpdate >= netDeltaT) {
-			netServer.pushEntities(getNetworkEntities());
+			formCommands();
+			netServer.pushInfo(getNetworkEntities(), getNetworkCommands());
+			// TODO direct access to netCommands
 			lastNetUpdate = G.p.millis();
+			pendingCommands.clear();
 		}
 		////////////////////////////////////////////////
 
+	}
+
+
+
+	void formCommands() {
+		NetworkCommand nc = new NetworkCommand(NetworkCommand.PLAYERINFO, getPlayerNames(), null);
+		pendingCommands.add(nc);
 	}
 
 
@@ -132,17 +160,33 @@ public class GameServer {
 
 
 
-	public void activate(int port) {
+	ArrayList<NetworkCommand> getNetworkCommands() {
+		return pendingCommands;
+	}
 
+
+
+	ArrayList<String> getPlayerNames() {
+		ArrayList<String> pnames = new ArrayList<String>();
+		for (Player p : players)
+			pnames.add(p.name);
+		return pnames;
+	}
+
+
+
+	public void activate(int port) {
 		netServer = new NetServer(port, G.p);
 		gameObjects.clear();
 		players.clear();
+		pendingCommands.clear();
 		phase = PHASE_LOBBY;
 	}
 
 
 
 	public void deactivate() {
+		netServer.stop();
 		phase = PHASE_INACTIVE;
 	}
 }
