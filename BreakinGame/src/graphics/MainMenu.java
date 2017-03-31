@@ -65,7 +65,7 @@ public class MainMenu {
 		credits = new Button(displayWidth / 2, displayHeight / 2 + 4 * displayHeight / 12, displayWidth / 3, displayHeight / 15, SCREEN_TITLESCREEN, "CREDITS", true, defaultButtonTexture);
 		quit = new Button(displayWidth / 2, displayHeight / 2 + 5 * displayHeight / 12, displayWidth / 3, displayHeight / 15, SCREEN_QUIT, "QUIT", false, defaultButtonTexture);
 
-		startSP = new Button(displayWidth / 2, displayHeight / 2 + displayHeight / 12, displayWidth / 3, displayHeight / 15, SCREEN_SINGLEPLAYER, "START GAME", true, defaultButtonTexture);
+		startSP = new Button(displayWidth / 2, displayHeight / 2 + displayHeight / 12, displayWidth / 3, displayHeight / 15, SCREEN_START_SINGLEPLAYER, "START GAME", true, defaultButtonTexture);
 		difficulty = new Button(displayWidth / 2, displayHeight / 2 + 2 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 7, "DIFFICULTY: NORMAL", true, defaultButtonTexture);
 		backTo1 = new Button(displayWidth / 2, displayHeight / 2 + 5 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 1, "BACK", false, defaultButtonTexture);
 
@@ -241,7 +241,9 @@ public class MainMenu {
 
 			
 			else if(lastScreen == SCREEN_SINGLEPLAYER && screen == SCREEN_START_SINGLEPLAYER) {
-				G.println("Hi");
+				G.gameServer.activate(4242);
+				G.gameClient.connect("Player", "");
+				G.gameClient.enterGame();
 			}
 		}
 
