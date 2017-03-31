@@ -21,6 +21,7 @@ public class GameClient {
 
 	final int PHASE_MAINMENU = 3;
 	final int PHASE_PREPAREMENU = 2;
+	final int PHASE_INGAME = 4;
 	int gamePhase = PHASE_PREPAREMENU;
 
 
@@ -68,8 +69,18 @@ public class GameClient {
 		case PHASE_MAINMENU:
 			mainmenu.draw();
 			break;
+			
+		case PHASE_INGAME:
+			update_INGAME();
+			break;
 		}
 
+	}
+
+
+
+	void update_INGAME() {
+		G.p.background(0xe8b425);
 	}
 
 
@@ -158,6 +169,13 @@ public class GameClient {
 
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public void enterGame() {
+		G.audio.stopAll();
+		mainmenu = null;
+		gamePhase = PHASE_INGAME;
+	}
+
 
 
 	public void connect(String name, String ip) {
