@@ -15,6 +15,7 @@ public class MainMenu {
 
 	int SCREEN_TITLESCREEN = 1; // Screen 1: Title screen
 	int SCREEN_SINGLEPLAYER = 2; // Screen 2: -> Singleplayer
+	int START_SINGLEPLAYER = 21; //SCREEN 21; START SINGLEPLAYER
 	int SCREEN_MULTIPLAYER = 3; // Screen 3: -> Multiplayer
 
 	int SCREEN_CREATEROOM = 31; // Screen 3 1: Create room
@@ -148,6 +149,8 @@ public class MainMenu {
 		case 2:
 			s1Window.disp();
 			renderButtons = s2Buttons;
+			break;
+		case 21:
 			break;
 		case 3:
 			s1Window.disp();
