@@ -58,8 +58,8 @@ public class ProcessingMain extends PApplet {
 		case '#':
 			G.gameServer.deactivate();
 			G.gameClient.disconnect();
+			G.audio.stopAll();
 			G.setup(this);
 		}
-
 	}
 }

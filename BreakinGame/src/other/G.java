@@ -31,6 +31,7 @@ public class G {
 
 	// Some more global variables
 	public static ArrayList<String> playerNames;
+	public static float  c_rightBoundary = 100;
 
 	// Resources
 	public static PFont defaultFont;
@@ -72,18 +73,20 @@ public class G {
 		// setup reference to PApplet
 		G.p = p;
 
-
+		// Global Variables
 		playerNames = new ArrayList<String>();
-
+		
 		// load some resources
 		arial = p.createFont("", 32);
 		defaultFont = p.createFont("/Assets/Graphics/Fonts/komikax.ttf", p.height / 27);
 		defaultButtonTexture = p.loadImage("/Assets/Graphics/Static_Sprites/Button.png");
 
 		// load many more resources
+		sprite=null;
 		sprite = new SpriteManager();
 		load_sprites();
-
+		
+		audio=null;
 		audio = new AudioManager();
 		load_audio();
 
