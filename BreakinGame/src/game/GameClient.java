@@ -45,7 +45,7 @@ public class GameClient {
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	
+
 	public void update() {
 
 		if (netClient != null && netClient.active()) {
@@ -55,7 +55,7 @@ public class GameClient {
 			handle_all();
 			netClient.pushPendingCommands();
 		}
-		else if(netClient != null && !netClient.active()) disconnect();
+		else if (netClient != null && !netClient.active()) disconnect();
 
 
 		switch (gamePhase) {
@@ -82,9 +82,10 @@ public class GameClient {
 	}
 
 
+
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	
+
 	void handle_all() {
 		NetworkContainer nc = netClient.getLatestContainer();
 		if (nc == null) return;
@@ -154,10 +155,11 @@ public class GameClient {
 
 	}
 
-	
+
+
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	
+
 	public void connect(String name, String ip) {
 
 		// Find a creative name for the player if they didn't choose one
@@ -195,7 +197,7 @@ public class GameClient {
 
 
 	public void disconnect() {
-		if(netClient != null && netClient.active()) netClient.stop();
+		if (netClient != null && netClient.active()) netClient.stop();
 		netClient = null;
 		gos.clear();
 		gamePhase = PHASE_PREPAREMENU;

@@ -21,7 +21,7 @@ public class NetworkEntity implements Serializable {
 	private int uniqueID; // The unique ID for networking purposes
 	PVector pos;
 	PVector speed;
-	HashMap<String, Integer> values;
+	HashMap<String, Float> values;
 
 
 
@@ -31,13 +31,19 @@ public class NetworkEntity implements Serializable {
 
 		pos = new PVector();
 		speed = new PVector();
-		values = new HashMap<String, Integer>();
+		values = new HashMap<String, Float>();
 	}
 
 
 
-	public void addKeyValuePair(String k, int v) {
+	public void addKeyValuePair(String k, float v) {
 		values.put(k, v);
+	}
+
+
+
+	public float getValue(String value) {
+		return values.get(value);
 	}
 
 

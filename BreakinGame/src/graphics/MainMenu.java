@@ -15,7 +15,7 @@ public class MainMenu {
 
 	int SCREEN_TITLESCREEN = 1; // Screen 1: Title screen
 	int SCREEN_SINGLEPLAYER = 2; // Screen 2: -> Singleplayer
-	int START_SINGLEPLAYER = 21; //SCREEN 21; START SINGLEPLAYER
+	int SCREEN_START_SINGLEPLAYER = 21; // SCREEN 21; START SINGLEPLAYER
 	int SCREEN_MULTIPLAYER = 3; // Screen 3: -> Multiplayer
 
 	int SCREEN_CREATEROOM = 31; // Screen 3 1: Create room
@@ -222,6 +222,7 @@ public class MainMenu {
 				G.gameClient.connect(inputPlayer.get_content(), inputIP.get_content());
 			}
 
+
 			else if (lastScreen == SCREEN_CREATEROOM && screen == SCREEN_HOSTLOBBY) {
 				// Player just opened a lobby and wants to be host
 				// Open the server, then connect local client to it!
@@ -233,11 +234,15 @@ public class MainMenu {
 				catch (NumberFormatException e) {
 					port = 4242;
 				}
-				
+
 				G.gameServer.activate(port);
-				G.gameClient.connect(inputPlayer.get_content(), "127.0.0.1:"+port);
+				G.gameClient.connect(inputPlayer.get_content(), "127.0.0.1:" + port);
 			}
 
+			
+			else if(lastScreen == SCREEN_SINGLEPLAYER && screen == SCREEN_START_SINGLEPLAYER) {
+				G.println("Hi");
+			}
 		}
 
 		G.p.pushMatrix();
