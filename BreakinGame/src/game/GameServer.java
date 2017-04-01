@@ -39,6 +39,7 @@ public class GameServer {
 		players = new ArrayList<Player>();
 		pendingCommands = new ArrayList<NetworkCommand>();
 		netDeltaT = 1000 / G.NETWORK_UPDATERATE;
+
 	}
 
 
@@ -66,7 +67,8 @@ public class GameServer {
 
 	private void updateACTIVE() {
 		// TODO private void vs void?
-
+		
+		if(gameObjects.size() < 300 && G.p.frameCount % 10 == 0) gameObjects.add( new Dummy( netServer.generate_uniqueID() ));
 		////////////////////////////////////////////////
 		// Handle arriving and departing clients ///////
 		for (Client c : G.newClients) {

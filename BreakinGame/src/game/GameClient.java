@@ -81,6 +81,7 @@ public class GameClient {
 
 	void update_INGAME() {
 		G.p.background(0xe8b425);
+		update_gos();
 	}
 
 
