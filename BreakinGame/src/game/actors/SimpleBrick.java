@@ -27,7 +27,7 @@ public class SimpleBrick extends GameObject {
 		PVector pos = Helper.GameToDrawPos( ne.get_pos() );
 		
 		
-		G.sprite.dispSprite("Static:SimpleBrick", (int)pos.x, (int)pos.y);
+		G.sprite.dispSprite("Static:SimpleBrick", (int)pos.x, (int)pos.y, G.p.width / G.playarea_width, 50);
 	}
 
 

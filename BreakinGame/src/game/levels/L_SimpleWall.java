@@ -12,10 +12,10 @@ public class L_SimpleWall extends Level {
 		super();
 
 		for (int y = 0; y < G.playarea_height; y++) {
-			for (int x = 0; x <= G.playarea_width; x++) {
+			for (int x = 0; x < G.playarea_width; x++) {
 				// TODO etwas unsauber hier auf G.gameServer zurückzugreifen!
 				SimpleBrick brick = new SimpleBrick(G.gameServer.generate_uniqueID());
-				brick.set_pos(x, y);
+				brick.set_pos(x+0.5f, y);
 				gameObjects.add(brick);
 			}
 		}
