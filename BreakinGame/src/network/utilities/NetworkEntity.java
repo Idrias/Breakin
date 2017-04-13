@@ -17,15 +17,15 @@ public class NetworkEntity implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	int actorType; // Which type of actor does this NE support?
+	Class<?> actorType; // Which type of actor does this NE support?
 	private int uniqueID; // The unique ID for networking purposes
 	PVector pos;
 	PVector speed;
 	HashMap<String, Float> values;
+	
 
 
-
-	public NetworkEntity(int actorType, int uniqueID) {
+	public NetworkEntity(Class<?> actorType, int uniqueID) {
 		this.actorType = actorType;
 		this.setUniqueID(uniqueID);
 
@@ -78,7 +78,7 @@ public class NetworkEntity implements Serializable {
 
 
 
-	public int get_type() {
+	public Class<?> get_type() {
 		return actorType;
 	}
 

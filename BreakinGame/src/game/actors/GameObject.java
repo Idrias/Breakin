@@ -9,9 +9,8 @@ import processing.core.PVector;
 public abstract class GameObject {
 
 	// Each actor within the game inherits from the GameObject object.
-	public NetworkEntity ne; // TODO NOT PUBLIC
+	NetworkEntity ne;
 	int lastUpdate;
-
 
 
 	public GameObject(NetworkEntity ne) {
@@ -22,40 +21,64 @@ public abstract class GameObject {
 
 
 
-	public GameObject(int actorType, int networkID) {
+	public GameObject(Class<?> actorType, int networkID) {
 		// Wenn der Server erstellt: NetworkEntity muss generiert werden!
 		this(new NetworkEntity(actorType, networkID));
 	}
 
 
 
-	public void simpleMove(int deltaT) {
+	///////////////////////////////////////////////////////////////////////////
+
+
+	public PVector simpleMove() {
+		int deltaT = G.p.millis() - lastUpdate;
 		PVector pos = get_pos();
+		
+		set_speed(0, G.gravity);
 		PVector speed = get_speed();
+
 		if (pos != null && speed != null) {
 			pos.x += speed.x * deltaT;
 			pos.y += speed.y * deltaT;
-			if (pos.x > G.p.width || pos.x < 0) {
-				set_speed(new PVector(speed.x * -1, speed.y));
-				set_pos(new PVector(G.p.width / 2, G.p.height / 2));
-			}
-			if (pos.y > G.p.height || pos.y < 0) {
-				set_speed(new PVector(speed.x, speed.y * -1));
-				set_pos(new PVector(G.p.width / 2, G.p.height / 2));
-			}
+			lastUpdate = G.p.millis();
+			return pos;
 		}
+		lastUpdate = G.p.millis();
+		return null;
+	}
+
+
+
+	///////////////////////////////////////////////////////////////////////////
+
+	public void set_ne(NetworkEntity ne) {
+		this.ne = ne;
 	}
 
 
 
 	public void set_speed(PVector speed) {
-		ne.set_speed(speed);
+		if(speed!=null) ne.set_speed(speed);
+	}
+
+
+
+	// TODO use this function instead of PVector one
+	public void set_speed(float speedX, float speedY) {
+		ne.set_speed(new PVector(speedX, speedY));
 	}
 
 
 
 	public void set_pos(PVector pos) {
-		ne.set_pos(pos);
+		if(pos!=null) ne.set_pos(pos);
+	}
+
+
+
+	public void set_pos(float posX, float posY) {
+		ne.set_pos(new PVector(posX, posY));
 	}
 
 
@@ -77,6 +100,8 @@ public abstract class GameObject {
 	}
 
 
+
+	///////////////////////////////////////////////////////////////////////////
 
 	abstract public void update();
 

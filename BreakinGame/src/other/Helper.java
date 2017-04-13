@@ -6,6 +6,7 @@ import game.Player;
 import network.utilities.DecompressResult;
 import network.utilities.NetworkContainer;
 import network.utilities.NetworkEntity;
+import processing.core.PVector;
 
 
 
@@ -40,6 +41,14 @@ public class Helper {
 				index++;
 		return -1;
 
+	}
+
+
+
+	public static PVector GameToDrawPos(PVector gamePos) {
+		// TODO note to addi: brick sprites have to be x size
+		// width/G.playarea_width !
+		return new PVector((gamePos.x / G.playarea_width) * G.p.width, (gamePos.y / G.playarea_height) * G.p.height);
 	}
 
 

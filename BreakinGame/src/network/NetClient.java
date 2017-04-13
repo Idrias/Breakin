@@ -1,7 +1,6 @@
 package network;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import network.utilities.DecompressResult;
 import network.utilities.NetworkCommand;
 import network.utilities.NetworkContainer;

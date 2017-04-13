@@ -2,7 +2,10 @@ package game;
 
 import java.util.ArrayList;
 import game.actors.Dummy;
+import game.actors.EndIndicator;
 import game.actors.GameObject;
+import game.actors.SimpleBrick;
+import managers.WorldManager;
 import network.NetServer;
 import network.utilities.NetworkCommand;
 import network.utilities.NetworkContainer;
@@ -17,12 +20,13 @@ import processing.net.Client;
 public class GameServer {
 
 	NetServer netServer;
+	WorldManager world;
+
 	ArrayList<GameObject> gameObjects;
 	ArrayList<Player> players;
 	ArrayList<NetworkCommand> pendingCommands;
 
 	final int PHASE_INACTIVE = 1, PHASE_LOBBY = 3, PHASE_INGAME = 4;
-
 	int phase = PHASE_INACTIVE;
 	int lastNetUpdate = 0;
 	float netDeltaT;
@@ -35,11 +39,11 @@ public class GameServer {
 	public GameServer() {
 		// TODO FREE PORT ON SERVER STOP
 		// netServer = new NetServer(G.p);
+		world = new WorldManager();
 		gameObjects = new ArrayList<GameObject>();
 		players = new ArrayList<Player>();
 		pendingCommands = new ArrayList<NetworkCommand>();
 		netDeltaT = 1000 / G.NETWORK_UPDATERATE;
-
 	}
 
 
@@ -63,12 +67,46 @@ public class GameServer {
 	}
 
 
+
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	private void updateACTIVE() {
 		// TODO private void vs void?
-		
-		if(gameObjects.size() < 300 && G.p.frameCount % 10 == 0) gameObjects.add( new Dummy( netServer.generate_uniqueID() ));
+
+		handle_connections();
+		handle_rcvMessages();
+
+
+		////////////////////////////////////////////////
+		// Update the gameObjects
+		for (int i = 0; i < gameObjects.size(); i++) {
+			GameObject go = gameObjects.get(i);
+
+			go.update();
+
+			if (go.get_pos().y > G.playarea_height) {
+				gameObjects.remove(i);
+				i--;
+			}
+
+			if (go.getClass() == EndIndicator.class && go.get_pos().y > 0) {
+				gameObjects.remove(i);
+				i--;
+				G.println("REGISTERED ENDINDICATOR AT Y=" + go.get_pos().y);
+				fetch_nextLevel();
+			}
+		}
+
+		if (gameObjects.isEmpty()) fetch_nextLevel();
+		////////////////////////////////////////////////
+
+		handle_sendUpdates();
+
+	}
+
+
+
+	private void handle_connections() {
 		////////////////////////////////////////////////
 		// Handle arriving and departing clients ///////
 		for (Client c : G.newClients) {
@@ -95,7 +133,11 @@ public class GameServer {
 		G.disconnectedClients.clear();
 		////////////////////////////////////////////////
 
+	}
 
+
+
+	private void handle_rcvMessages() {
 		////////////////////////////////////////////////
 		// Receive messages from clients
 		for (NetworkContainer container : netServer.receive()) {
@@ -115,15 +157,11 @@ public class GameServer {
 			}
 		}
 		////////////////////////////////////////////////
+	}
 
 
-		////////////////////////////////////////////////
-		// Update the gameObjects
-		for (GameObject go : gameObjects)
-			go.update();
-		////////////////////////////////////////////////
 
-
+	private void handle_sendUpdates() {
 		////////////////////////////////////////////////
 		// Send update to clients
 		if (G.p.millis() - lastNetUpdate >= netDeltaT) {
@@ -138,6 +176,7 @@ public class GameServer {
 	}
 
 
+
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void formCommands() {
@@ -146,21 +185,21 @@ public class GameServer {
 	}
 
 
-	/////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void add_go(int type, PVector pos, PVector speed) {
-		switch (type) {
-		case G.ACTORTYPE_DUMMY:
-			Dummy d = new Dummy(netServer.generate_uniqueID());
-			d.set_pos(pos);
-			d.set_speed(speed);
-			gameObjects.add(d);
-			break;
+	void fetch_nextLevel() {
+		ArrayList<GameObject> new_gos = world.nextLevel().get_gameObjects();
+
+		for (GameObject new_go : new_gos) {
+			PVector oldPos = new_go.get_pos();
+			new_go.set_pos(oldPos.x, oldPos.y - G.playarea_height);
+			if(new_go.getClass() == EndIndicator.class) G.println("ENDINDICATOR INTRODUCED AT " + new_go.get_pos().y);
 		}
+
+		gameObjects.addAll(new_gos);
 	}
 
-	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 	ArrayList<NetworkEntity> getNetworkEntities() {
@@ -189,6 +228,14 @@ public class GameServer {
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	public int generate_uniqueID() {
+		if (netServer != null) {
+			return netServer.generate_uniqueID();
+		}
+		return -1;
+	}
+
+
 
 	public void activate(int port) {
 		netServer = new NetServer(port, G.p);
@@ -201,7 +248,7 @@ public class GameServer {
 
 
 	public void deactivate() {
-		if(netServer != null && netServer.active()) netServer.stop();
+		if (netServer != null && netServer.active()) netServer.stop();
 		phase = PHASE_INACTIVE;
 	}
 }

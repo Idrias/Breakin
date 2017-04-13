@@ -31,7 +31,6 @@ public class G {
 
 	// Some more global variables
 	public static ArrayList<String> playerNames;
-	public static float  c_rightBoundary = 100;
 
 	// Resources
 	public static PFont defaultFont;
@@ -44,8 +43,8 @@ public class G {
 
 	// Constants
 	final public static String NET_SPLITSTRING = "-NEXT-";
-	final public static int ACTORTYPE_DUMMY = 3;
 	final public static int ID_SERVER = 42;
+
 
 	public static enum graphics {
 		None, Off, On, Low, Medium, High
@@ -64,6 +63,11 @@ public class G {
 																// gameclient
 																// predict
 																// movements?
+	// GAME SETTINGS //
+	final public static int playarea_width = 15;
+	final public static int playarea_height = 15; //TODO 
+	final public static float gravity = 0.005f;
+	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -75,18 +79,18 @@ public class G {
 
 		// Global Variables
 		playerNames = new ArrayList<String>();
-		
+
 		// load some resources
 		arial = p.createFont("", 32);
 		defaultFont = p.createFont("/Assets/Graphics/Fonts/komikax.ttf", p.height / 27);
 		defaultButtonTexture = p.loadImage("/Assets/Graphics/Static_Sprites/Button.png");
 
 		// load many more resources
-		sprite=null;
+		sprite = null;
 		sprite = new SpriteManager();
 		load_sprites();
-		
-		audio=null;
+
+		audio = null;
 		audio = new AudioManager();
 		load_audio();
 
@@ -130,7 +134,7 @@ public class G {
 
 
 
-	static public void println(String text) {
+	static public void println(Object text) {
 		System.out.println(text);
 	}
 

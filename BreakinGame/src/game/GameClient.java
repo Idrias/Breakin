@@ -2,8 +2,7 @@ package game;
 
 import java.net.ConnectException;
 import java.util.ArrayList;
-import game.actors.Dummy;
-import game.actors.GameObject;
+import game.actors.*;
 import graphics.MainMenu;
 import network.NetClient;
 import network.utilities.NetworkCommand;
@@ -69,7 +68,7 @@ public class GameClient {
 		case PHASE_MAINMENU:
 			mainmenu.draw();
 			break;
-			
+
 		case PHASE_INGAME:
 			update_INGAME();
 			break;
@@ -80,7 +79,7 @@ public class GameClient {
 
 
 	void update_INGAME() {
-		G.p.background(0xe8b425);
+		G.p.background(0x604020);
 		update_gos();
 	}
 
@@ -122,16 +121,18 @@ public class GameClient {
 			boolean found = false;
 			for (GameObject go : gos) {
 				if (ne_id == go.get_ne().get_id()) {
-					go.ne = ne;
+					go.set_ne(ne);
 					found = true;
 				}
 			}
 			if (!found) {
-				switch (ne.get_type()) {
-				case G.ACTORTYPE_DUMMY:
+				Class<?> c = ne.get_type();
+
+				if (c == Dummy.class)
 					gos.add(new Dummy(ne));
-					break;
-				}
+
+				else if (c == SimpleBrick.class) gos.add(new SimpleBrick(ne));
+
 			}
 		}
 

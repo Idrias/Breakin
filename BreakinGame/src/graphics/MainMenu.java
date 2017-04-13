@@ -213,6 +213,7 @@ public class MainMenu {
 			if (i != -1) screen = i;
 		}
 
+		
 		if (screen != lastScreen) {
 			// we changed screens! //
 			// TODO open server etc
@@ -240,7 +241,9 @@ public class MainMenu {
 			}
 
 			
+			
 			else if(lastScreen == SCREEN_SINGLEPLAYER && screen == SCREEN_START_SINGLEPLAYER) {
+				// Start a singleplayer game
 				G.gameServer.activate(4242);
 				G.gameClient.connect("Player", "");
 				G.gameClient.enterGame();
