@@ -67,8 +67,8 @@ public class G {
 	// GAME SETTINGS //
 	final public static int playarea_width = 15;
 	final public static int playarea_height = 15; //TODO 
-	final public static float gravity = 0.005f;
-	final public static float playerspeed = 0.015f;
+	final public static float gravity = 0.001f;
+	final public static float playerspeed = 0.003f;
 	
 	final public static int KEY_FORWARDS = Character.getNumericValue('w');
 	final public static int KEY_BACKWARDS = Character.getNumericValue('s');

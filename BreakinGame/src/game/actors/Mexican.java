@@ -23,14 +23,21 @@ public class Mexican extends GameObject {
 
 	@Override
 	public void update() {
+		
+		int deltaT = G.p.millis() - lastUpdate;
+		lastUpdate = G.p.millis();
+		
 		PVector posBefore = get_pos();
 		PVector speed = get_speed().copy();
 		//G.println(speed);
-		speed.x = PApplet.constrain(speed.x, -1, 1);
-		speed.y = PApplet.constrain(speed.y, -1, 1);
+		speed = speed.normalize();
 		speed = speed.mult(G.playerspeed);
+		speed.y += G.gravity;
 		
-		PVector posAfter = posBefore.add(speed);
+		PVector posAfter = new PVector();
+		posAfter.x = posBefore.x += speed.x*deltaT;
+		posAfter.y = posBefore.y += speed.y*deltaT;
+		
 		set_pos(posAfter);
 		//G.println(speed);
 		
@@ -43,7 +50,7 @@ public class Mexican extends GameObject {
 	public void draw() {
 		// Draw mexican here
 		PVector pos = Helper.GameToDrawPos(get_pos());
-		G.sprite.dispAnimation("Anim:Mexican", (int)pos.x, (int)pos.y, 3, 2);
+		G.sprite.dispAnimation("Anim:Mexican", (int)pos.x, (int)pos.y, 3, 4);
 	}
 
 }
