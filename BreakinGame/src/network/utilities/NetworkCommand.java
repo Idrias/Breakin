@@ -11,6 +11,7 @@ public class NetworkCommand implements Serializable {
 
 	public static final int PLAYERINFO = 34;
 	public static final int MYNAMEIS = 35;
+	public static final int PLAYERMOVEMENTVECTOR = 36;
 
 	int commandType = 0;
 	ArrayList<String> stringParams;

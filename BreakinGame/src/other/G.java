@@ -31,6 +31,7 @@ public class G {
 
 	// Some more global variables
 	public static ArrayList<String> playerNames;
+	public static boolean[] keys;
 
 	// Resources
 	public static PFont defaultFont;
@@ -67,6 +68,12 @@ public class G {
 	final public static int playarea_width = 15;
 	final public static int playarea_height = 15; //TODO 
 	final public static float gravity = 0.005f;
+	final public static float playerspeed = 0.015f;
+	
+	final public static int KEY_FORWARDS = Character.getNumericValue('w');
+	final public static int KEY_BACKWARDS = Character.getNumericValue('s');
+	final public static int KEY_RIGHT = Character.getNumericValue('d');
+	final public static int KEY_LEFT = Character.getNumericValue('a');
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -79,6 +86,8 @@ public class G {
 
 		// Global Variables
 		playerNames = new ArrayList<String>();
+		keys = new boolean[256];
+		for(int i=0; i<keys.length; i++) keys[i] = false;
 
 		// load some resources
 		arial = p.createFont("", 32);
@@ -113,7 +122,7 @@ public class G {
 			sprite.addSprite(name, location);
 		}
 		
-		sprite.resizeStatic("Static:SimpleBrick", p.width / playarea_width, 0);
+		sprite.resizeStatic("Static:SimpleBrick", p.width / playarea_width, p.height / playarea_height);
 	}
 
 

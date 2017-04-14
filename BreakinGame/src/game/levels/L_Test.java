@@ -26,9 +26,28 @@ public class L_Test extends Level {
 			"xxxoxxxxxxxxxxx", 
 			};
 	
+	static public final int m2 = 2;
+	String[] model2 = new String[] {
+			"oxooooooooooooo", 
+			"xoooooooooooooo", 
+			"oxooooooooooooo", 
+			"xoooooooooooooo", 
+			"oxooooooooooooo", 
+			"xoooooooooooooo", 
+			"oxooooooooooooo",
+			"xoooooooooooooo", 
+			"oxooooooooooooo", 
+			"xoooooooooooooo",
+			"oxooooooooooooo", 
+			"xoooooooooooooo", 
+			"oxooooooooooooo", 
+			"xoooooooooooooo", 
+	};
+	
 	public L_Test(int m) {
 		String[] model;
 		if(m == m1) model = model1; 
+		else if(m == m2) model = model2;
 		else return;
 		
 		height = model.length;

@@ -16,7 +16,7 @@ public class ProcessingMain extends PApplet {
 
 
 	public void settings() {
-		//fullScreen(P2D);
+		// fullScreen(P2D);
 		size(1600, 900, P2D);
 	}
 
@@ -61,6 +61,21 @@ public class ProcessingMain extends PApplet {
 			G.gameClient.disconnect();
 			G.audio.stopAll();
 			G.setup(this);
+			break;
+		}
+
+		int k = Character.getNumericValue(key);
+		if (k >= 0 && k < 256) {
+			G.keys[k] = true;
+		}
+	}
+
+
+
+	public void keyReleased() {
+		int k = Character.getNumericValue(key);
+		if (k >= 0 && k < 256) {
+			G.keys[k] = false;
 		}
 	}
 }

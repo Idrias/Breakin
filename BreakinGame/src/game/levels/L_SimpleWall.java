@@ -9,7 +9,9 @@ import other.G;
 public class L_SimpleWall extends Level {
 
 	public L_SimpleWall() {
-		for (int y = 0; y < G.playarea_height; y++) {
+		
+		height = 3;
+		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < G.playarea_width; x++) {
 				// TODO etwas unsauber hier auf G.gameServer zurückzugreifen!
 				SimpleBrick brick = new SimpleBrick(G.gameServer.generate_uniqueID());

@@ -63,6 +63,7 @@ public class WorldManager {
 			break;
 		}
 		
+		generatedLevel = new L_Test(L_Test.m2); //TODO DEV !!
 		
 		if (generatedLevel != null) {
 			futureWorld.add(generatedLevel);

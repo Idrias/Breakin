@@ -12,7 +12,7 @@ public class L_SimpleMaze extends Level {
 
 
 	public L_SimpleMaze() {
-		height = 15;
+		height = 10;
 
 		boolean[][] futureMaze = new boolean[G.playarea_width][height];
 

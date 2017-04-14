@@ -22,7 +22,8 @@ public class GameClient {
 	final int PHASE_PREPAREMENU = 2;
 	final int PHASE_INGAME = 4;
 	int gamePhase = PHASE_PREPAREMENU;
-
+	int lastNetUpdate = 0;
+	float netDeltaT;
 
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,6 +33,7 @@ public class GameClient {
 		// To start a client which is connected to a server
 		netClient = new NetClient(ip, port, G.p);
 		gos = new ArrayList<GameObject>();
+		netDeltaT = 1000 / G.NETWORK_UPDATERATE;
 	}
 
 
@@ -52,7 +54,7 @@ public class GameClient {
 			// We are connected and should do a network update!
 			// TODO not every frame?
 			netClient.receive();
-			handle_all();
+			net_handle_all();
 			netClient.pushPendingCommands();
 		}
 		else if (netClient != null && !netClient.active()) disconnect();
@@ -97,17 +99,18 @@ public class GameClient {
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-	void handle_all() {
+	void net_handle_all() {
 		NetworkContainer nc = netClient.getLatestContainer();
 		if (nc == null) return;
 
-		handle_nes(nc);
-		handle_commands(nc);
+		net_handle_nes(nc);
+		net_handle_commands(nc);
+		net_prepare_commands();
 	}
 
 
 
-	void handle_nes(NetworkContainer container) {
+	void net_handle_nes(NetworkContainer container) {
 
 		ArrayList<NetworkEntity> nes = container.get_nes();
 
@@ -131,8 +134,10 @@ public class GameClient {
 				if (c == Dummy.class)
 					gos.add(new Dummy(ne));
 
-				else if (c == SimpleBrick.class) gos.add(new SimpleBrick(ne));
+				else if (c == SimpleBrick.class)
+					gos.add(new SimpleBrick(ne));
 
+				else if (c == Mexican.class) gos.add(new Mexican(ne));
 			}
 		}
 
@@ -150,7 +155,7 @@ public class GameClient {
 
 
 
-	void handle_commands(NetworkContainer container) {
+	void net_handle_commands(NetworkContainer container) {
 		ArrayList<NetworkCommand> ncs = container.get_commands();
 
 		for (NetworkCommand nc : ncs) {
@@ -166,6 +171,29 @@ public class GameClient {
 			}
 		}
 
+	}
+
+
+
+	void net_prepare_commands() {
+		if (G.p.millis() - lastNetUpdate < netDeltaT) return;
+		lastNetUpdate = G.p.millis();
+		
+		// Prepare to send movement vector to server
+		float movementX = 0, movementY = 0;
+		if(G.keys[G.KEY_FORWARDS]) movementY -= 1;
+		if(G.keys[G.KEY_BACKWARDS]) movementY += 1;
+		if(G.keys[G.KEY_RIGHT]) movementX += 1;
+		if(G.keys[G.KEY_LEFT]) movementX -= 1;
+		
+		//if(movementX == 0 && movementY == 0) return;
+		
+		ArrayList<Float> floatValues = new ArrayList<Float>();
+		floatValues.add(movementX);
+		floatValues.add(movementY);
+		netClient.addToPendingCommands( new NetworkCommand(NetworkCommand.PLAYERMOVEMENTVECTOR, null, floatValues));
+		
+		
 	}
 
 

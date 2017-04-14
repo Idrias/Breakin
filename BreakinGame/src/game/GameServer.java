@@ -3,6 +3,7 @@ package game;
 import java.util.ArrayList;
 import game.actors.EndIndicator;
 import game.actors.GameObject;
+import game.actors.Mexican;
 import game.levels.Level;
 import managers.WorldManager;
 import network.NetServer;
@@ -89,7 +90,17 @@ public class GameServer {
 			infoContainer.set_destination(c.ip(), clientID);
 			netServer.pushNetworkContainer(infoContainer);
 			netServer.addNewClient(c);
-			players.add(new Player(c, clientID));
+			
+			Mexican mexican = new Mexican(generate_uniqueID());
+			mexican.set_pos(G.playarea_width/2, G.playarea_height - 3);
+			
+			Player p = new Player(c, clientID);
+			p.set_gameObject(mexican);
+			players.add(p);
+			
+			if(gameObjects != null)
+				gameObjects.add( mexican );
+			
 			G.println("added new client!");
 		}
 
@@ -127,6 +138,11 @@ public class GameServer {
 					int index = Helper.getPlayerIndexByID(players, senderID);
 					if (index != -1 && stringParams.size() == 1) players.get(index).set_name(stringParams.get(0));
 					break;
+					
+				case NetworkCommand.PLAYERMOVEMENTVECTOR:
+					int index2 = Helper.getPlayerIndexByID(players, senderID);
+					if (index2 != -1 && floatParams.size() == 2) players.get(index2).set_movementVector(floatParams.get(0), floatParams.get(1));
+					break;
 				}
 			}
 		}
@@ -160,7 +176,7 @@ public class GameServer {
 			}
 		}
 
-		if (gameObjects.isEmpty()) fetch_nextLevel(0);
+		if (gameObjects.size() == players.size()) fetch_nextLevel(0);
 		////////////////////////////////////////////////
 
 	}
