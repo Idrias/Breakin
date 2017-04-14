@@ -245,6 +245,7 @@ public class MainMenu {
 			else if(lastScreen == SCREEN_SINGLEPLAYER && screen == SCREEN_START_SINGLEPLAYER) {
 				// Start a singleplayer game
 				G.gameServer.activate(4242);
+				G.gameServer.go_ingame();
 				G.gameClient.connect("Player", "");
 				G.gameClient.enterGame();
 			}

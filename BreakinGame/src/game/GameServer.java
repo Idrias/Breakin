@@ -136,7 +136,7 @@ public class GameServer {
 
 
 	private void handle_gameObjects() {
-		if(phase != PHASE_INGAME) return;
+		if (phase != PHASE_INGAME) return;
 		////////////////////////////////////////////////
 		// Update the gameObjects
 		for (int i = 0; i < gameObjects.size(); i++) {
@@ -249,6 +249,12 @@ public class GameServer {
 		players.clear();
 		pendingCommands.clear();
 		phase = PHASE_LOBBY;
+	}
+
+
+
+	public void go_ingame() {
+		phase = PHASE_INGAME;
 	}
 
 
