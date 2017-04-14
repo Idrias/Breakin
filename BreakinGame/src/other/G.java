@@ -66,7 +66,7 @@ public class G {
 	// GAME SETTINGS //
 	final public static int playarea_width = 15;
 	final public static int playarea_height = 15; //TODO 
-	final public static float gravity = 0.005f;
+	final public static float gravity = 0.001f;
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -112,6 +112,8 @@ public class G {
 			String location = imageFiles[i];
 			sprite.addSprite(name, location);
 		}
+		
+		sprite.resizeStatic("Static:SimpleBrick", p.width / playarea_width, 0);
 	}
 
 

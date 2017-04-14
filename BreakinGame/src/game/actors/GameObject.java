@@ -71,14 +71,16 @@ public abstract class GameObject {
 
 
 
-	public void set_pos(PVector pos) {
+	public GameObject set_pos(PVector pos) {
 		if(pos!=null) ne.set_pos(pos);
+		return this;
 	}
 
 
 
-	public void set_pos(float posX, float posY) {
+	public GameObject set_pos(float posX, float posY) {
 		ne.set_pos(new PVector(posX, posY));
+		return this;
 	}
 
 

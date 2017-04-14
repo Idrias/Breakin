@@ -1,6 +1,7 @@
 package managers;
 
 import java.util.ArrayList;
+import game.levels.L_SimpleMaze;
 import game.levels.L_SimpleWall;
 import game.levels.Level;
 
@@ -46,7 +47,8 @@ public class WorldManager {
 		Level generatedLevel = null;
 
 		generatedLevel = new L_SimpleWall(); //TODO / DEV
-
+		generatedLevel = new L_SimpleMaze();
+		
 		if (generatedLevel != null) {
 			futureWorld.add(generatedLevel);
 		}

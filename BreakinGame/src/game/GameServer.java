@@ -1,10 +1,9 @@
 package game;
 
 import java.util.ArrayList;
-import game.actors.Dummy;
 import game.actors.EndIndicator;
 import game.actors.GameObject;
-import game.actors.SimpleBrick;
+import game.levels.Level;
 import managers.WorldManager;
 import network.NetServer;
 import network.utilities.NetworkCommand;
@@ -187,11 +186,12 @@ public class GameServer {
 
 
 	void fetch_nextLevel() {
-		ArrayList<GameObject> new_gos = world.nextLevel().get_gameObjects();
+		Level nextLevel = world.nextLevel();
+		ArrayList<GameObject> new_gos = nextLevel.get_gameObjects();
 
 		for (GameObject new_go : new_gos) {
 			PVector oldPos = new_go.get_pos();
-			new_go.set_pos(oldPos.x, oldPos.y - G.playarea_height);
+			new_go.set_pos(oldPos.x, oldPos.y - nextLevel.get_height());
 			if(new_go.getClass() == EndIndicator.class) G.println("ENDINDICATOR INTRODUCED AT " + new_go.get_pos().y);
 		}
 
