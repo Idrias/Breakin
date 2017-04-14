@@ -12,12 +12,8 @@ public class L_SimpleMaze extends Level {
 
 
 	public L_SimpleMaze() {
-		// TODO Auto-generated constructor stub
-		super();
-		height = 20;
-		
-		gameObjects.add( new EndIndicator(G.gameServer.generate_uniqueID()).set_pos(0, -1));
-		
+		height = 15;
+
 		boolean[][] futureMaze = new boolean[G.playarea_width][height];
 
 		for (int x = 0; x < G.playarea_width; x++) {
@@ -40,22 +36,13 @@ public class L_SimpleMaze extends Level {
 				}
 			}
 		}
+
+		gameObjects.add(new EndIndicator(G.gameServer.generate_uniqueID()).set_pos(0, 0));
 	}
 
 
 
 	boolean isSolvable(boolean[][] proposal) {
-		for (int y = 0; y < height; y++) {
-			for (int x = 0; x < G.playarea_width; x++) {
-				if (proposal[x][y])
-					PApplet.print("[ ]");
-				else
-					PApplet.print("[X]");
-			}
-
-			PApplet.println();
-		}
-		PApplet.println("-----");
 
 
 		int ySize = height;
@@ -135,7 +122,6 @@ public class L_SimpleMaze extends Level {
 				i--;
 
 				if (p.currentY == 0) {
-					p.printPast();
 					return true;
 				}
 			}

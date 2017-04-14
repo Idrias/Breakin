@@ -8,7 +8,7 @@ import processing.core.PVector;
 
 
 public class SimpleBrick extends GameObject {
-	
+
 	public SimpleBrick(int networkID) {
 		// Server calls this
 		super(SimpleBrick.class, networkID);
@@ -24,10 +24,8 @@ public class SimpleBrick extends GameObject {
 
 
 	public void draw() {
-		PVector pos = Helper.GameToDrawPos( ne.get_pos() );
-		
-		
-		G.sprite.dispSprite("Static:SimpleBrick", (int)pos.x, (int)pos.y);
+		PVector pos = Helper.GameToDrawPos(ne.get_pos());
+		G.sprite.dispSprite("Static:SimpleBrick", (int) pos.x, (int) pos.y);
 	}
 
 

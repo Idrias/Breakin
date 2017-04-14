@@ -13,6 +13,7 @@ public abstract class GameObject {
 	int lastUpdate;
 
 
+
 	public GameObject(NetworkEntity ne) {
 		// Wenn der Client erstellt: NetworkEntity schon vorhanden!
 		this.ne = ne;
@@ -32,9 +33,10 @@ public abstract class GameObject {
 
 
 	public PVector simpleMove() {
+		// Move with gravity -> general downwards movement
 		int deltaT = G.p.millis() - lastUpdate;
 		PVector pos = get_pos();
-		
+
 		set_speed(0, G.gravity);
 		PVector speed = get_speed();
 
@@ -52,27 +54,30 @@ public abstract class GameObject {
 
 	///////////////////////////////////////////////////////////////////////////
 
-	public void set_ne(NetworkEntity ne) {
+	public GameObject set_ne(NetworkEntity ne) {
 		this.ne = ne;
+		return this;
 	}
 
 
 
-	public void set_speed(PVector speed) {
-		if(speed!=null) ne.set_speed(speed);
+	public GameObject set_speed(PVector speed) {
+		if (speed != null) ne.set_speed(speed);
+		return this;
 	}
 
 
 
 	// TODO use this function instead of PVector one
-	public void set_speed(float speedX, float speedY) {
+	public GameObject set_speed(float speedX, float speedY) {
 		ne.set_speed(new PVector(speedX, speedY));
+		return this;
 	}
 
 
 
 	public GameObject set_pos(PVector pos) {
-		if(pos!=null) ne.set_pos(pos);
+		if (pos != null) ne.set_pos(pos);
 		return this;
 	}
 

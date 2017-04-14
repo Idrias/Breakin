@@ -71,34 +71,9 @@ public class GameServer {
 
 	private void updateACTIVE() {
 		// TODO private void vs void?
-
 		handle_connections();
 		handle_rcvMessages();
-
-
-		////////////////////////////////////////////////
-		// Update the gameObjects
-		for (int i = 0; i < gameObjects.size(); i++) {
-			GameObject go = gameObjects.get(i);
-
-			go.update();
-
-			if (go.get_pos().y > G.playarea_height) {
-				gameObjects.remove(i);
-				i--;
-			}
-
-			if (go.getClass() == EndIndicator.class && go.get_pos().y > 0) {
-				gameObjects.remove(i);
-				i--;
-				G.println("REGISTERED ENDINDICATOR AT Y=" + go.get_pos().y);
-				fetch_nextLevel();
-			}
-		}
-
-		if (gameObjects.isEmpty()) fetch_nextLevel();
-		////////////////////////////////////////////////
-
+		handle_gameObjects();
 		handle_sendUpdates();
 
 	}
@@ -160,6 +135,38 @@ public class GameServer {
 
 
 
+	private void handle_gameObjects() {
+		if(phase != PHASE_INGAME) return;
+		////////////////////////////////////////////////
+		// Update the gameObjects
+		for (int i = 0; i < gameObjects.size(); i++) {
+			GameObject go = gameObjects.get(i);
+
+			go.update();
+
+
+			if (go.getClass() == EndIndicator.class && go.get_pos().y > 0) {
+				gameObjects.remove(i);
+				i--;
+				fetch_nextLevel(go.get_pos().y);
+				continue;
+			}
+
+
+			if (go.get_pos().y > G.playarea_height) {
+				gameObjects.remove(i);
+				i--;
+				continue;
+			}
+		}
+
+		if (gameObjects.isEmpty()) fetch_nextLevel(0);
+		////////////////////////////////////////////////
+
+	}
+
+
+
 	private void handle_sendUpdates() {
 		////////////////////////////////////////////////
 		// Send update to clients
@@ -185,14 +192,13 @@ public class GameServer {
 
 
 
-	void fetch_nextLevel() {
+	void fetch_nextLevel(float yOffset) {
 		Level nextLevel = world.nextLevel();
 		ArrayList<GameObject> new_gos = nextLevel.get_gameObjects();
 
 		for (GameObject new_go : new_gos) {
 			PVector oldPos = new_go.get_pos();
-			new_go.set_pos(oldPos.x, oldPos.y - nextLevel.get_height());
-			if(new_go.getClass() == EndIndicator.class) G.println("ENDINDICATOR INTRODUCED AT " + new_go.get_pos().y);
+			new_go.set_pos(oldPos.x, oldPos.y - nextLevel.get_height() + yOffset);
 		}
 
 		gameObjects.addAll(new_gos);

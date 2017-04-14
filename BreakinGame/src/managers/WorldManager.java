@@ -3,7 +3,9 @@ package managers;
 import java.util.ArrayList;
 import game.levels.L_SimpleMaze;
 import game.levels.L_SimpleWall;
+import game.levels.L_Test;
 import game.levels.Level;
+import other.G;
 
 
 
@@ -46,8 +48,21 @@ public class WorldManager {
 	void generateLevel() {
 		Level generatedLevel = null;
 
-		generatedLevel = new L_SimpleWall(); //TODO / DEV
-		generatedLevel = new L_SimpleMaze();
+		int levelCount = 3;
+		int levelType = (int) Math.floor(G.p.random(levelCount));
+
+		switch (levelType) {
+		case 0:
+			generatedLevel = new L_SimpleWall();
+			break;// TODO / DEV
+		case 1:
+			generatedLevel = new L_SimpleMaze();
+			break;
+		case 2:
+			generatedLevel = new L_Test(L_Test.m1);
+			break;
+		}
+		
 		
 		if (generatedLevel != null) {
 			futureWorld.add(generatedLevel);

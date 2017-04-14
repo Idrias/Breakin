@@ -32,8 +32,9 @@ public class EndIndicator extends GameObject {
 
 	@Override
 	public void draw() {
-		// TODO Auto-generated method stub
+		// Client currently doesn't add EndIndicator to gameObjects -> no draw!
 		PVector pos = Helper.GameToDrawPos( get_pos() );
+		G.p.fill(255, 0, 0);
 		G.p.ellipse(pos.x, pos.y, 10, 10);
 	}
 

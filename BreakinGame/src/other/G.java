@@ -66,7 +66,7 @@ public class G {
 	// GAME SETTINGS //
 	final public static int playarea_width = 15;
 	final public static int playarea_height = 15; //TODO 
-	final public static float gravity = 0.001f;
+	final public static float gravity = 0.005f;
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
