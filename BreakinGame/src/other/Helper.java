@@ -2,9 +2,11 @@ package other;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import game.Player;
 import network.utilities.DecompressResult;
 import network.utilities.NetworkContainer;
 import network.utilities.NetworkEntity;
+import processing.core.PVector;
 
 
 
@@ -26,6 +28,27 @@ public class Helper {
 			else
 				index++;
 		return -1;
+	}
+
+
+
+	public static int getPlayerIndexByID(ArrayList<Player> players, int id) {
+		int index = 0;
+		for (Player p : players)
+			if (p.get_playerID() == id)
+				return index;
+			else
+				index++;
+		return -1;
+
+	}
+
+
+
+	public static PVector GameToDrawPos(PVector gamePos) {
+		// TODO note to addi: brick sprites have to be x size
+		// width/G.playarea_width !
+		return new PVector((gamePos.x / G.playarea_width) * G.p.width, (gamePos.y / G.playarea_height) * G.p.height);
 	}
 
 
@@ -80,4 +103,5 @@ public class Helper {
 
 		return new DecompressResult(returnedContainers, messageBuffer);
 	}
+
 }

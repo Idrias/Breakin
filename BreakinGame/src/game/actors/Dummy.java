@@ -2,6 +2,7 @@ package game.actors;
 
 import network.utilities.NetworkEntity;
 import other.G;
+import other.Helper;
 import processing.core.PVector;
 
 
@@ -9,7 +10,7 @@ import processing.core.PVector;
 public class Dummy extends GameObject {
 
 	public Dummy(int networkID) {
-		super(G.ACTORTYPE_DUMMY, networkID);
+		super(Dummy.class, networkID);
 	}
 
 
@@ -21,16 +22,14 @@ public class Dummy extends GameObject {
 
 
 	public void update() {
-		int deltaT = G.p.millis() - lastUpdate;
-		simpleMove(deltaT);
-		lastUpdate = G.p.millis();
+		simpleMove();
 	}
 
 
 
 	public void draw() {
 		G.p.fill(0, 0, 255);
-		PVector pos = ne.get_pos();
+		PVector pos = Helper.GameToDrawPos(ne.get_pos());
 		G.p.ellipse(pos.x, pos.y, 20, 20);
 	}
 }

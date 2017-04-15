@@ -17,6 +17,7 @@ public class ProcessingMain extends PApplet {
 
 	public void settings() {
 		fullScreen(P2D);
+		
 	}
 
 
@@ -49,5 +50,32 @@ public class ProcessingMain extends PApplet {
 
 	public void disconnectEvent(Client c) {
 		G.disconnectedClients.add(c);
+	}
+
+
+
+	public void keyPressed() {
+		switch (G.p.key) {
+		case '#':
+			G.gameServer.deactivate();
+			G.gameClient.disconnect();
+			G.audio.stopAll();
+			G.setup(this);
+			break;
+		}
+
+		int k = Character.getNumericValue(key);
+		if (k >= 0 && k < 256) {
+			G.keys[k] = true;
+		}
+	}
+
+
+
+	public void keyReleased() {
+		int k = Character.getNumericValue(key);
+		if (k >= 0 && k < 256) {
+			G.keys[k] = false;
+		}
 	}
 }

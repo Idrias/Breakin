@@ -21,10 +21,10 @@ public class SpriteManager {
 
 
 	public void addSprite(String name, String path) {
-		if (name.charAt(0) == 'S') {                   // STATIC SPRITE
+		if (name.charAt(0) == 'S') { // STATIC SPRITE
 			sprites.put(name, G.p.loadImage(path));
 		}
-		else {                                         // ANIMATED SPRITE
+		else { // ANIMATED SPRITE
 
 			char c = ' ';
 			int i = 0;
@@ -70,5 +70,13 @@ public class SpriteManager {
 
 	public void dispAnimation(String name, int x, int y, float w, float h, int speed, int frames) {
 		G.p.image(animations.get(name)[(G.p.millis() / speed) % frames], x, y, w, h);
+	}
+
+
+
+	public void resizeStatic(String name, int xSize, int ySize) {
+		PImage image = sprites.get(name);
+		
+		if(image != null) image.resize(xSize, ySize);
 	}
 }

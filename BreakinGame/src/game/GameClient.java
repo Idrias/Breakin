@@ -2,10 +2,10 @@ package game;
 
 import java.net.ConnectException;
 import java.util.ArrayList;
-import game.actors.Dummy;
-import game.actors.GameObject;
+import game.actors.*;
 import graphics.MainMenu;
 import network.NetClient;
+import network.utilities.NetworkCommand;
 import network.utilities.NetworkContainer;
 import network.utilities.NetworkEntity;
 import other.G;
@@ -17,16 +17,23 @@ public class GameClient {
 	NetClient netClient;
 	MainMenu mainmenu;
 	ArrayList<GameObject> gos;
+
 	final int PHASE_MAINMENU = 3;
 	final int PHASE_PREPAREMENU = 2;
+	final int PHASE_INGAME = 4;
 	int gamePhase = PHASE_PREPAREMENU;
+	int lastNetUpdate = 0;
+	float netDeltaT;
 
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 	public GameClient(String ip, int port) {
 		// To start a client which is connected to a server
 		netClient = new NetClient(ip, port, G.p);
 		gos = new ArrayList<GameObject>();
+		netDeltaT = 1000 / G.NETWORK_UPDATERATE;
 	}
 
 
@@ -38,8 +45,21 @@ public class GameClient {
 
 
 
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 	public void update() {
-		G.p.background(0);
+
+		if (netClient != null && netClient.active()) {
+			// We are connected and should do a network update!
+			// TODO not every frame?
+			netClient.receive();
+			net_handle_all();
+			netClient.pushPendingCommands();
+		}
+		else if (netClient != null && !netClient.active()) disconnect();
+
+
 		switch (gamePhase) {
 
 		case PHASE_PREPAREMENU:
@@ -50,17 +70,24 @@ public class GameClient {
 		case PHASE_MAINMENU:
 			mainmenu.draw();
 			break;
+
+		case PHASE_INGAME:
+			update_INGAME();
+			break;
 		}
 
-		// fetch_nes();
-		// handle_gos();
-		// netClient.addToSendingList("Hi", new int[] { 1, 2, 3, 4 });
-		// netClient.pushSendingList();
 	}
 
 
 
-	void handle_gos() {
+	void update_INGAME() {
+		G.p.background(0x604020);
+		update_gos();
+	}
+
+
+
+	void update_gos() {
 		for (GameObject go : gos) {
 			if (G.CLIENTSIDE_PREDICTIONS) go.update();
 			go.draw();
@@ -69,13 +96,24 @@ public class GameClient {
 
 
 
-	void fetch_nes() {
-		ArrayList<NetworkEntity> nes = null;
-		ArrayList<NetworkContainer> containers = netClient.receive();
-		int numberContainers = containers.size();
-		if (numberContainers >= 1) {
-			nes = containers.get(containers.size() - 1).nes;
-		}
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	void net_handle_all() {
+		NetworkContainer nc = netClient.getLatestContainer();
+		if (nc == null) return;
+
+		net_handle_nes(nc);
+		net_handle_commands(nc);
+		net_prepare_commands();
+	}
+
+
+
+	void net_handle_nes(NetworkContainer container) {
+
+		ArrayList<NetworkEntity> nes = container.get_nes();
+
 		if (nes == null) return;
 
 		ArrayList<Integer> IDs = new ArrayList<Integer>();
@@ -86,16 +124,20 @@ public class GameClient {
 			boolean found = false;
 			for (GameObject go : gos) {
 				if (ne_id == go.get_ne().get_id()) {
-					go.ne = ne;
+					go.set_ne(ne);
 					found = true;
 				}
 			}
 			if (!found) {
-				switch (ne.get_type()) {
-				case G.ACTORTYPE_DUMMY:
+				Class<?> c = ne.get_type();
+
+				if (c == Dummy.class)
 					gos.add(new Dummy(ne));
-					break;
-				}
+
+				else if (c == SimpleBrick.class)
+					gos.add(new SimpleBrick(ne));
+
+				else if (c == Mexican.class) gos.add(new Mexican(ne));
 			}
 		}
 
@@ -113,17 +155,69 @@ public class GameClient {
 
 
 
+	void net_handle_commands(NetworkContainer container) {
+		ArrayList<NetworkCommand> ncs = container.get_commands();
+
+		for (NetworkCommand nc : ncs) {
+
+			int commandType = nc.get_commandType();
+			ArrayList<String> stringParams = nc.get_stringParams();
+			ArrayList<Float> floatParams = nc.get_floatParams();
+
+			switch (commandType) {
+			case NetworkCommand.PLAYERINFO:
+				G.playerNames = stringParams;
+				break;
+			}
+		}
+
+	}
+
+
+
+	void net_prepare_commands() {
+		if (G.p.millis() - lastNetUpdate < netDeltaT) return;
+		lastNetUpdate = G.p.millis();
+		
+		// Prepare to send movement vector to server
+		float movementX = 0, movementY = 0;
+		if(G.keys[G.KEY_FORWARDS]) movementY -= 1;
+		if(G.keys[G.KEY_BACKWARDS]) movementY += 1;
+		if(G.keys[G.KEY_RIGHT]) movementX += 1;
+		if(G.keys[G.KEY_LEFT]) movementX -= 1;
+		
+		//if(movementX == 0 && movementY == 0) return;
+		
+		ArrayList<Float> floatValues = new ArrayList<Float>();
+		floatValues.add(movementX);
+		floatValues.add(movementY);
+		netClient.addToPendingCommands( new NetworkCommand(NetworkCommand.PLAYERMOVEMENTVECTOR, null, floatValues));
+		
+		
+	}
+
+
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public void enterGame() {
+		G.audio.stopAll();
+		mainmenu = null;
+		gamePhase = PHASE_INGAME;
+	}
+
+
+
 	public void connect(String name, String ip) {
-		
+
 		// Find a creative name for the player if they didn't choose one
-		if(name == null || name.equals("")) name = ""+Integer.toHexString(G.p.millis());
-		
+		if (name == null || name.equals("")) name = "" + Integer.toHexString(G.p.millis());
+
 		String[] addressparts = ip.split(":");
-		G.println("addressparts: " + addressparts);
 		// TODO NOT SAFE FROM EXCEPTIONS
 
 		try {
-			if(addressparts.length == 0)
+			if (addressparts.length == 0)
 				// This means we want to connect to localhost!
 				netClient = new NetClient(G.p);
 			else if (addressparts.length == 1)
@@ -139,18 +233,20 @@ public class GameClient {
 			return;
 		}
 
-		G.println("Connect finished.");
-		G.println("Playername: " + name);
-		for(int i=0; i<addressparts.length; i++) {
-			G.println("Addresspart: " + addressparts[i]);
+
+		if (netClient != null && netClient.active()) {
+			ArrayList<String> stringParams = new ArrayList<String>();
+			stringParams.add(name);
+			netClient.addToPendingCommands(new NetworkCommand(NetworkCommand.MYNAMEIS, stringParams, null));
 		}
-		
+
 	}
 
 
 
 	public void disconnect() {
-		netClient.stop();
+		if (netClient != null && netClient.active()) netClient.stop();
+		netClient = null;
 		gos.clear();
 		gamePhase = PHASE_PREPAREMENU;
 	}

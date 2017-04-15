@@ -23,13 +23,16 @@ public class G {
 	public static PApplet p;
 
 	/// Important Objects
-	//public static Helper h;
+	// public static Helper h;
 	public static GameServer gameServer;
 	public static GameClient gameClient;
 	public static AudioManager audio;
 	public static SpriteManager sprite;
 
 	// Some more global variables
+	public static ArrayList<String> playerNames;
+	public static boolean[] keys;
+
 	// Resources
 	public static PFont defaultFont;
 	public static PFont arial;
@@ -41,13 +44,13 @@ public class G {
 
 	// Constants
 	final public static String NET_SPLITSTRING = "-NEXT-";
-	final public static int ACTORTYPE_DUMMY = 3;
 	final public static int ID_SERVER = 42;
+
 
 	public static enum graphics {
 		None, Off, On, Low, Medium, High
 	}
-	
+
 	public enum difficulty {
 		easy, normal, hard
 	}
@@ -61,6 +64,17 @@ public class G {
 																// gameclient
 																// predict
 																// movements?
+	// GAME SETTINGS //
+	final public static int playarea_width = 15;
+	final public static int playarea_height = 15; //TODO 
+	final public static float gravity = 0.001f;
+	final public static float playerspeed = 0.003f;
+	
+	final public static int KEY_FORWARDS = Character.getNumericValue('w');
+	final public static int KEY_BACKWARDS = Character.getNumericValue('s');
+	final public static int KEY_RIGHT = Character.getNumericValue('d');
+	final public static int KEY_LEFT = Character.getNumericValue('a');
+	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -70,24 +84,32 @@ public class G {
 		// setup reference to PApplet
 		G.p = p;
 
+		// Global Variables
+		playerNames = new ArrayList<String>();
+		keys = new boolean[256];
+		for(int i=0; i<keys.length; i++) keys[i] = false;
+
 		// load some resources
 		arial = p.createFont("", 32);
 		defaultFont = p.createFont("/Assets/Graphics/Fonts/komikax.ttf", p.height / 27);
 		defaultButtonTexture = p.loadImage("/Assets/Graphics/Static_Sprites/Button.png");
 
 		// load many more resources
+		sprite = null;
 		sprite = new SpriteManager();
 		load_sprites();
-		
+
+		audio = null;
 		audio = new AudioManager();
 		load_audio();
 
 		// instantiate some objects we need
-		//h = new Helper();
+		// h = new Helper();
 		newClients = new ArrayList<Client>();
 		disconnectedClients = new ArrayList<Client>();
 		gameServer = new GameServer();
 		gameClient = new GameClient();
+
 	}
 
 
@@ -99,6 +121,8 @@ public class G {
 			String location = imageFiles[i];
 			sprite.addSprite(name, location);
 		}
+		
+		sprite.resizeStatic("Static:SimpleBrick", p.width / playarea_width, p.height / playarea_height);
 	}
 
 
@@ -121,7 +145,7 @@ public class G {
 
 
 
-	static public void println(String text) {
+	static public void println(Object text) {
 		System.out.println(text);
 	}
 

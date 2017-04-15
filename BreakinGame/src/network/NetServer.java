@@ -3,6 +3,7 @@ package network;
 import java.util.ArrayList;
 import java.util.HashMap;
 import network.utilities.DecompressResult;
+import network.utilities.NetworkCommand;
 import network.utilities.NetworkContainer;
 import network.utilities.NetworkEntity;
 import other.G;
@@ -49,10 +50,22 @@ public class NetServer extends Server {
 
 
 	////////////////////////////////////////////////
-	// Send networkEntitites as NetworkContainer to all clients!
+	// Send networkEntitites as NetworkContainer to all clients! // TODO remove, legacy
 	public void pushEntities(ArrayList<NetworkEntity> networkEntities) {
 		NetworkContainer nc = new NetworkContainer();
 		nc.set_nes(networkEntities);
+		pushNetworkContainer(nc);
+	}
+	////////////////////////////////////////////////
+
+
+
+	////////////////////////////////////////////////
+	// Send networkEntitites as well as commands to all clients!
+	public void pushInfo(ArrayList<NetworkEntity> networkEntities, ArrayList<NetworkCommand> networkCommands) {
+		NetworkContainer nc = new NetworkContainer();
+		nc.set_nes(networkEntities);
+		nc.set_commands(networkCommands);
 		pushNetworkContainer(nc);
 	}
 	////////////////////////////////////////////////

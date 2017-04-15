@@ -1,8 +1,8 @@
 package network;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import network.utilities.DecompressResult;
+import network.utilities.NetworkCommand;
 import network.utilities.NetworkContainer;
 import other.G;
 import other.Helper;
@@ -13,8 +13,9 @@ import processing.net.Client;
 
 public class NetClient extends Client {
 
+	NetworkContainer latestContainer;
 	String messageBuffer = "";
-	HashMap<String, int[]> sendingList;
+	ArrayList<NetworkCommand> pendingCommands; // TODO same on gameserver/netserver
 	int playerID = -1;
 
 
@@ -22,7 +23,8 @@ public class NetClient extends Client {
 	//////// Constructors
 	public NetClient(String ip, int port, PApplet g) {
 		super(g, ip, port);
-		sendingList = new HashMap<String, int[]>();
+		pendingCommands = new ArrayList<NetworkCommand>();
+		latestContainer = new NetworkContainer();
 	}
 
 
@@ -41,6 +43,8 @@ public class NetClient extends Client {
 
 
 	public ArrayList<NetworkContainer> receive() {
+		
+		
 		if (available() > 0) {
 			DecompressResult dr = Helper.getNetworkContainerFromByteArray(messageBuffer, readBytes());
 			messageBuffer = dr.get_messageBuffer();
@@ -94,6 +98,8 @@ public class NetClient extends Client {
 				}
 				///// ENDIF
 			}
+
+			if(containers.size()>0) latestContainer = containers.get(containers.size() - 1);
 			return containers;
 		}
 		return new ArrayList<NetworkContainer>();
@@ -101,19 +107,27 @@ public class NetClient extends Client {
 
 
 
-	public void addToSendingList(String command, int[] values) {
-		sendingList.put(command, values);
+	public void addToPendingCommands(NetworkCommand nc) {
+		pendingCommands.add(nc);
 	}
 
 
 
-	public void pushSendingList() {
-		if (!active()) return;
+	public void pushPendingCommands() {
+		if (!active() || pendingCommands.size() == 0 || playerID == -1) return; //TODO where does playerid come from?
 		NetworkContainer nc = new NetworkContainer();
-		//TODO nc.set_commands(sendingList);
+		nc.set_sender(playerID);
+		nc.set_commands(pendingCommands);
 		write(nc.compress());
 		write(G.NET_SPLITSTRING);
-		sendingList = new HashMap<String, int[]>();
+		pendingCommands.clear();
+	}
+
+
+
+	public NetworkContainer getLatestContainer() {
+		return latestContainer;
+
 	}
 	////////////////////////////////////////////////////////
 }

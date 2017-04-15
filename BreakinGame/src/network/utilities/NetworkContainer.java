@@ -9,30 +9,27 @@ import java.io.Serializable;
 import java.io.StreamCorruptedException;
 import java.io.UTFDataFormatException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import other.G;
 
 
 
 public class NetworkContainer implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	public ArrayList<NetworkEntity> nes = null; // TODO not public
-	HashMap<String, String[]> commands = null;
+	ArrayList<NetworkEntity> nes = null;
+	ArrayList<NetworkCommand> commands = null;
 
 	// Usually we want to send NetworkCotnainers to all clients.
 	// If this is set only a specific client is the destination!
 	String destinationIP = "";
 	int destinationID = -1;
+	int senderID = -1;
 
 
 
 	public NetworkContainer() {
 		nes = new ArrayList<NetworkEntity>();
-		commands = new HashMap<String, String[]>();
+		commands = new ArrayList<NetworkCommand>();
 	}
 
 
@@ -43,7 +40,7 @@ public class NetworkContainer implements Serializable {
 
 
 
-	public void set_commands(HashMap<String, String[]> commands) {
+	public void set_commands(ArrayList<NetworkCommand> commands) {
 		this.commands = commands;
 	}
 
@@ -56,13 +53,19 @@ public class NetworkContainer implements Serializable {
 
 
 
+	public void set_sender(int id) {
+		senderID = id;
+	}
+
+
+
 	public ArrayList<NetworkEntity> get_nes() {
 		return nes;
 	}
 
 
 
-	public HashMap<String, String[]> get_commands() {
+	public ArrayList<NetworkCommand> get_commands() {
 		return commands;
 	}
 
@@ -70,6 +73,12 @@ public class NetworkContainer implements Serializable {
 
 	public int get_destinationID() {
 		return destinationID;
+	}
+
+
+
+	public int get_senderID() {
+		return senderID;
 	}
 
 

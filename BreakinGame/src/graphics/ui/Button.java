@@ -135,13 +135,12 @@ public class Button {
 		G.p.vertex(posX - sizeX / 2, posY - sizeY / 2, 0, u);
 		G.p.endShape();
 		G.p.fill(r / 2, 140, b / 2, a);
-		G.p.text(text, posX + 3 + 2 * u, posY + 3 - G.p.height / 100 + 3 * u); // Schatteneffekt
+		G.p.text(text, posX + 3 + 2 * u, posY + 3 - G.p.height / 100 + 3 * u);  // Schatteneffekt
 																				// vom
 																				// Text
 		G.p.fill(0, 40, 0, a);
 		G.p.text(text, posX + 2 * u, posY - G.p.height / 100 + 2 * u);
 
-		
 		return -1;
 	}
 

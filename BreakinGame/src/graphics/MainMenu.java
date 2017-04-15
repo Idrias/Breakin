@@ -15,6 +15,7 @@ public class MainMenu {
 
 	int SCREEN_TITLESCREEN = 1; // Screen 1: Title screen
 	int SCREEN_SINGLEPLAYER = 2; // Screen 2: -> Singleplayer
+	int SCREEN_START_SINGLEPLAYER = 21; // SCREEN 21; START SINGLEPLAYER
 	int SCREEN_MULTIPLAYER = 3; // Screen 3: -> Multiplayer
 
 	int SCREEN_CREATEROOM = 31; // Screen 3 1: Create room
@@ -64,7 +65,7 @@ public class MainMenu {
 		credits = new Button(displayWidth / 2, displayHeight / 2 + 4 * displayHeight / 12, displayWidth / 3, displayHeight / 15, SCREEN_TITLESCREEN, "CREDITS", true, defaultButtonTexture);
 		quit = new Button(displayWidth / 2, displayHeight / 2 + 5 * displayHeight / 12, displayWidth / 3, displayHeight / 15, SCREEN_QUIT, "QUIT", false, defaultButtonTexture);
 
-		startSP = new Button(displayWidth / 2, displayHeight / 2 + displayHeight / 12, displayWidth / 3, displayHeight / 15, SCREEN_SINGLEPLAYER, "START GAME", true, defaultButtonTexture);
+		startSP = new Button(displayWidth / 2, displayHeight / 2 + displayHeight / 12, displayWidth / 3, displayHeight / 15, SCREEN_START_SINGLEPLAYER, "START GAME", true, defaultButtonTexture);
 		difficulty = new Button(displayWidth / 2, displayHeight / 2 + 2 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 7, "DIFFICULTY: NORMAL", true, defaultButtonTexture);
 		backTo1 = new Button(displayWidth / 2, displayHeight / 2 + 5 * displayHeight / 12, displayWidth / 3, displayHeight / 15, 1, "BACK", false, defaultButtonTexture);
 
@@ -103,7 +104,7 @@ public class MainMenu {
 		fft = new FFT(G.audio.getAudioPlayer("Music:MainMenu").bufferSize(), G.audio.getAudioPlayer("Music:MainMenu").sampleRate());
 
 		G.audio.stopAll();
-		// G.audio.loop("Music:MainMenu");
+		G.audio.loop("Music:MainMenu");
 
 		inputHost = new InputBox(displayWidth / 2 - 17 * displayWidth / 48 + displayWidth / 10, displayHeight / 2 - 2 * displayHeight / 48 + displayHeight / 40, displayWidth / 5, displayHeight / 30, false);
 		inputPort = new InputBox(displayWidth / 2 - 17 * displayWidth / 48 + displayWidth / 10, displayHeight / 2 + 2 * displayHeight / 48 + displayHeight / 40, displayWidth / 5, displayHeight / 30, false);
@@ -148,6 +149,8 @@ public class MainMenu {
 		case 2:
 			s1Window.disp();
 			renderButtons = s2Buttons;
+			break;
+		case 21:
 			break;
 		case 3:
 			s1Window.disp();
@@ -210,6 +213,7 @@ public class MainMenu {
 			if (i != -1) screen = i;
 		}
 
+		
 		if (screen != lastScreen) {
 			// we changed screens! //
 			// TODO open server etc
@@ -218,6 +222,7 @@ public class MainMenu {
 				// Player entered ip and now wants to join a server!.
 				G.gameClient.connect(inputPlayer.get_content(), inputIP.get_content());
 			}
+
 
 			else if (lastScreen == SCREEN_CREATEROOM && screen == SCREEN_HOSTLOBBY) {
 				// Player just opened a lobby and wants to be host
@@ -228,14 +233,22 @@ public class MainMenu {
 					port = Integer.parseInt(inputIP.get_content());
 				}
 				catch (NumberFormatException e) {
-					port = 0;
+					port = 4242;
 				}
-				
+
 				G.gameServer.activate(port);
-				G.p.delay(100);
-				G.gameClient.connect(inputPlayer.get_content(), "");
+				G.gameClient.connect(inputPlayer.get_content(), "127.0.0.1:" + port);
 			}
 
+			
+			
+			else if(lastScreen == SCREEN_SINGLEPLAYER && screen == SCREEN_START_SINGLEPLAYER) {
+				// Start a singleplayer game
+				G.gameServer.activate(4242);
+				G.gameServer.go_ingame();
+				G.gameClient.connect("Player", "");
+				G.gameClient.enterGame();
+			}
 		}
 
 		G.p.pushMatrix();
