@@ -168,6 +168,18 @@ public class GameClient {
 			case NetworkCommand.PLAYERINFO:
 				G.playerNames = stringParams;
 				break;
+			
+			case NetworkCommand.SERVER_STATECHANGE:
+				int newState = (int)(float)floatParams.get(0);
+				
+				switch(newState) {
+				case GameServer.PHASE_INGAME:
+					enterGame();
+					break;
+				}
+				
+				break;
+			
 			}
 		}
 
@@ -201,6 +213,7 @@ public class GameClient {
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public void enterGame() {
+		if(gamePhase == PHASE_INGAME) return;
 		G.audio.stopAll();
 		mainmenu = null;
 		gamePhase = PHASE_INGAME;

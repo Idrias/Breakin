@@ -26,7 +26,7 @@ public class GameServer {
 	ArrayList<Player> players;
 	ArrayList<NetworkCommand> pendingCommands;
 
-	final int PHASE_INACTIVE = 1, PHASE_LOBBY = 3, PHASE_INGAME = 4;
+	public final static int PHASE_INACTIVE = 1, PHASE_LOBBY = 3, PHASE_INGAME = 4;
 	int phase = PHASE_INACTIVE;
 	int lastNetUpdate = 0;
 	float netDeltaT;
@@ -100,6 +100,11 @@ public class GameServer {
 			
 			if(gameObjects != null)
 				gameObjects.add( mexican );
+			
+			
+			ArrayList<Float> floatArgs = new ArrayList<Float>();
+			floatArgs.add((float)phase);
+			pendingCommands.add( new NetworkCommand(NetworkCommand.SERVER_STATECHANGE, null, floatArgs) );
 			
 			G.println("added new client!");
 		}
@@ -271,6 +276,14 @@ public class GameServer {
 
 	public void go_ingame() {
 		phase = PHASE_INGAME;
+		
+		for(GameObject go : gameObjects) {
+			go.touch();
+		}
+		
+		ArrayList<Float> floatArgs = new ArrayList<Float>();
+		floatArgs.add((float)phase);
+		pendingCommands.add( new NetworkCommand(NetworkCommand.SERVER_STATECHANGE, null, floatArgs) );
 	}
 
 

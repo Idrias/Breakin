@@ -104,7 +104,7 @@ public class MainMenu {
 		fft = new FFT(G.audio.getAudioPlayer("Music:MainMenu").bufferSize(), G.audio.getAudioPlayer("Music:MainMenu").sampleRate());
 
 		G.audio.stopAll();
-		G.audio.loop("Music:MainMenu");
+		//G.audio.loop("Music:MainMenu");
 
 		inputHost = new InputBox(displayWidth / 2 - 17 * displayWidth / 48 + displayWidth / 10, displayHeight / 2 - 2 * displayHeight / 48 + displayHeight / 40, displayWidth / 5, displayHeight / 30, false);
 		inputPort = new InputBox(displayWidth / 2 - 17 * displayWidth / 48 + displayWidth / 10, displayHeight / 2 + 2 * displayHeight / 48 + displayHeight / 40, displayWidth / 5, displayHeight / 30, false);
@@ -212,6 +212,14 @@ public class MainMenu {
 			int i = b.disp();
 			if (i != -1) screen = i;
 		}
+		
+		
+		if(screen == SCREEN_HOSTLOBBY) {
+			if(G.p.keyPressed && G.p.key=='+') {
+				// We are a server host and want to launch the game!
+				G.gameServer.go_ingame();
+			}
+		}
 
 		
 		if (screen != lastScreen) {
@@ -247,7 +255,7 @@ public class MainMenu {
 				G.gameServer.activate(4242);
 				G.gameServer.go_ingame();
 				G.gameClient.connect("Player", "");
-				G.gameClient.enterGame();
+				//G.gameClient.enterGame();
 			}
 		}
 

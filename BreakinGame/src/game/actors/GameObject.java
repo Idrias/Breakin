@@ -108,6 +108,12 @@ public abstract class GameObject {
 
 
 
+	public void touch() {
+		lastUpdate = G.p.millis();
+	}
+
+
+
 	///////////////////////////////////////////////////////////////////////////
 
 	abstract public void update();
