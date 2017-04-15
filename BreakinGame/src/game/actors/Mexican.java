@@ -2,6 +2,7 @@ package game.actors;
 
 import java.util.ArrayList;
 import game.actors.colliders.Collider;
+import game.actors.colliders.CollisionReport;
 import game.actors.colliders.RectangularCollider;
 import network.utilities.NetworkEntity;
 import other.G;
@@ -14,12 +15,14 @@ public class Mexican extends GameObject {
 
 	public Mexican(NetworkEntity ne) {
 		super(ne);
+		setDefaultValues();
 	}
 
 
 
 	public Mexican(int networkID) {
 		super(Mexican.class, networkID);
+		setDefaultValues();
 	}
 
 
@@ -36,7 +39,19 @@ public class Mexican extends GameObject {
 
 		int deltaT = G.p.millis() - lastUpdate;
 		lastUpdate = G.p.millis();
-
+		c.set_center(get_pos());
+		
+		ArrayList<CollisionReport> hits = c.get_hits();
+		if(!hits.isEmpty()) {
+			CollisionReport lastHit = hits.get(hits.size()-1);
+			PVector attackVector = lastHit.generateResponseVector(this);
+			
+			//TODO
+			while(Collider.checkCollision(this, others)) set_pos(get_pos().add(attackVector));
+			c.clearHits();
+		}
+		
+		
 		PVector posBefore = get_pos();
 		PVector speed = get_speed().copy();
 		// G.println(speed);
@@ -52,7 +67,7 @@ public class Mexican extends GameObject {
 
 		// COLLISION TEST
 		boolean collided = Collider.checkCollision(this, others);
-
+		G.println(G.p.frameCount + " " + collided);
 		if (collided) {
 			set_pos(posBefore);
 			c.set_center(posBefore);

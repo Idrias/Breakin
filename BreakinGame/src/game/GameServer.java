@@ -94,9 +94,7 @@ public class GameServer {
 			
 			Mexican mexican = new Mexican(generate_uniqueID());
 			mexican.set_pos(clientID%G.playarea_width, G.playarea_height - 3);
-			
-			mexican.set_size(0.9f*9/16, 0.9f);
-			mexican.set_collider( new RectangularCollider(mexican.get_pos(), mexican.get_size().x*0.8f, mexican.get_size().y) );
+			mexican.setDefaultValues();
 			mexican.setOwnerID(clientID);
 			// TODO add collider to networkentity
 			

@@ -56,11 +56,11 @@ public class G {
 	}
 
 	// Settings
-	final public static float NETWORK_UPDATERATE = 20; // How often per second
+	final public static float NETWORK_UPDATERATE = 1; // How often per second
 														// do we want to send
 														// updates from server
 														// to client?
-	final public static boolean CLIENTSIDE_PREDICTIONS = false; // Should the
+	final public static boolean CLIENTSIDE_PREDICTIONS = true; // Should the
 																// gameclient
 																// predict
 																// movements?

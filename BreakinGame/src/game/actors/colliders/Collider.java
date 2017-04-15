@@ -9,13 +9,13 @@ import processing.core.PVector;
 public class Collider {
 
 	PVector center;
-	ArrayList<GameObject> hits;
+	ArrayList<CollisionReport> hits;
 
 
 
 	public Collider() {
 		center = new PVector();
-		hits = new ArrayList<GameObject>();
+		hits = new ArrayList<CollisionReport>();
 	}
 
 
@@ -40,13 +40,13 @@ public class Collider {
 
 
 
-	public void registerHit(GameObject other) {
-		hits.add(other);
+	public void registerHit(GameObject other, float overlap) {
+		hits.add( new CollisionReport(other, overlap) );
 	}
 
 
 
-	public ArrayList<GameObject> get_hits() {
+	public ArrayList<CollisionReport> get_hits() {
 		return hits;
 	}
 
@@ -70,8 +70,8 @@ public class Collider {
 
 			if (c1.getClass() == RectangularCollider.class && c2.getClass() == RectangularCollider.class) {
 				if (R_R_collision((RectangularCollider) c1, (RectangularCollider) c2)) {
-					c1.registerHit(other);
-					c2.registerHit(me);
+					c1.registerHit(other, 1);
+					c2.registerHit(me, 1);
 					return true;
 				}
 			}
