@@ -2,13 +2,18 @@ package game;
 
 import java.net.ConnectException;
 import java.util.ArrayList;
-import game.actors.*;
+import game.actors.Dummy;
+import game.actors.GameObject;
+import game.actors.Mexican;
+import game.actors.SimpleBrick;
 import graphics.MainMenu;
 import network.NetClient;
 import network.utilities.NetworkCommand;
 import network.utilities.NetworkContainer;
 import network.utilities.NetworkEntity;
 import other.G;
+import other.Helper;
+import processing.core.PVector;
 
 
 
@@ -24,6 +29,7 @@ public class GameClient {
 	int gamePhase = PHASE_PREPAREMENU;
 	int lastNetUpdate = 0;
 	float netDeltaT;
+
 
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,7 +87,10 @@ public class GameClient {
 
 
 	void update_INGAME() {
-		G.p.background(0x604020);
+		G.p.background(0x000000);
+		G.p.fill(0, 100, 0);
+		G.p.rectMode(G.p.CORNER);
+		G.p.rect(0, 0, Helper.GameToDrawPos(new PVector(G.playarea_width, G.playarea_height)).x, Helper.GameToDrawPos(new PVector(G.playarea_width, G.playarea_height)).y);
 		update_gos();
 	}
 
@@ -89,7 +98,7 @@ public class GameClient {
 
 	void update_gos() {
 		for (GameObject go : gos) {
-			if (G.CLIENTSIDE_PREDICTIONS) go.update();
+			if (G.CLIENTSIDE_PREDICTIONS) go.update(gos);
 			go.draw();
 		}
 	}
@@ -123,7 +132,8 @@ public class GameClient {
 			int ne_id = ne.get_id();
 			boolean found = false;
 			for (GameObject go : gos) {
-				if (ne_id == go.get_ne().get_id()) {
+				if (ne_id == go.get_ne()
+						.get_id()) {
 					go.set_ne(ne);
 					found = true;
 				}
@@ -145,7 +155,8 @@ public class GameClient {
 			// Remove local GameObjects whose NetworkEntities aren't in the list
 			// anymore!
 			GameObject go = gos.get(i);
-			if (!IDs.contains(go.get_ne().get_id())) {
+			if (!IDs.contains(go.get_ne()
+					.get_id())) {
 				gos.remove(i);
 				i--;
 			}
@@ -168,18 +179,18 @@ public class GameClient {
 			case NetworkCommand.PLAYERINFO:
 				G.playerNames = stringParams;
 				break;
-			
+
 			case NetworkCommand.SERVER_STATECHANGE:
-				int newState = (int)(float)floatParams.get(0);
-				
-				switch(newState) {
+				int newState = (int) (float) floatParams.get(0);
+
+				switch (newState) {
 				case GameServer.PHASE_INGAME:
 					enterGame();
 					break;
 				}
-				
+
 				break;
-			
+
 			}
 		}
 
@@ -190,22 +201,28 @@ public class GameClient {
 	void net_prepare_commands() {
 		if (G.p.millis() - lastNetUpdate < netDeltaT) return;
 		lastNetUpdate = G.p.millis();
-		
+
 		// Prepare to send movement vector to server
 		float movementX = 0, movementY = 0;
-		if(G.keys[G.KEY_FORWARDS]) movementY -= 1;
-		if(G.keys[G.KEY_BACKWARDS]) movementY += 1;
-		if(G.keys[G.KEY_RIGHT]) movementX += 1;
-		if(G.keys[G.KEY_LEFT]) movementX -= 1;
-		
-		//if(movementX == 0 && movementY == 0) return;
-		
+		if (G.keys[G.KEY_FORWARDS]) movementY -= 1;
+		if (G.keys[G.KEY_BACKWARDS]) movementY += 1;
+		if (G.keys[G.KEY_RIGHT]) movementX += 1;
+		if (G.keys[G.KEY_LEFT]) movementX -= 1;
+
 		ArrayList<Float> floatValues = new ArrayList<Float>();
 		floatValues.add(movementX);
 		floatValues.add(movementY);
-		netClient.addToPendingCommands( new NetworkCommand(NetworkCommand.PLAYERMOVEMENTVECTOR, null, floatValues));
-		
-		
+		netClient.addToPendingCommands(new NetworkCommand(NetworkCommand.PLAYERMOVEMENTVECTOR, null, floatValues));
+
+		for (GameObject g : gos) {
+			if (g instanceof Mexican) {
+				// ABSCHIEBEN!
+				Mexican m = (Mexican) g;
+				if (m.getOwnerID() == netClient.get_playerID()) {
+					m.set_speed(movementX, movementY);
+				}
+			}
+		}
 	}
 
 
@@ -213,7 +230,7 @@ public class GameClient {
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public void enterGame() {
-		if(gamePhase == PHASE_INGAME) return;
+		if (gamePhase == PHASE_INGAME) return;
 		G.audio.stopAll();
 		mainmenu = null;
 		gamePhase = PHASE_INGAME;
