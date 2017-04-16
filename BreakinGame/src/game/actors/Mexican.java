@@ -34,7 +34,6 @@ public class Mexican extends GameObject {
 		//G.println(speed);
 		speed = speed.normalize();
 		speed = speed.mult(G.playerspeed);
-		speed.y += G.gravity;
 		
 		PVector posAfter = new PVector();
 		posAfter.x = posBefore.x += speed.x*deltaT;

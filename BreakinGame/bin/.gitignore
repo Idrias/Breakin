@@ -1,3 +1,11 @@
 /game/
+<<<<<<< HEAD
 /other/
 /graphics/
+=======
+/graphics/
+/main/
+/managers/
+/network/
+/other/
+>>>>>>> origin/master

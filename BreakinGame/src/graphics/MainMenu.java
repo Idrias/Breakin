@@ -212,6 +212,14 @@ public class MainMenu {
 			int i = b.disp();
 			if (i != -1) screen = i;
 		}
+		
+		
+		if(screen == SCREEN_HOSTLOBBY) {
+			if(G.p.keyPressed && G.p.key=='+') {
+				// We are a server host and want to launch the game!
+				G.gameServer.go_ingame();
+			}
+		}
 
 		
 		if (screen != lastScreen) {
@@ -247,7 +255,7 @@ public class MainMenu {
 				G.gameServer.activate(4242);
 				G.gameServer.go_ingame();
 				G.gameClient.connect("Player", "");
-				G.gameClient.enterGame();
+				//G.gameClient.enterGame();
 			}
 		}
 
