@@ -56,18 +56,18 @@ public class G {
 	}
 
 	// Settings
-	final public static float NETWORK_UPDATERATE = 1; // How often per second
+	final public static float NETWORK_UPDATERATE = 20; // How often per second
 														// do we want to send
 														// updates from server
 														// to client?
 	final public static boolean CLIENTSIDE_PREDICTIONS = true; // Should the
-																// gameclient
+	final public static boolean KEYBOARD_PREDICTIONS = true;	// gameclient
 																// predict
 																// movements?
 	// GAME SETTINGS //
 	final public static int playarea_width = 15;
 	final public static int playarea_height = 15; //TODO 
-	final public static float gravity = 0.002f;
+	final public static float gravity = 0.0003f;
 	final public static float playerspeed = 0.004f;
 	
 	final public static int KEY_FORWARDS = Character.getNumericValue('w');

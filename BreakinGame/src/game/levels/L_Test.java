@@ -1,7 +1,9 @@
 package game.levels;
 
 import game.actors.EndIndicator;
+import game.actors.GameObject;
 import game.actors.SimpleBrick;
+import game.actors.colliders.NotCollider;
 import other.G;
 
 
@@ -16,7 +18,8 @@ public class L_Test extends Level {
 	String[] model2 = new String[] { "oxooooooooooooo", "xoooooooooooooo", "oxooooooooooooo", "xoooooooooooooo", "oxooooooooooooo", "xoooooooooooooo", "oxooooooooooooo", "xoooooooooooooo", "oxooooooooooooo", "xoooooooooooooo",
 			"oxooooooooooooo", "xoooooooooooooo", "oxooooooooooooo", "xoooooooooooooo", };
 
-
+	static public final int m3 = 3;
+	String[] model3 = new String[] { "oxooxoooooooooo", "oxooooooooooooo", "ooooooooooooooo", "ooooooxxooooooo", };
 
 	public L_Test(int m) {
 		String[] model;
@@ -24,6 +27,8 @@ public class L_Test extends Level {
 			model = model1;
 		else if (m == m2)
 			model = model2;
+		else if (m == m3)
+			model = model3;
 		else
 			return;
 		
@@ -34,10 +39,10 @@ public class L_Test extends Level {
 			for (int x = 0; x < model[y].length(); x++) {
 				switch (model[y].charAt(x)) {
 				case 'x':
-					gameObjects.add(new SimpleBrick(G.gameServer.generate_uniqueID())
-							.set_pos(x + 0.5f, y)
-							.setDefaultValues());
-
+					GameObject s = new SimpleBrick(G.gameServer.generate_uniqueID());
+					s.set_pos(x + 0.5f, y);
+					s.setDefaultValues();
+					gameObjects.add(s);
 					break;
 				}
 			}

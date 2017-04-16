@@ -214,12 +214,14 @@ public class GameClient {
 		floatValues.add(movementY);
 		netClient.addToPendingCommands(new NetworkCommand(NetworkCommand.PLAYERMOVEMENTVECTOR, null, floatValues));
 
-		for (GameObject g : gos) {
-			if (g instanceof Mexican) {
-				// ABSCHIEBEN!
-				Mexican m = (Mexican) g;
-				if (m.getOwnerID() == netClient.get_playerID()) {
-					m.set_speed(movementX, movementY);
+		if (G.CLIENTSIDE_PREDICTIONS && G.KEYBOARD_PREDICTIONS) {
+			for (GameObject g : gos) {
+				if (g instanceof Mexican) {
+					// ABSCHIEBEN!
+					Mexican m = (Mexican) g;
+					if (m.getOwnerID() == netClient.get_playerID()) {
+						m.set_speed(movementX, movementY);
+					}
 				}
 			}
 		}

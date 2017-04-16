@@ -26,13 +26,20 @@ public class Mexican extends GameObject {
 	}
 
 
+
 	@Override
 	public GameObject setDefaultValues() {
-		set_size(0.9f*9/16, 0.9f);
-		set_collider( new RectangularCollider(get_pos(), get_size().x*0.8f, get_size().y) );
+		float defaultWidth = 0.7f * 9 / 16;
+		float defaultHeight = 0.7f;
+		float hitBoxWidthScale = 0.8f;
+		float hitBoxHeightScale = 1.0f;
+
+		set_size(defaultWidth, defaultHeight);
+		set_collider(new RectangularCollider(get_pos(), get_size().x * hitBoxWidthScale, get_size().y * hitBoxHeightScale));
 		return this;
 	}
-	
+
+
 
 	@Override
 	public void update(ArrayList<GameObject> others) {
@@ -40,21 +47,23 @@ public class Mexican extends GameObject {
 		int deltaT = G.p.millis() - lastUpdate;
 		lastUpdate = G.p.millis();
 		c.set_center(get_pos());
-		
+
 		ArrayList<CollisionReport> hits = c.get_hits();
-		if(!hits.isEmpty()) {
-			CollisionReport lastHit = hits.get(hits.size()-1);
+		if (!hits.isEmpty()) {
+			CollisionReport lastHit = hits.get(hits.size() - 1);
 			PVector attackVector = lastHit.generateResponseVector(this);
-			
-			//TODO
-			while(Collider.checkCollision(this, others)) set_pos(get_pos().add(attackVector));
+
+			// TODO
+			while (Collider.checkCollision(this, others))
+				set_pos(get_pos().add(attackVector));
+
+			set_pos(get_pos().add(attackVector.mult(10)));
 			c.clearHits();
 		}
-		
-		
+
+
 		PVector posBefore = get_pos();
 		PVector speed = get_speed().copy();
-		// G.println(speed);
 		speed = speed.normalize();
 		speed = speed.mult(G.playerspeed);
 
@@ -67,16 +76,11 @@ public class Mexican extends GameObject {
 
 		// COLLISION TEST
 		boolean collided = Collider.checkCollision(this, others);
-		G.println(G.p.frameCount + " " + collided);
 		if (collided) {
 			set_pos(posBefore);
 			c.set_center(posBefore);
 		}
 
-
-		// G.println(speed);
-
-		// G.println("----------");
 
 	}
 

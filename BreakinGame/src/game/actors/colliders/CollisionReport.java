@@ -21,7 +21,6 @@ public class CollisionReport {
 		// F = m * a
 		// TODO
 		//return attackVector.mult(-1).normalize().mult(overlap);
-		G.println(attackVector);
 		return attackVector;
 		
 	}

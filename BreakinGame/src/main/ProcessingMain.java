@@ -16,9 +16,8 @@ public class ProcessingMain extends PApplet {
 
 
 	public void settings() {
+		size(1600, 900, P2D);
 		//fullScreen(P2D);
-		//size(1600, 900, P2D);
-		fullScreen(P2D);
 	}
 
 

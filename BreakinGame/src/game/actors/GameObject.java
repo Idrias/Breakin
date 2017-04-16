@@ -23,6 +23,7 @@ public abstract class GameObject {
 		this.ne = ne;
 		c = new NotCollider();
 		lastUpdate = G.p.millis();
+		setDefaultValues();
 	}
 
 
@@ -48,12 +49,17 @@ public abstract class GameObject {
 		if (pos != null && speed != null) {
 			pos.x += speed.x * deltaT;
 			pos.y += speed.y * deltaT;
-			lastUpdate = G.p.millis();
 			
-			Collider.checkCollision(this, others);
+			
+			//TODO add reaction to collisions
+			
 			c.set_center(pos);
+			Collider.checkCollision(this, others);
+			
+			lastUpdate = G.p.millis();
 			return pos;
 		}
+		
 		lastUpdate = G.p.millis();
 		return null;
 	}
