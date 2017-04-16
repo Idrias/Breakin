@@ -25,7 +25,7 @@ public class GameClient {
 	int lastNetUpdate = 0;
 	float netDeltaT;
 
-
+	ParallaxDesert bgDesert;
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -81,7 +81,8 @@ public class GameClient {
 
 
 	void update_INGAME() {
-		G.p.background(0x604020);
+		if(bgDesert == null)bgDesert = new ParallaxDesert();
+		bgDesert.disp();
 		update_gos();
 	}
 

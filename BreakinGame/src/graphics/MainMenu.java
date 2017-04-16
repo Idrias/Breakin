@@ -104,7 +104,7 @@ public class MainMenu {
 		fft = new FFT(G.audio.getAudioPlayer("Music:MainMenu").bufferSize(), G.audio.getAudioPlayer("Music:MainMenu").sampleRate());
 
 		G.audio.stopAll();
-		G.audio.loop("Music:MainMenu");
+		//G.audio.loop("Music:MainMenu");
 
 		inputHost = new InputBox(displayWidth / 2 - 17 * displayWidth / 48 + displayWidth / 10, displayHeight / 2 - 2 * displayHeight / 48 + displayHeight / 40, displayWidth / 5, displayHeight / 30, false);
 		inputPort = new InputBox(displayWidth / 2 - 17 * displayWidth / 48 + displayWidth / 10, displayHeight / 2 + 2 * displayHeight / 48 + displayHeight / 40, displayWidth / 5, displayHeight / 30, false);

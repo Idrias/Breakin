@@ -30,6 +30,7 @@ public class Resources {
 		imageFiles = new String[] {
 				// Static
 				"Static:BreakinLogo", "/Assets/Graphics/Static_Sprites/Breakin.png", 
+				"Static:DesertBG", "/Assets/Graphics/Static_Sprites/Desert.png", 
 				"Static:ButtonTexture", "/Assets/Graphics/Static_Sprites/Button.png",
 				"Static:Tacursor", "/Assets/Graphics/Static_Sprites/Tacursor.png",
 				"Static:SimpleBrick", "/Assets/Graphics/Static_Sprites/WallBrick.png",
