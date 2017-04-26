@@ -13,6 +13,7 @@ import network.utilities.NetworkContainer;
 import network.utilities.NetworkEntity;
 import other.G;
 import other.Helper;
+import processing.core.PApplet;
 import processing.core.PVector;
 
 
@@ -88,9 +89,11 @@ public class GameClient {
 
 	void update_INGAME() {
 		G.p.background(0x000000);
-		G.p.fill(0, 100, 0);
-		G.p.rectMode(G.p.CORNER);
-		G.p.rect(0, 0, Helper.GameToDrawPos(new PVector(G.playarea_width, G.playarea_height)).x, Helper.GameToDrawPos(new PVector(G.playarea_width, G.playarea_height)).y);
+		// G.p.fill(0, 100, 0);
+		// G.p.rectMode(PApplet.CORNER);
+		// G.p.rect(0, 0, Helper.GameToDrawPos(new PVector(G.playarea_width,
+		// G.playarea_height)).x, Helper.GameToDrawPos(new
+		// PVector(G.playarea_width, G.playarea_height)).y);
 		update_gos();
 	}
 

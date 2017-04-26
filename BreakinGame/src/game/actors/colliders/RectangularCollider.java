@@ -1,5 +1,7 @@
 package game.actors.colliders;
 
+import other.G;
+import other.Helper;
 import processing.core.PVector;
 
 public class RectangularCollider extends Collider {
@@ -22,4 +24,11 @@ public class RectangularCollider extends Collider {
 	}
 
 	public PVector get_size() { return size; }
+	
+	public void draw() {
+		PVector drawCenter = Helper.GameToDrawPos(center);
+		PVector drawSize = Helper.GameToDrawSize(size);
+		G.p.rect(drawCenter.x, drawCenter.y, drawSize.x, drawSize.y);
+	}
+	
 }

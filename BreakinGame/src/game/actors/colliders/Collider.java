@@ -6,7 +6,7 @@ import processing.core.PVector;
 
 
 
-public class Collider {
+public abstract class Collider {
 
 	PVector center;
 	ArrayList<CollisionReport> hits;
@@ -41,7 +41,7 @@ public class Collider {
 
 
 	public void registerHit(GameObject other, float overlap) {
-		hits.add( new CollisionReport(other, overlap) );
+		hits.add(new CollisionReport(other, overlap));
 	}
 
 
@@ -54,6 +54,12 @@ public class Collider {
 
 	public void clearHits() {
 		hits.clear();
+	}
+
+
+
+	public void draw() {
+		// DEV TODO ONLY FOR DEBUG
 	}
 
 

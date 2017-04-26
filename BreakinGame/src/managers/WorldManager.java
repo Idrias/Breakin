@@ -63,7 +63,7 @@ public class WorldManager {
 			break;
 		}
 		
-		generatedLevel = new L_SimpleWall(); //TODO DEV !!
+		generatedLevel = new L_Test(L_Test.m3); //TODO DEV !!
 		
 		if (generatedLevel != null) {
 			futureWorld.add(generatedLevel);

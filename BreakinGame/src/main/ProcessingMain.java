@@ -23,13 +23,13 @@ public class ProcessingMain extends PApplet {
 
 
 	public void setup() {
-		// Set a global variable to reference this PApplet
 		frameRate(144);
 		noCursor();
 		shapeMode(CENTER);
 		textureMode(NORMAL);
 		imageMode(CENTER);
 		textAlign(CENTER, CENTER);
+		rectMode(CENTER);
 		G.setup(this);
 	}
 

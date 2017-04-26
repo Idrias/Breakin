@@ -33,9 +33,19 @@ public class Mexican extends GameObject {
 		float defaultHeight = 0.7f;
 		float hitBoxWidthScale = 0.8f;
 		float hitBoxHeightScale = 1.0f;
+		//float hitBoxOffsetX = 500.0f;
+		//float hitBoxOffsetY = 140.0f;
 
 		set_size(defaultWidth, defaultHeight);
-		set_collider(new RectangularCollider(get_pos(), get_size().x * hitBoxWidthScale, get_size().y * hitBoxHeightScale));
+
+		PVector hitBoxPos = get_pos().copy();
+		PVector hitBoxSize = get_size().copy();
+		hitBoxSize.x *= hitBoxWidthScale;
+		hitBoxSize.y *= hitBoxHeightScale;
+		//hitBoxPos.x += hitBoxOffsetX;
+		//hitBoxPos.y += hitBoxOffsetY;
+
+		set_collider(new RectangularCollider(hitBoxPos, hitBoxSize.x, hitBoxSize.y));
 		return this;
 	}
 
@@ -91,8 +101,9 @@ public class Mexican extends GameObject {
 		// Draw mexican here
 		PVector pos = Helper.GameToDrawPos(get_pos());
 		PVector size = Helper.GameToDrawSize(get_size());
-
+		c.draw();
 		G.sprite.dispAnimation("Anim:Mexican", (int) pos.x, (int) pos.y, size.x, size.y, 130, 4);
+
 
 	}
 
