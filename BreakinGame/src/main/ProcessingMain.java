@@ -1,6 +1,5 @@
 package main;
 
-import other.G;
 import processing.core.PApplet;
 import processing.net.Client;
 import processing.net.Server;
