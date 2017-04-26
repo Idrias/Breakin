@@ -31,7 +31,7 @@ public class Mexican extends GameObject {
 	public GameObject setDefaultValues() {
 		float defaultWidth = 0.7f * 9 / 16;
 		float defaultHeight = 0.7f;
-		float hitBoxWidthScale = 0.8f;
+		float hitBoxWidthScale = 0.65f;
 		float hitBoxHeightScale = 1.0f;
 		//float hitBoxOffsetX = 500.0f;
 		//float hitBoxOffsetY = 140.0f;
@@ -89,8 +89,8 @@ public class Mexican extends GameObject {
 		if (collided) {
 			set_pos(posBefore);
 			c.set_center(posBefore);
+			c.clearHits();
 		}
-
 
 	}
 

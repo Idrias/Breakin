@@ -1,6 +1,6 @@
 package main;
 
-import Guenther;
+import other.G;
 import processing.core.PApplet;
 import processing.net.Client;
 import processing.net.Server;
