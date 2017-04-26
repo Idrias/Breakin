@@ -46,9 +46,20 @@ public class Helper {
 
 
 	public static PVector GameToDrawPos(PVector gamePos) {
-		// TODO note to addi: brick sprites have to be x size
-		// width/G.playarea_width !
+		float limitingFactor;
+		if(G.p.width > G.p.height) limitingFactor = G.p.height;
+		else limitingFactor = G.p.width;
+		limitingFactor /= 1;
+		//return new PVector(gamePos.x / G.playarea_width * limitingFactor, gamePos.y / G.playarea_height * limitingFactor);
 		return new PVector((gamePos.x / G.playarea_width) * G.p.width, (gamePos.y / G.playarea_height) * G.p.height);
+	}
+
+
+
+	public static PVector GameToDrawSize(PVector gameSize) {
+		//return new PVector(gameSize.x * G.p.width, gameSize.y * G.p.height);
+		return GameToDrawPos(gameSize);
+		//return new PVector((gameSize.x / G.playarea_width) * G.p.width, (gameSize.y / G.playarea_height) * G.p.height);
 	}
 
 

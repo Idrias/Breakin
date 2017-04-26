@@ -61,14 +61,14 @@ public class G {
 														// updates from server
 														// to client?
 	final public static boolean CLIENTSIDE_PREDICTIONS = true; // Should the
-																// gameclient
+	final public static boolean KEYBOARD_PREDICTIONS = true;	// gameclient
 																// predict
 																// movements?
 	// GAME SETTINGS //
 	final public static int playarea_width = 15;
 	final public static int playarea_height = 15; //TODO 
-	final public static float gravity = 0.001f;
-	final public static float playerspeed = 0.002f;
+	final public static float gravity = 0.0003f;
+	final public static float playerspeed = 0.004f;
 	
 	final public static int KEY_FORWARDS = Character.getNumericValue('w');
 	final public static int KEY_BACKWARDS = Character.getNumericValue('s');
@@ -121,8 +121,6 @@ public class G {
 			String location = imageFiles[i];
 			sprite.addSprite(name, location);
 		}
-		
-		sprite.resizeStatic("Static:SimpleBrick", p.width / playarea_width, p.height / playarea_height);
 	}
 
 

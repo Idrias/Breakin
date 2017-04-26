@@ -1,5 +1,6 @@
 package game.actors;
 
+import java.util.ArrayList;
 import network.utilities.NetworkEntity;
 import other.G;
 import other.Helper;
@@ -21,8 +22,8 @@ public class Dummy extends GameObject {
 
 
 
-	public void update() {
-		simpleMove();
+	public void update(ArrayList<GameObject> others) {
+		simpleMove(others);
 	}
 
 

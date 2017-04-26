@@ -1,5 +1,8 @@
 package game.actors;
 
+import java.util.ArrayList;
+import game.actors.colliders.Collider;
+import game.actors.colliders.NotCollider;
 import network.utilities.NetworkEntity;
 import other.G;
 import processing.core.PVector;
@@ -10,6 +13,7 @@ public abstract class GameObject {
 
 	// Each actor within the game inherits from the GameObject object.
 	NetworkEntity ne;
+	Collider c;
 	int lastUpdate;
 
 
@@ -17,7 +21,9 @@ public abstract class GameObject {
 	public GameObject(NetworkEntity ne) {
 		// Wenn der Client erstellt: NetworkEntity schon vorhanden!
 		this.ne = ne;
+		c = new NotCollider();
 		lastUpdate = G.p.millis();
+		setDefaultValues();
 	}
 
 
@@ -32,7 +38,7 @@ public abstract class GameObject {
 	///////////////////////////////////////////////////////////////////////////
 
 
-	public PVector simpleMove() {
+	public PVector simpleMove(ArrayList<GameObject> others) {
 		// Move with gravity -> general downwards movement
 		int deltaT = G.p.millis() - lastUpdate;
 		PVector pos = get_pos();
@@ -43,9 +49,17 @@ public abstract class GameObject {
 		if (pos != null && speed != null) {
 			pos.x += speed.x * deltaT;
 			pos.y += speed.y * deltaT;
+			
+			
+			//TODO add reaction to collisions
+			
+			c.set_center(pos);
+			Collider.checkCollision(this, others);
+			
 			lastUpdate = G.p.millis();
 			return pos;
 		}
+		
 		lastUpdate = G.p.millis();
 		return null;
 	}
@@ -76,6 +90,20 @@ public abstract class GameObject {
 
 
 
+	public GameObject set_size(PVector size) {
+		if (size != null) ne.set_size(size);
+		return this;
+	}
+
+
+
+	public GameObject set_size(float sizeX, float sizeY) {
+		ne.set_size(new PVector(sizeX, sizeY));
+		return this;
+	}
+
+
+
 	public GameObject set_pos(PVector pos) {
 		if (pos != null) ne.set_pos(pos);
 		return this;
@@ -85,6 +113,13 @@ public abstract class GameObject {
 
 	public GameObject set_pos(float posX, float posY) {
 		ne.set_pos(new PVector(posX, posY));
+		return this;
+	}
+
+
+
+	public GameObject set_collider(Collider c) {
+		this.c = c;
 		return this;
 	}
 
@@ -102,8 +137,20 @@ public abstract class GameObject {
 
 
 
+	public PVector get_size() {
+		return ne.get_size() == null ? new PVector(0, 0) : ne.get_size();
+	}
+
+
+
 	public PVector get_pos() {
 		return ne.get_pos() == null ? new PVector(0, 0) : ne.get_pos();
+	}
+
+
+
+	public Collider get_collider() {
+		return c;
 	}
 
 
@@ -112,11 +159,16 @@ public abstract class GameObject {
 		lastUpdate = G.p.millis();
 	}
 
-
-
+	
+	public GameObject setDefaultValues() {
+		c = new NotCollider();
+		set_size(1, 1);
+		return this;
+	}
+	
 	///////////////////////////////////////////////////////////////////////////
-
-	abstract public void update();
+	
+	abstract public void update(ArrayList<GameObject> others);
 
 
 

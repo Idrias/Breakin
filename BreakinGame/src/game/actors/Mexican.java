@@ -1,10 +1,15 @@
 package game.actors;
 
+import java.util.ArrayList;
+import game.actors.colliders.Collider;
+import game.actors.colliders.CollisionReport;
+import game.actors.colliders.RectangularCollider;
 import network.utilities.NetworkEntity;
 import other.G;
 import other.Helper;
 import processing.core.PApplet;
 import processing.core.PVector;
+
 
 
 public class Mexican extends GameObject {
@@ -13,36 +18,83 @@ public class Mexican extends GameObject {
 	
 	public Mexican(NetworkEntity ne) {
 		super(ne);
+		setDefaultValues();
 	}
 
 
 
 	public Mexican(int networkID) {
 		super(Mexican.class, networkID);
+		setDefaultValues();
 	}
 
 
 
 	@Override
-	public void update() {
-		
+	public GameObject setDefaultValues() {
+		float defaultWidth = 0.7f * 9 / 16;
+		float defaultHeight = 0.7f;
+		float hitBoxWidthScale = 0.8f;
+		float hitBoxHeightScale = 1.0f;
+		//float hitBoxOffsetX = 500.0f;
+		//float hitBoxOffsetY = 140.0f;
+
+		set_size(defaultWidth, defaultHeight);
+
+		PVector hitBoxPos = get_pos().copy();
+		PVector hitBoxSize = get_size().copy();
+		hitBoxSize.x *= hitBoxWidthScale;
+		hitBoxSize.y *= hitBoxHeightScale;
+		//hitBoxPos.x += hitBoxOffsetX;
+		//hitBoxPos.y += hitBoxOffsetY;
+
+		set_collider(new RectangularCollider(hitBoxPos, hitBoxSize.x, hitBoxSize.y));
+		return this;
+	}
+
+
+
+	@Override
+	public void update(ArrayList<GameObject> others) {
+
 		int deltaT = G.p.millis() - lastUpdate;
 		lastUpdate = G.p.millis();
-		
+		c.set_center(get_pos());
+
+		ArrayList<CollisionReport> hits = c.get_hits();
+		if (!hits.isEmpty()) {
+			CollisionReport lastHit = hits.get(hits.size() - 1);
+			PVector attackVector = lastHit.generateResponseVector(this);
+
+			// TODO
+			while (Collider.checkCollision(this, others))
+				set_pos(get_pos().add(attackVector));
+
+			set_pos(get_pos().add(attackVector.mult(10)));
+			c.clearHits();
+		}
+
+
 		PVector posBefore = get_pos();
 		PVector speed = get_speed().copy();
-		//G.println(speed);
 		speed = speed.normalize();
 		speed = speed.mult(G.playerspeed);
-		
+
 		PVector posAfter = new PVector();
-		posAfter.x = posBefore.x += speed.x*deltaT;
-		posAfter.y = posBefore.y += speed.y*deltaT;
-		
+		posAfter.x = posBefore.x + speed.x * deltaT;
+		posAfter.y = posBefore.y + speed.y * deltaT;
+
 		set_pos(posAfter);
-		//G.println(speed);
-		
-		//G.println("----------");
+		c.set_center(posAfter);
+
+		// COLLISION TEST
+		boolean collided = Collider.checkCollision(this, others);
+		if (collided) {
+			set_pos(posBefore);
+			c.set_center(posBefore);
+		}
+
+
 	}
 
 
@@ -54,8 +106,24 @@ public class Mexican extends GameObject {
 		if(trail == null)trail = new Trail(0);   //Edit Line 43 in Trail.java to enable colored Trails
 		
 		PVector pos = Helper.GameToDrawPos(get_pos());
-		trail.disp((int)pos.x, (int)pos.y);
-		G.sprite.dispAnimation("Anim:Mexican", (int)pos.x, (int)pos.y, 64, 64, 130, 4); //PosX, PosY, Width, Height, Animation Speed, Animationrames
+		PVector size = Helper.GameToDrawSize(get_size());
+		c.draw();
+		G.sprite.dispAnimation("Anim:Mexican", (int) pos.x, (int) pos.y, size.x, size.y, 130, 4);
+                trail.disp((int)pos.x, (int)pos.y);
+
 	}
+
+
+
+	public int getOwnerID() {
+		return (int) ne.getValue("OwnerID");
+	}
+
+
+
+	public void setOwnerID(int ownerID) {
+		ne.addKeyValuePair("OwnerID", (float) ownerID);
+	}
+
 
 }

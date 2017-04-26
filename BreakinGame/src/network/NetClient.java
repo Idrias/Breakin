@@ -15,7 +15,8 @@ public class NetClient extends Client {
 
 	NetworkContainer latestContainer;
 	String messageBuffer = "";
-	ArrayList<NetworkCommand> pendingCommands; // TODO same on gameserver/netserver
+	ArrayList<NetworkCommand> pendingCommands; // TODO same on
+												// gameserver/netserver
 	int playerID = -1;
 
 
@@ -43,8 +44,8 @@ public class NetClient extends Client {
 
 
 	public ArrayList<NetworkContainer> receive() {
-		
-		
+
+
 		if (available() > 0) {
 			DecompressResult dr = Helper.getNetworkContainerFromByteArray(messageBuffer, readBytes());
 			messageBuffer = dr.get_messageBuffer();
@@ -99,7 +100,7 @@ public class NetClient extends Client {
 				///// ENDIF
 			}
 
-			if(containers.size()>0) latestContainer = containers.get(containers.size() - 1);
+			if (containers.size() > 0) latestContainer = containers.get(containers.size() - 1);
 			return containers;
 		}
 		return new ArrayList<NetworkContainer>();
@@ -114,7 +115,12 @@ public class NetClient extends Client {
 
 
 	public void pushPendingCommands() {
-		if (!active() || pendingCommands.size() == 0 || playerID == -1) return; //TODO where does playerid come from?
+		if (!active() || pendingCommands.size() == 0 || playerID == -1) return; // TODO
+																				// where
+																				// does
+																				// playerid
+																				// come
+																				// from?
 		NetworkContainer nc = new NetworkContainer();
 		nc.set_sender(playerID);
 		nc.set_commands(pendingCommands);
@@ -128,6 +134,12 @@ public class NetClient extends Client {
 	public NetworkContainer getLatestContainer() {
 		return latestContainer;
 
+	}
+
+
+
+	public int get_playerID() {
+		return playerID;
 	}
 	////////////////////////////////////////////////////////
 }

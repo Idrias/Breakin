@@ -9,6 +9,9 @@ import network.utilities.NetworkCommand;
 import network.utilities.NetworkContainer;
 import network.utilities.NetworkEntity;
 import other.G;
+import other.Helper;
+import processing.core.PApplet;
+import processing.core.PVector;
 
 
 
@@ -90,7 +93,7 @@ public class GameClient {
 
 	void update_gos() {
 		for (GameObject go : gos) {
-			if (G.CLIENTSIDE_PREDICTIONS) go.update();
+			if (G.CLIENTSIDE_PREDICTIONS) go.update(gos);
 			go.draw();
 		}
 	}
@@ -169,18 +172,18 @@ public class GameClient {
 			case NetworkCommand.PLAYERINFO:
 				G.playerNames = stringParams;
 				break;
-			
+
 			case NetworkCommand.SERVER_STATECHANGE:
-				int newState = (int)(float)floatParams.get(0);
-				
-				switch(newState) {
+				int newState = (int) (float) floatParams.get(0);
+
+				switch (newState) {
 				case GameServer.PHASE_INGAME:
 					enterGame();
 					break;
 				}
-				
+
 				break;
-			
+
 			}
 		}
 
@@ -191,22 +194,30 @@ public class GameClient {
 	void net_prepare_commands() {
 		if (G.p.millis() - lastNetUpdate < netDeltaT) return;
 		lastNetUpdate = G.p.millis();
-		
+
 		// Prepare to send movement vector to server
 		float movementX = 0, movementY = 0;
-		if(G.keys[G.KEY_FORWARDS]) movementY -= 1;
-		if(G.keys[G.KEY_BACKWARDS]) movementY += 1;
-		if(G.keys[G.KEY_RIGHT]) movementX += 1;
-		if(G.keys[G.KEY_LEFT]) movementX -= 1;
-		
-		//if(movementX == 0 && movementY == 0) return;
-		
+		if (G.keys[G.KEY_FORWARDS]) movementY -= 1;
+		if (G.keys[G.KEY_BACKWARDS]) movementY += 1;
+		if (G.keys[G.KEY_RIGHT]) movementX += 1;
+		if (G.keys[G.KEY_LEFT]) movementX -= 1;
+
 		ArrayList<Float> floatValues = new ArrayList<Float>();
 		floatValues.add(movementX);
 		floatValues.add(movementY);
-		netClient.addToPendingCommands( new NetworkCommand(NetworkCommand.PLAYERMOVEMENTVECTOR, null, floatValues));
-		
-		
+		netClient.addToPendingCommands(new NetworkCommand(NetworkCommand.PLAYERMOVEMENTVECTOR, null, floatValues));
+
+		if (G.CLIENTSIDE_PREDICTIONS && G.KEYBOARD_PREDICTIONS) {
+			for (GameObject g : gos) {
+				if (g instanceof Mexican) {
+					// ABSCHIEBEN!
+					Mexican m = (Mexican) g;
+					if (m.getOwnerID() == netClient.get_playerID()) {
+						m.set_speed(movementX, movementY);
+					}
+				}
+			}
+		}
 	}
 
 
@@ -214,7 +225,7 @@ public class GameClient {
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public void enterGame() {
-		if(gamePhase == PHASE_INGAME) return;
+		if (gamePhase == PHASE_INGAME) return;
 		G.audio.stopAll();
 		mainmenu = null;
 		gamePhase = PHASE_INGAME;

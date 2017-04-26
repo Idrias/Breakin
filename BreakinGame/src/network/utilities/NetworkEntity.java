@@ -21,8 +21,9 @@ public class NetworkEntity implements Serializable {
 	private int uniqueID; // The unique ID for networking purposes
 	PVector pos;
 	PVector speed;
+	PVector size;
 	HashMap<String, Float> values;
-	
+
 
 
 	public NetworkEntity(Class<?> actorType, int uniqueID) {
@@ -31,6 +32,7 @@ public class NetworkEntity implements Serializable {
 
 		pos = new PVector();
 		speed = new PVector();
+		size = new PVector();
 		values = new HashMap<String, Float>();
 	}
 
@@ -60,6 +62,12 @@ public class NetworkEntity implements Serializable {
 
 
 
+	public PVector get_size() {
+		return size;
+	}
+
+
+
 	public void set_pos(PVector pos) {
 		this.pos = pos;
 	}
@@ -68,6 +76,12 @@ public class NetworkEntity implements Serializable {
 
 	public void set_speed(PVector speed) {
 		this.speed = speed;
+	}
+
+
+
+	public void set_size(PVector size) {
+		this.size = size;
 	}
 
 

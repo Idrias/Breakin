@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import game.actors.EndIndicator;
 import game.actors.GameObject;
 import game.actors.Mexican;
+import game.actors.colliders.RectangularCollider;
 import game.levels.Level;
 import managers.WorldManager;
 import network.NetServer;
@@ -92,7 +93,10 @@ public class GameServer {
 			netServer.addNewClient(c);
 			
 			Mexican mexican = new Mexican(generate_uniqueID());
-			mexican.set_pos(G.playarea_width/2, G.playarea_height - 3);
+			mexican.set_pos(clientID%G.playarea_width, G.playarea_height - 3);
+			mexican.setDefaultValues();
+			mexican.setOwnerID(clientID);
+			// TODO add collider to networkentity
 			
 			Player p = new Player(c, clientID);
 			p.set_gameObject(mexican);
@@ -163,7 +167,7 @@ public class GameServer {
 		for (int i = 0; i < gameObjects.size(); i++) {
 			GameObject go = gameObjects.get(i);
 
-			go.update();
+			go.update(gameObjects);
 
 
 			if (go.getClass() == EndIndicator.class && go.get_pos().y > 0) {

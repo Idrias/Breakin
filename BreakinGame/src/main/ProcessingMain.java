@@ -1,6 +1,6 @@
 package main;
 
-import other.G;
+import Guenther;
 import processing.core.PApplet;
 import processing.net.Client;
 import processing.net.Server;
@@ -16,21 +16,20 @@ public class ProcessingMain extends PApplet {
 
 
 	public void settings() {
-		//fullScreen(P2D);
 		size(1600, 900, P2D);
-		
+		//fullScreen(P2D);
 	}
 
 
 
 	public void setup() {
-		// Set a global variable to reference this PApplet
 		frameRate(144);
 		noCursor();
 		shapeMode(CENTER);
 		textureMode(NORMAL);
 		imageMode(CENTER);
 		textAlign(CENTER, CENTER);
+		rectMode(CENTER);
 		G.setup(this);
 	}
 
