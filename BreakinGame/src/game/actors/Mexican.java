@@ -14,7 +14,7 @@ import processing.core.PVector;
 
 public class Mexican extends GameObject {
 	
-	Trail trail;
+	
 	
 	public Mexican(NetworkEntity ne) {
 		super(ne);
@@ -103,13 +103,11 @@ public class Mexican extends GameObject {
 	public void draw() {
 		// Draw mexican here
 		
-		if(trail == null)trail = new Trail(0);   //Edit Line 43 in Trail.java to enable colored Trails
-		
 		PVector pos = Helper.GameToDrawPos(get_pos());
 		PVector size = Helper.GameToDrawSize(get_size());
-		c.draw();
+		
 		G.sprite.dispAnimation("Anim:Mexican", (int) pos.x, (int) pos.y, size.x, size.y, 130, 4);
-                trail.disp((int)pos.x, (int)pos.y);
+                
 
 	}
 

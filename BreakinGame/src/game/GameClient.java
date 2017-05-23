@@ -140,8 +140,14 @@ public class GameClient {
 
 				else if (c == SimpleBrick.class)
 					gos.add(new SimpleBrick(ne));
+				else if (c == IronBrick.class)
+					gos.add(new IronBrick(ne));
 
-				else if (c == Mexican.class) gos.add(new Mexican(ne));
+				else if (c == Mexican.class) 
+					gos.add(new Mexican(ne));
+				
+				else if(c == Sombrero.class)
+					gos.add(new Sombrero(ne));
 			}
 		}
 

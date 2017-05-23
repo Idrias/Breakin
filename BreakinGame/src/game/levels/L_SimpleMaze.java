@@ -2,6 +2,7 @@ package game.levels;
 
 import java.util.ArrayList;
 import game.actors.EndIndicator;
+import game.actors.IronBrick;
 import game.actors.SimpleBrick;
 import other.G;
 import processing.core.PApplet;
@@ -30,7 +31,7 @@ public class L_SimpleMaze extends Level {
 		for (int x = 0; x < G.playarea_width; x++) {
 			for (int y = 0; y < height; y++) {
 				if (!futureMaze[x][y]) {
-					SimpleBrick s = new SimpleBrick(G.gameServer.generate_uniqueID());
+					IronBrick s = new IronBrick(G.gameServer.generate_uniqueID());
 					s.set_pos(x + 0.5f, y);
 					gameObjects.add(s);
 				}

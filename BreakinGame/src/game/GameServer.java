@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import game.actors.EndIndicator;
 import game.actors.GameObject;
 import game.actors.Mexican;
+import game.actors.Sombrero;
 import game.actors.colliders.RectangularCollider;
 import game.levels.Level;
 import managers.WorldManager;
@@ -45,6 +46,9 @@ public class GameServer {
 		players = new ArrayList<Player>();
 		pendingCommands = new ArrayList<NetworkCommand>();
 		netDeltaT = 1000 / G.NETWORK_UPDATERATE;
+		
+		
+		
 	}
 
 
@@ -185,7 +189,7 @@ public class GameServer {
 			}
 		}
 
-		if (gameObjects.size() == players.size()) fetch_nextLevel(0);
+		if (gameObjects.size() == players.size()*2) fetch_nextLevel(0);
 		////////////////////////////////////////////////
 
 	}
@@ -274,6 +278,8 @@ public class GameServer {
 		players.clear();
 		pendingCommands.clear();
 		phase = PHASE_LOBBY;
+		
+		gameObjects.add(new Sombrero(netServer.generate_uniqueID()));
 	}
 
 
