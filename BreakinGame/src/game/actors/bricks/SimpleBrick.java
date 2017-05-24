@@ -46,6 +46,7 @@ public class SimpleBrick extends GameObject {
 				.addPointRelative(-0.5f, -0.5f)
 		);
 		
+		set_weight(1000);
 		return this;
 	}
 

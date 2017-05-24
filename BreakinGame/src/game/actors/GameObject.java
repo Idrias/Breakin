@@ -15,7 +15,6 @@ public abstract class GameObject {
 	protected NetworkEntity ne;
 	protected Collider c;
 	protected int lastUpdate;
-	protected int weight=1;
 
 
 
@@ -50,17 +49,17 @@ public abstract class GameObject {
 		if (pos != null && speed != null) {
 			pos.x += speed.x * deltaT;
 			pos.y += speed.y * deltaT;
-			
-			
-			//TODO add reaction to collisions
-			
+
+
+			// TODO add reaction to collisions
+
 			c.set_center(pos);
-			//TODO//Collider.checkCollision(this, others);
-			
+			Collider.checkCollision(this, others);
+
 			lastUpdate = G.p.millis();
 			return pos;
 		}
-		
+
 		lastUpdate = G.p.millis();
 		return null;
 	}
@@ -127,6 +126,13 @@ public abstract class GameObject {
 
 
 
+	public GameObject set_weight(float weight) {
+		ne.set_weight(weight);
+		return this;
+	}
+
+
+
 	public NetworkEntity get_ne() {
 		return ne;
 	}
@@ -151,6 +157,12 @@ public abstract class GameObject {
 
 
 
+	public float get_weight() {
+		return ne.get_weight();
+	}
+
+
+
 	public Collider get_collider() {
 		return c;
 	}
@@ -161,15 +173,18 @@ public abstract class GameObject {
 		lastUpdate = G.p.millis();
 	}
 
-	
+
+
 	public GameObject setDefaultValues() {
 		c = new NotCollider();
 		set_size(1, 1);
 		return this;
 	}
-	
+
+
+
 	///////////////////////////////////////////////////////////////////////////
-	
+
 	abstract public void update(ArrayList<GameObject> others);
 
 
