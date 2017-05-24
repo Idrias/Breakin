@@ -1,8 +1,6 @@
 package game.actors;
 
 import java.util.ArrayList;
-
-import game.actors.colliders.PolygonCollider;
 import network.utilities.NetworkEntity;
 import other.G;
 import other.Helper;
@@ -23,14 +21,14 @@ public class Helicopter extends GameObject {
 		super(ne);
 		setDefaultValues();
 	}
-
-
-
+	
+	
+	
 	public void update(ArrayList<GameObject> others) {
 		simpleMove(others);
 	}
-
-
+	
+	
 	@Override
 	public GameObject setDefaultValues() {
 		
@@ -41,7 +39,7 @@ public class Helicopter extends GameObject {
 		return this;
 	}
 	
-
+	
 	public void draw() {
 		PVector pos = Helper.GameToDrawPos(get_pos());
 		PVector size = Helper.GameToDrawSize(get_size());

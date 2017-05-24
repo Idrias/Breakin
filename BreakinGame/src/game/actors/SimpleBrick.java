@@ -1,7 +1,6 @@
 package game.actors;
 
 import java.util.ArrayList;
-import game.actors.colliders.NotCollider;
 import game.actors.colliders.PolygonCollider;
 import network.utilities.NetworkEntity;
 import other.G;
@@ -33,14 +32,14 @@ public class SimpleBrick extends GameObject {
 		set_size(defaultWidth, defaultHeight);
 		
 		System.out.println(get_pos());
-		set_collider(
+		/*set_collider(
 				new PolygonCollider(get_pos().copy())
 				.addPointRelative(1, 0)
 				.addPointRelative(-1, -1)
 				.addPointRelative(-1, 0)
 				.addPointRelative(0, 1)
 				.addPointRelative(2, 1)
-		);
+		);*/
 		
 		return this;
 	}

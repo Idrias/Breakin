@@ -2,7 +2,6 @@ package game.actors.colliders;
 
 import java.util.ArrayList;
 import game.actors.GameObject;
-import other.G;
 import processing.core.PVector;
 
 

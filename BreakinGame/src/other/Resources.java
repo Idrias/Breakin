@@ -17,6 +17,7 @@ public class Resources {
 				"SFX:Game:MexicanAttack4", "/Assets/Audio/SFX/game/MexicanAttack_4.mp3", 
 				"SFX:Game:MexicanAttack5", "/Assets/Audio/SFX/game/MexicanAttack_5.mp3", 
 				"SFX:Game:MexicanLost", "/Assets/Audio/SFX/game/MexicanLost.mp3", 
+				"SFX:Menu:Helicopter", "/Assets/Audio/SFX/game/Helicopter.mp3",
 				"SFX:Menu:Back", "/Assets/Audio/SFX/menu/back.mp3", 
 				"SFX:Menu:Hover", "/Assets/Audio/SFX/menu/hover.mp3",
 				"SFX:Menu:Next", "/Assets/Audio/SFX/menu/next.mp3",

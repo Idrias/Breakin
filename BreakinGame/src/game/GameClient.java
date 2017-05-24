@@ -9,8 +9,6 @@ import network.utilities.NetworkCommand;
 import network.utilities.NetworkContainer;
 import network.utilities.NetworkEntity;
 import other.G;
-import other.Helper;
-import processing.core.PApplet;
 import processing.core.PVector;
 
 
@@ -210,14 +208,14 @@ public class GameClient {
 		PVector mexicanPos = null;
 		
 		
-		/*for(GameObject go : gos) {
+		for(GameObject go : gos) {
 			if(go.getClass() == Mexican.class) {
 				Mexican m = (Mexican)go;
 				if(m.getOwnerID() == netClient.get_playerID()) {
 					mexicanPos = go.get_pos().copy();
 				}
 			}
-		}*/
+		}
 		
 		
 		// Prepare to send movement vector to server

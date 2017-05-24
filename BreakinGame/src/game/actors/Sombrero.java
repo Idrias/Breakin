@@ -14,6 +14,8 @@ public class Sombrero extends GameObject {
 	public Sombrero(int networkID) {
 			super(Sombrero.class, networkID);
 			setDefaultValues();
+			
+			
 		}
 
 
@@ -46,7 +48,8 @@ public class Sombrero extends GameObject {
 			PVector size = Helper.GameToDrawSize(get_size());
 			trail.disp(G.p.mouseX, G.p.mouseY);
 			
-			G.sprite.dispAnimation("Anim:Sombrero", G.p.mouseX, G.p.mouseY, size.x, size.y, 80, 4);
+			//G.sprite.dispAnimation("Anim:Sombrero", G.p.mouseX, G.p.mouseY, size.x, size.y, 80, 4);
+			G.sprite.dispAnimation("Anim:Helicopter", G.p.mouseX, G.p.mouseY, size.x*6, size.y*6, 40, 4);
 		}
 
 }

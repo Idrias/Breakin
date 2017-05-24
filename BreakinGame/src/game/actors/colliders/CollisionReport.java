@@ -1,7 +1,6 @@
 package game.actors.colliders;
 
 import game.actors.GameObject;
-import other.G;
 import processing.core.PVector;
 
 public class CollisionReport {
