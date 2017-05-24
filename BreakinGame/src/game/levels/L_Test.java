@@ -21,7 +21,7 @@ public class L_Test extends Level {
 	String[] model3 = new String[] { "oxooxoooooooooo", "oxooooooooooooo", "ooooooooooooooo", "ooooooxxooooooo", };
 	
 	static public final int m4 = 4;
-	String[] model4= new String[] { "ooooooooooooooo", "ooooooooooooooo", "oooooooxooooooo", "ooooooooooooooo", "ooooooooooooooo", "ooooooooooooooo","ooooooooooooooo", "ooooooooooooooo","ooooooooooooooo", "ooooooooooooooo","ooooooooooooooo", "ooooooooooooooo","ooooooooooooooo", "ooooooooooooooo",};
+	String[] model4= new String[] { "oooooooxooooooo", "ooooooooooooooo", "ooooooooooooooo", "ooooooooooooooo","ooooooooooooooo", "ooooooooooooooo","ooooooooooooooo", "ooooooooooooooo","ooooooooooooooo", "ooooooooooooooo","ooooooooooooooo", "ooooooooooooooo",};
 
 	public L_Test(int m) {
 		String[] model;

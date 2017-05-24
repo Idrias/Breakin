@@ -15,6 +15,7 @@ public abstract class GameObject {
 	protected NetworkEntity ne;
 	protected Collider c;
 	protected int lastUpdate;
+	protected int weight=1;
 
 
 

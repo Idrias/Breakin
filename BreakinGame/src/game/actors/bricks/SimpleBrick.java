@@ -38,7 +38,6 @@ public class SimpleBrick extends GameObject {
 		float defaultHeight = 1;
 		set_size(defaultWidth, defaultHeight);
 		
-		System.out.println(get_pos());
 		set_collider(
 				new PolygonCollider(get_pos().copy())
 				.addPointRelative(-0.5f, 0.5f)

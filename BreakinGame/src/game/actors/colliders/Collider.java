@@ -2,6 +2,7 @@ package game.actors.colliders;
 
 import java.util.ArrayList;
 import game.actors.GameObject;
+import other.G;
 import processing.core.PVector;
 
 
@@ -40,8 +41,8 @@ public abstract class Collider {
 
 
 
-	public void registerHit(GameObject other, float overlap) {
-		hits.add(new CollisionReport(other, overlap));
+	public void registerHit(GameObject other) {
+		hits.add(new CollisionReport(other));
 	}
 
 
@@ -76,8 +77,8 @@ public abstract class Collider {
 
 			if (c1.getClass() == PolygonCollider.class && c2.getClass() == PolygonCollider.class) {
 				if (poly_poly_collision((PolygonCollider) c1, (PolygonCollider) c2)) {
-					c1.registerHit(other, 1);
-					c2.registerHit(me, 1);
+					c1.registerHit(other);
+					c2.registerHit(me);
 					return true;
 				}
 			}
@@ -105,7 +106,7 @@ public abstract class Collider {
 			// get the PVectors at our current position
 			// this makes our if statement a little cleaner
 			PVector vc = a.get(current); // c for "current"
-			PVector vn = b.get(current); // n for "next"
+			PVector vn = a.get(next); // n for "next"
 
 			// now we can use these two points (a line) to compare to the
 			// other polygon's vertices using polyLine()

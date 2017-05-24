@@ -16,6 +16,7 @@ import network.utilities.NetworkCommand;
 import network.utilities.NetworkContainer;
 import network.utilities.NetworkEntity;
 import other.G;
+import other.Helper;
 import processing.core.PVector;
 
 
@@ -35,6 +36,7 @@ public class GameClient {
 
 	ParallaxDesert bgDesert;
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 	public GameClient(String ip, int port) {
@@ -89,7 +91,7 @@ public class GameClient {
 
 
 	void update_INGAME() {
-		if(bgDesert == null)bgDesert = new ParallaxDesert();
+		if (bgDesert == null) bgDesert = new ParallaxDesert();
 		bgDesert.disp();
 		update_gos();
 	}
@@ -132,7 +134,8 @@ public class GameClient {
 			int ne_id = ne.get_id();
 			boolean found = false;
 			for (GameObject go : gos) {
-				if (ne_id == go.get_ne().get_id()) {
+				if (ne_id == go.get_ne()
+						.get_id()) {
 					go.set_ne(ne);
 					found = true;
 				}
@@ -145,21 +148,20 @@ public class GameClient {
 
 				else if (c == SimpleBrick.class)
 					gos.add(new SimpleBrick(ne));
-				
+
 				else if (c == IronBrick.class)
 					gos.add(new IronBrick(ne));
-				
+
 				else if (c == TNTBrick.class)
 					gos.add(new TNTBrick(ne));
 
-				else if (c == Mexican.class) 
+				else if (c == Mexican.class)
 					gos.add(new Mexican(ne));
-				
-				else if (c == Helicopter.class) 
+
+				else if (c == Helicopter.class)
 					gos.add(new Helicopter(ne));
-				
-				else if(c == Sombrero.class)
-					gos.add(new Sombrero(ne));
+
+				else if (c == Sombrero.class) gos.add(new Sombrero(ne));
 			}
 		}
 
@@ -167,7 +169,8 @@ public class GameClient {
 			// Remove local GameObjects whose NetworkEntities aren't in the list
 			// anymore!
 			GameObject go = gos.get(i);
-			if (!IDs.contains(go.get_ne().get_id())) {
+			if (!IDs.contains(go.get_ne()
+					.get_id())) {
 				gos.remove(i);
 				i--;
 			}
@@ -213,27 +216,28 @@ public class GameClient {
 		if (G.p.millis() - lastNetUpdate < netDeltaT) return;
 		lastNetUpdate = G.p.millis();
 		PVector mexicanPos = null;
-		
-		
-		for(GameObject go : gos) {
-			if(go.getClass() == Mexican.class) {
-				Mexican m = (Mexican)go;
-				if(m.getOwnerID() == netClient.get_playerID()) {
-					mexicanPos = go.get_pos().copy();
+
+
+		for (GameObject go : gos) {
+			if (go.getClass() == Mexican.class) {
+				Mexican m = (Mexican) go;
+				if (m.getOwnerID() == netClient.get_playerID()) {
+					mexicanPos = go.get_pos()
+							.copy();
 				}
 			}
 		}
-		
-		
+
+
 		// Prepare to send movement vector to server
 		float movementX = 0, movementY = 0;
 		if (G.keys[G.KEY_FORWARDS]) movementY -= 1;
 		if (G.keys[G.KEY_BACKWARDS]) movementY += 1;
 		if (G.keys[G.KEY_RIGHT]) movementX += 1;
 		if (G.keys[G.KEY_LEFT]) movementX -= 1;
-		
-		//if(mexicanPos.x > G.p.mouseX)movementX -= 1;
-		//else movementX += 1;
+
+		// if(mexicanPos.x > G.p.mouseX)movementX -= 1;
+		// else movementX += 1;
 
 		ArrayList<Float> floatValues = new ArrayList<Float>();
 		floatValues.add(movementX);
@@ -246,7 +250,7 @@ public class GameClient {
 					// ABSCHIEBEN!
 					Mexican m = (Mexican) g;
 					if (m.getOwnerID() == netClient.get_playerID()) {
-						m.set_pos(G.p.mouseX, movementY);
+						m.set_speed(movementX, movementY);
 					}
 				}
 			}

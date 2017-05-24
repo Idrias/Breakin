@@ -24,16 +24,6 @@ public class TNTBrick extends SimpleBrick {
 	}
 
 
-	
-	@Override
-	public TNTBrick setDefaultValues() {
-		float defaultWidth = 1;
-		float defaultHeight = 1;
-		set_size(defaultWidth, defaultHeight);
-		return this;
-	}
-
-
 
 	public void draw() {
 		PVector pos = Helper.GameToDrawPos(get_pos());

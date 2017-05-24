@@ -101,6 +101,7 @@ public class Mexican extends GameObject {
 		// COLLISION TEST
 		boolean collided = Collider.checkCollision(this, others);
 		if (collided) {
+			G.println("collided");
 			set_pos(posBefore);
 			c.set_center(posBefore);
 			c.clearHits();
