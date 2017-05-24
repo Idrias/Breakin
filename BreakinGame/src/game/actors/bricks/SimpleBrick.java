@@ -12,6 +12,12 @@ import processing.core.PVector;
 
 public class SimpleBrick extends GameObject {
 
+	public SimpleBrick(Class<?> c, int networkID) {
+		// Children call this
+		super(c, networkID);
+	}
+	
+	
 	public SimpleBrick(int networkID) {
 		// Server calls this
 		super(SimpleBrick.class, networkID);

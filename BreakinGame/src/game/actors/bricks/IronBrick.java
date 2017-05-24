@@ -9,7 +9,7 @@ import processing.core.PVector;
 
 
 
-public class IronBrick extends GameObject {
+public class IronBrick extends SimpleBrick {
 
 	public IronBrick(int networkID) {
 		// Server calls this

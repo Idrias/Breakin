@@ -9,7 +9,7 @@ import processing.core.PVector;
 
 
 
-public class TNTBrick extends GameObject {
+public class TNTBrick extends SimpleBrick {
 
 	public TNTBrick(int networkID) {
 		// Server calls this
