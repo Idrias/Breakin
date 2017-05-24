@@ -8,9 +8,9 @@ import other.G;
 
 
 
-public class l_HolyWall extends Level {
+public class L_HolyWall extends Level {
 
-	public l_HolyWall() {
+	public L_HolyWall() {
 		
 		height = 3;
 		for (int y = 0; y < height; y++) {
