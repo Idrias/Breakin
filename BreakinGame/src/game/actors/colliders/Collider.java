@@ -109,12 +109,12 @@ public abstract class Collider {
 
 			// now we can use these two points (a line) to compare to the
 			// other polygon's vertices using polyLine()
-			System.out.println(b);
-			boolean collision = poly_line_collision((PVector[])b.toArray(), vc.x, vc.y, vn.x, vn.y);
+			//System.out.println(b);
+			boolean collision = poly_line_collision(b, vc.x, vc.y, vn.x, vn.y);
 			if (collision) return true;
 
 			// optional: check if the 2nd polygon is INSIDE the first
-			collision = poly_point_collision((PVector[])a.toArray(), b.get(0).x, b.get(0).y);
+			collision = poly_point_collision(a, b.get(0).x, b.get(0).y);
 			if (collision) return true;
 		}
 
@@ -123,23 +123,23 @@ public abstract class Collider {
 
 
 
-	static boolean poly_line_collision(PVector[] vertices, float x1, float y1, float x2, float y2) {
+	static boolean poly_line_collision(ArrayList<PVector> vertices, float x1, float y1, float x2, float y2) {
 
 		// go through each of the vertices, plus the next vertex in the list
 		int next = 0;
-		for (int current = 0; current < vertices.length; current++) {
+		for (int current = 0; current < vertices.size(); current++) {
 
 			// get next vertex in list
 			// if we've hit the end, wrap around to 0
 			next = current + 1;
-			if (next == vertices.length) next = 0;
+			if (next == vertices.size()) next = 0;
 
 			// get the PVectors at our current position
 			// extract X/Y coordinates from each
-			float x3 = vertices[current].x;
-			float y3 = vertices[current].y;
-			float x4 = vertices[next].x;
-			float y4 = vertices[next].y;
+			float x3 = vertices.get(current).x;
+			float y3 = vertices.get(current).y;
+			float x4 = vertices.get(next).x;
+			float y4 = vertices.get(next).y;
 
 			// do a Line/Line comparison
 			// if true, return 'true' immediately and stop testing (faster)
@@ -169,22 +169,22 @@ public abstract class Collider {
 
 
 
-	static boolean poly_point_collision(PVector[] vertices, float px, float py) {
+	static boolean poly_point_collision(ArrayList<PVector> vertices, float px, float py) {
 		boolean collision = false;
 		// TODO
 		// go through each of the vertices, plus the next vertex in the list
 		int next = 0;
-		for (int current = 0; current < vertices.length; current++) {
+		for (int current = 0; current < vertices.size(); current++) {
 
 			// get next vertex in list
 			// if we've hit the end, wrap around to 0
 			next = current + 1;
-			if (next == vertices.length) next = 0;
+			if (next == vertices.size()) next = 0;
 
 			// get the PVectors at our current position
 			// this makes our if statement a little cleaner
-			PVector vc = vertices[current]; // c for "current"
-			PVector vn = vertices[next]; // n for "next"
+			PVector vc = vertices.get(current); // c for "current"
+			PVector vn = vertices.get(next); // n for "next"
 
 			// compare position, flip 'collision' variable back and forth
 			if (((vc.y > py && vn.y < py) || (vc.y < py && vn.y > py)) && (px < (vn.x - vc.x) * (py - vc.y) / (vn.y - vc.y) + vc.x))

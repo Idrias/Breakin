@@ -64,7 +64,7 @@ public class WorldManager {
 			break;
 		}
 		
-		generatedLevel = new l_HolyWall(); //TODO DEV !!
+		generatedLevel = new L_Test(L_Test.m4); //TODO DEV !!
 		
 		if (generatedLevel != null) {
 			futureWorld.add(generatedLevel);

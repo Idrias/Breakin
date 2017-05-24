@@ -54,7 +54,7 @@ public abstract class GameObject {
 			//TODO add reaction to collisions
 			
 			c.set_center(pos);
-			Collider.checkCollision(this, others);
+			//TODO//Collider.checkCollision(this, others);
 			
 			lastUpdate = G.p.millis();
 			return pos;
