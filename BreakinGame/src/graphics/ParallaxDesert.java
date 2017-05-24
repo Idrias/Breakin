@@ -1,4 +1,4 @@
-package game.actors;
+package graphics;
 import other.G;
 
 public class ParallaxDesert {

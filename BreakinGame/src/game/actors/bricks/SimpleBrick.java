@@ -1,6 +1,7 @@
-package game.actors;
+package game.actors.bricks;
 
 import java.util.ArrayList;
+import game.actors.GameObject;
 import game.actors.colliders.PolygonCollider;
 import network.utilities.NetworkEntity;
 import other.G;
@@ -11,6 +12,12 @@ import processing.core.PVector;
 
 public class SimpleBrick extends GameObject {
 
+	public SimpleBrick(Class<?> c, int networkID) {
+		// Children call this
+		super(c, networkID);
+	}
+	
+	
 	public SimpleBrick(int networkID) {
 		// Server calls this
 		super(SimpleBrick.class, networkID);
@@ -32,14 +39,13 @@ public class SimpleBrick extends GameObject {
 		set_size(defaultWidth, defaultHeight);
 		
 		System.out.println(get_pos());
-		/*set_collider(
+		set_collider(
 				new PolygonCollider(get_pos().copy())
-				.addPointRelative(1, 0)
-				.addPointRelative(-1, -1)
-				.addPointRelative(-1, 0)
-				.addPointRelative(0, 1)
-				.addPointRelative(2, 1)
-		);*/
+				.addPointRelative(-0.5f, 0.5f)
+				.addPointRelative(0.5f, 0.5f)
+				.addPointRelative(0.5f, -0.5f)
+				.addPointRelative(-0.5f, -0.5f)
+		);
 		
 		return this;
 	}

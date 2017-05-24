@@ -2,7 +2,7 @@ package game.levels;
 
 import game.actors.EndIndicator;
 import game.actors.GameObject;
-import game.actors.SimpleBrick;
+import game.actors.bricks.SimpleBrick;
 import other.G;
 
 
@@ -19,6 +19,9 @@ public class L_Test extends Level {
 
 	static public final int m3 = 3;
 	String[] model3 = new String[] { "oxooxoooooooooo", "oxooooooooooooo", "ooooooooooooooo", "ooooooxxooooooo", };
+	
+	static public final int m4 = 4;
+	String[] model4= new String[] { "ooooooooooooooo", "ooooooooooooooo", "oooooooxooooooo", "ooooooooooooooo", "ooooooooooooooo", "ooooooooooooooo","ooooooooooooooo", "ooooooooooooooo","ooooooooooooooo", "ooooooooooooooo","ooooooooooooooo", "ooooooooooooooo","ooooooooooooooo", "ooooooooooooooo",};
 
 	public L_Test(int m) {
 		String[] model;
@@ -28,6 +31,8 @@ public class L_Test extends Level {
 			model = model2;
 		else if (m == m3)
 			model = model3;
+		else if (m == m4)
+			model = model4;
 		else
 			return;
 		

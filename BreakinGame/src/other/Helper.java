@@ -43,7 +43,12 @@ public class Helper {
 
 	}
 
-
+	
+	
+	public static PVector DrawToGamePos(PVector drawPos) {
+		//TODO DEV
+		return new PVector((drawPos.x*G.playarea_width)/G.p.width, (drawPos.y*G.playarea_height)/G.p.height);
+	}
 
 	public static PVector GameToDrawPos(PVector gamePos) {
 		float limitingFactor;

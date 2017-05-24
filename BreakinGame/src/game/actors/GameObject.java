@@ -12,9 +12,9 @@ import processing.core.PVector;
 public abstract class GameObject {
 
 	// Each actor within the game inherits from the GameObject object.
-	NetworkEntity ne;
-	Collider c;
-	int lastUpdate;
+	protected NetworkEntity ne;
+	protected Collider c;
+	protected int lastUpdate;
 
 
 
@@ -54,7 +54,7 @@ public abstract class GameObject {
 			//TODO add reaction to collisions
 			
 			c.set_center(pos);
-			Collider.checkCollision(this, others);
+			//TODO//Collider.checkCollision(this, others);
 			
 			lastUpdate = G.p.millis();
 			return pos;

@@ -1,7 +1,8 @@
-package game.actors;
+package game.actors.dynamic;
 
 import java.util.ArrayList;
-
+import game.actors.GameObject;
+import graphics.Trail;
 import network.utilities.NetworkEntity;
 import other.G;
 import other.Helper;

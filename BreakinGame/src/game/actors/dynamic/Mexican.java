@@ -1,6 +1,7 @@
-package game.actors;
+package game.actors.dynamic;
 
 import java.util.ArrayList;
+import game.actors.GameObject;
 import game.actors.colliders.Collider;
 import game.actors.colliders.CollisionReport;
 import game.actors.colliders.PolygonCollider;
@@ -49,11 +50,12 @@ public class Mexican extends GameObject {
 
 		set_collider(
 				new PolygonCollider(get_pos().copy())
-				.addPointRelative(1, 0)
-				.addPointRelative(0, -1)
-				.addPointRelative(-1, 0)
-				.addPointRelative(0, 1)
-				.addPointRelative(2, 1)
+				.addPointRelative(0, -0.3f)  //A
+				.addPointRelative(-0.138f, -0.217f) // C
+				.addPointRelative(-0.139f, 0.183f) //D!
+				.addPointRelative(0, 0.383f) // F
+				.addPointRelative(0.139f, 0.183f) //E!
+				.addPointRelative(0.138f, -0.217f) //B
 		);
 
 		System.out.println("POS: " + get_pos());
@@ -117,6 +119,14 @@ public class Mexican extends GameObject {
 		c.draw();
 		G.sprite.dispAnimation("Anim:Mexican", (int) pos.x, (int) pos.y, size.x, size.y, 130, 4);
                 
+		
+		/* TODO DEV Debug Tool for finding hitbox points!
+		PVector mouse = Helper.DrawToGamePos(new PVector(G.p.mouseX, G.p.mouseY));
+		if(get_pos().y > 0)
+		G.p.println("Mouse is ingame at: " + mouse, "Relative to Block: " + mouse.sub(get_pos()));
+		G.p.fill(255,0,0);
+		G.p.ellipse(G.p.mouseX, G.p.mouseY, 5, 5);
+		*/
 
 	}
 

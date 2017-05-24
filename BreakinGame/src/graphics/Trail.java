@@ -1,4 +1,4 @@
-package game.actors;
+package graphics;
 
 import other.G;
 
@@ -10,7 +10,7 @@ public class Trail {
 	int[] trailX, trailY;
 	
 	public Trail(int _outerTrailColor){
-		  
+		
 		  outerTrailLength = 150;
 		  coreTrailLength = 70;
 		  outerTrailWeight = G.p.width/50;
@@ -19,10 +19,12 @@ public class Trail {
 		  //-----------------------------------------------------------------------------------------------------
 		  
 		  trailX = new int[outerTrailLength];
-		  trailY = new int[outerTrailLength];	
+		  trailY = new int[outerTrailLength];
+		
 	}
 	
-	void disp(int x, int y){
+	
+	public void disp(int x, int y){
 		
 		
 		

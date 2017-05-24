@@ -1,6 +1,5 @@
-package game.actors;
+package game.actors.bricks;
 
-import java.util.ArrayList;
 import network.utilities.NetworkEntity;
 import other.G;
 import other.Helper;
@@ -8,7 +7,7 @@ import processing.core.PVector;
 
 
 
-public class IronBrick extends GameObject {
+public class IronBrick extends SimpleBrick {
 
 	public IronBrick(int networkID) {
 		// Server calls this
@@ -39,14 +38,6 @@ public class IronBrick extends GameObject {
 		PVector pos = Helper.GameToDrawPos(get_pos());
 		PVector size = Helper.GameToDrawSize(get_size());
 		G.sprite.dispSprite("Static:IronBrick", (int) pos.x, (int) pos.y, (int) size.x, (int) size.y);
-
 		G.p.fill(255, 0, 0);
 	}
-
-
-
-	public void update(ArrayList<GameObject> others) {
-		simpleMove(others);
-	}
-
 }

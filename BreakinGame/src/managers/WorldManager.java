@@ -5,7 +5,7 @@ import game.levels.L_SimpleMaze;
 import game.levels.L_SimpleWall;
 import game.levels.L_Test;
 import game.levels.Level;
-import game.levels.l_HolyWall;
+import game.levels.L_HolyWall;
 import other.G;
 
 
@@ -64,7 +64,7 @@ public class WorldManager {
 			break;
 		}
 		
-		generatedLevel = new l_HolyWall(); //TODO DEV !!
+		generatedLevel = new L_HolyWall(); //new L_Test(L_Test.m4); //TODO DEV !!
 		
 		if (generatedLevel != null) {
 			futureWorld.add(generatedLevel);

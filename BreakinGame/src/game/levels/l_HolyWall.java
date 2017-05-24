@@ -1,16 +1,16 @@
 package game.levels;
 
 import game.actors.EndIndicator;
-import game.actors.IronBrick;
-import game.actors.SimpleBrick;
-import game.actors.TNTBrick;
+import game.actors.bricks.IronBrick;
+import game.actors.bricks.SimpleBrick;
+import game.actors.bricks.TNTBrick;
 import other.G;
 
 
 
-public class l_HolyWall extends Level {
+public class L_HolyWall extends Level {
 
-	public l_HolyWall() {
+	public L_HolyWall() {
 		
 		height = 3;
 		for (int y = 0; y < height; y++) {
