@@ -2,7 +2,6 @@ package game.actors;
 
 import java.util.ArrayList;
 import game.actors.colliders.NotCollider;
-import game.actors.colliders.RectangularCollider;
 import network.utilities.NetworkEntity;
 import other.G;
 import other.Helper;
@@ -31,7 +30,6 @@ public class TNTBrick extends GameObject {
 		float defaultWidth = 1;
 		float defaultHeight = 1;
 		set_size(defaultWidth, defaultHeight);
-		c = new RectangularCollider(get_pos(), defaultWidth, defaultHeight);
 		return this;
 	}
 
@@ -42,7 +40,7 @@ public class TNTBrick extends GameObject {
 		PVector size = Helper.GameToDrawSize(get_size());
 		G.sprite.dispSprite("Static:TNTBrick", (int) pos.x, (int) pos.y, (int) size.x, (int) size.y);
 		//Rakete anzeigen
-		//G.sprite.dispAnimation("Anim:Rocket", (int) pos.x, (int) pos.y, size.x, size.y*2, 50, 4);
+		G.sprite.dispAnimation("Anim:Rocket", (int) pos.x, (int) pos.y, size.x, size.y*2, 50, 4);
 		G.p.fill(255, 0, 0);
 	}
 

@@ -150,6 +150,9 @@ public class GameClient {
 				else if (c == Mexican.class) 
 					gos.add(new Mexican(ne));
 				
+				else if (c == Helicopter.class) 
+					gos.add(new Helicopter(ne));
+				
 				else if(c == Sombrero.class)
 					gos.add(new Sombrero(ne));
 			}
@@ -207,14 +210,14 @@ public class GameClient {
 		PVector mexicanPos = null;
 		
 		
-		for(GameObject go : gos) {
+		/*for(GameObject go : gos) {
 			if(go.getClass() == Mexican.class) {
 				Mexican m = (Mexican)go;
 				if(m.getOwnerID() == netClient.get_playerID()) {
 					mexicanPos = go.get_pos().copy();
 				}
 			}
-		}
+		}*/
 		
 		
 		// Prepare to send movement vector to server
