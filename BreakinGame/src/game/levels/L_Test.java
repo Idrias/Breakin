@@ -3,7 +3,6 @@ package game.levels;
 import game.actors.EndIndicator;
 import game.actors.GameObject;
 import game.actors.SimpleBrick;
-import game.actors.colliders.NotCollider;
 import other.G;
 
 

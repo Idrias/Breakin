@@ -1,7 +1,6 @@
 package game.actors;
 
 import java.util.ArrayList;
-import game.actors.colliders.NotCollider;
 import network.utilities.NetworkEntity;
 import other.G;
 import other.Helper;

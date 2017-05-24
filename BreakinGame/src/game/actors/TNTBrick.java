@@ -1,8 +1,6 @@
 package game.actors;
 
 import java.util.ArrayList;
-import game.actors.colliders.NotCollider;
-import game.actors.colliders.RectangularCollider;
 import network.utilities.NetworkEntity;
 import other.G;
 import other.Helper;
@@ -31,7 +29,6 @@ public class TNTBrick extends GameObject {
 		float defaultWidth = 1;
 		float defaultHeight = 1;
 		set_size(defaultWidth, defaultHeight);
-		c = new RectangularCollider(get_pos(), defaultWidth, defaultHeight);
 		return this;
 	}
 

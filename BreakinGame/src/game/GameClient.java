@@ -9,8 +9,6 @@ import network.utilities.NetworkCommand;
 import network.utilities.NetworkContainer;
 import network.utilities.NetworkEntity;
 import other.G;
-import other.Helper;
-import processing.core.PApplet;
 import processing.core.PVector;
 
 
@@ -149,6 +147,9 @@ public class GameClient {
 
 				else if (c == Mexican.class) 
 					gos.add(new Mexican(ne));
+				
+				else if (c == Helicopter.class) 
+					gos.add(new Helicopter(ne));
 				
 				else if(c == Sombrero.class)
 					gos.add(new Sombrero(ne));

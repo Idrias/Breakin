@@ -17,6 +17,7 @@ public class Resources {
 				"SFX:Game:MexicanAttack4", "/Assets/Audio/SFX/game/MexicanAttack_4.mp3", 
 				"SFX:Game:MexicanAttack5", "/Assets/Audio/SFX/game/MexicanAttack_5.mp3", 
 				"SFX:Game:MexicanLost", "/Assets/Audio/SFX/game/MexicanLost.mp3", 
+				"SFX:Menu:Helicopter", "/Assets/Audio/SFX/game/Helicopter.mp3",
 				"SFX:Menu:Back", "/Assets/Audio/SFX/menu/back.mp3", 
 				"SFX:Menu:Hover", "/Assets/Audio/SFX/menu/hover.mp3",
 				"SFX:Menu:Next", "/Assets/Audio/SFX/menu/next.mp3",
@@ -36,11 +37,12 @@ public class Resources {
 				"Static:SimpleBrick", "/Assets/Graphics/Static_Sprites/WallBrick.png",
 				"Static:IronBrick", "/Assets/Graphics/Static_Sprites/IronBrick.png",
 				"Static:TNTBrick", "/Assets/Graphics/Static_Sprites/TNTBrick.png",
-
+				
 				// Animated
 				"Anim:Mexican", "/Assets/Graphics/Spritesheets/Juan_2.png", 
 				"Anim:Sombrero", "/Assets/Graphics/Spritesheets/Sombrero_2.png",
 				"Anim:Rocket", "/Assets/Graphics/Spritesheets/rocket_2.png",
+				"Anim:Helicopter", "/Assets/Graphics/Spritesheets/Helicopter_2.png",
 				"Anim:DestructedWallBrick", "/Assets/Graphics/Spritesheets/DestructedWallBrick_3.png" };
 	}
 }
