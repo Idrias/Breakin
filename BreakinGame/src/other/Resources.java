@@ -1,10 +1,10 @@
 package other;
 
 public class Resources {
-
+	
 	static final String[] audioFiles;
 	static final String[] imageFiles;
-
+	
 	static {
 		audioFiles = new String[] {   
 				
@@ -25,7 +25,8 @@ public class Resources {
 				
 				//Music
 				"Music:Trump", "/Assets/Audio/Music/Trump.mp3", 
-				"Music:MainMenu", "/Assets/Audio/Music/bgmMainMenu.mp3" };
+				"Music:MainMenu", "/Assets/Audio/Music/bgmMainMenu.mp3",
+				"Music:InGame", "/Assets/Audio/Music/bgmBossFight.mp3"};
 				
 				
 		imageFiles = new String[] {

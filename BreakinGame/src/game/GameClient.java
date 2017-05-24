@@ -226,7 +226,7 @@ public class GameClient {
 		if (G.keys[G.KEY_LEFT]) movementX -= 1;
 		
 		//if(mexicanPos.x > G.p.mouseX)movementX -= 1;
-		//Delse movementX += 1;
+		//else movementX += 1;
 
 		ArrayList<Float> floatValues = new ArrayList<Float>();
 		floatValues.add(movementX);
@@ -239,7 +239,7 @@ public class GameClient {
 					// ABSCHIEBEN!
 					Mexican m = (Mexican) g;
 					if (m.getOwnerID() == netClient.get_playerID()) {
-						m.set_speed(movementX, movementY);
+						m.set_pos(G.p.mouseX, movementY);
 					}
 				}
 			}
