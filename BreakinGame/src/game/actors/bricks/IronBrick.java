@@ -1,7 +1,5 @@
 package game.actors.bricks;
 
-import java.util.ArrayList;
-import game.actors.GameObject;
 import network.utilities.NetworkEntity;
 import other.G;
 import other.Helper;
@@ -40,14 +38,6 @@ public class IronBrick extends SimpleBrick {
 		PVector pos = Helper.GameToDrawPos(get_pos());
 		PVector size = Helper.GameToDrawSize(get_size());
 		G.sprite.dispSprite("Static:IronBrick", (int) pos.x, (int) pos.y, (int) size.x, (int) size.y);
-
 		G.p.fill(255, 0, 0);
 	}
-
-
-
-	public void update(ArrayList<GameObject> others) {
-		simpleMove(others);
-	}
-
 }

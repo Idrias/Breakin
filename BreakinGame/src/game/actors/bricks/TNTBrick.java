@@ -39,15 +39,7 @@ public class TNTBrick extends SimpleBrick {
 		PVector pos = Helper.GameToDrawPos(get_pos());
 		PVector size = Helper.GameToDrawSize(get_size());
 		G.sprite.dispSprite("Static:TNTBrick", (int) pos.x, (int) pos.y, (int) size.x, (int) size.y);
-		//Rakete anzeigen
-		//G.sprite.dispAnimation("Anim:Rocket", (int) pos.x, (int) pos.y, size.x, size.y*2, 50, 4);
 		G.p.fill(255, 0, 0);
-	}
-
-
-
-	public void update(ArrayList<GameObject> others) {
-		simpleMove(others);
 	}
 
 }
