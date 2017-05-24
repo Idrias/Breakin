@@ -3,8 +3,8 @@ import other.G;
 
 public class ParallaxDesert {
 	
-	int counter = 0;
-	int speed = 1;
+	float counter = 0;
+	float speed = 0.3f;
 	
 	public ParallaxDesert(){
 	
@@ -16,11 +16,13 @@ public class ParallaxDesert {
 	
 	public void disp(){
 		
+		
+		
 		if(counter < G.p.height)counter += speed;
 		else counter = 0;
 		
-		G.sprite.dispSprite("Static:DesertBG", G.p.width/2,   G.p.height/2 + counter, G.p.width, G.p.height);
-		G.sprite.dispSprite("Static:DesertBG", G.p.width/2, - G.p.height/2 + counter, G.p.width, G.p.height);
+		G.sprite.dispSprite("Static:DesertBG", G.p.width/2,   G.p.height/2 + (int)counter, G.p.width, G.p.height);
+		G.sprite.dispSprite("Static:DesertBG", G.p.width/2, - G.p.height/2 + (int)counter, G.p.width, G.p.height);
 		
 	};
 	

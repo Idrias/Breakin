@@ -3,6 +3,7 @@ package game.levels;
 import game.actors.EndIndicator;
 import game.actors.IronBrick;
 import game.actors.SimpleBrick;
+import game.actors.TNTBrick;
 import other.G;
 
 
@@ -19,8 +20,12 @@ public class l_HolyWall extends Level {
 				float i = G.p.random(0, 2);
 				
 				if(i < 1.6){
-					
-					if(i < 0.3){
+					if(i < 0.05){
+						TNTBrick tnt = new TNTBrick(G.gameServer.generate_uniqueID());
+						tnt.set_pos(x + 0.5f, y);
+						gameObjects.add(tnt);
+					}
+					else if(i < 0.3){
 						IronBrick iron = new IronBrick(G.gameServer.generate_uniqueID());
 						iron.set_pos(x + 0.5f, y);
 						gameObjects.add(iron);

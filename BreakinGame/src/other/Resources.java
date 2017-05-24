@@ -35,10 +35,12 @@ public class Resources {
 				"Static:Tacursor", "/Assets/Graphics/Static_Sprites/Tacursor.png",
 				"Static:SimpleBrick", "/Assets/Graphics/Static_Sprites/WallBrick.png",
 				"Static:IronBrick", "/Assets/Graphics/Static_Sprites/IronBrick.png",
+				"Static:TNTBrick", "/Assets/Graphics/Static_Sprites/TNTBrick.png",
 
 				// Animated
 				"Anim:Mexican", "/Assets/Graphics/Spritesheets/Juan_2.png", 
 				"Anim:Sombrero", "/Assets/Graphics/Spritesheets/Sombrero_2.png",
+				"Anim:Rocket", "/Assets/Graphics/Spritesheets/rocket_2.png",
 				"Anim:DestructedWallBrick", "/Assets/Graphics/Spritesheets/DestructedWallBrick_3.png" };
 	}
 }

@@ -140,8 +140,12 @@ public class GameClient {
 
 				else if (c == SimpleBrick.class)
 					gos.add(new SimpleBrick(ne));
+				
 				else if (c == IronBrick.class)
 					gos.add(new IronBrick(ne));
+				
+				else if (c == TNTBrick.class)
+					gos.add(new TNTBrick(ne));
 
 				else if (c == Mexican.class) 
 					gos.add(new Mexican(ne));
@@ -200,13 +204,28 @@ public class GameClient {
 	void net_prepare_commands() {
 		if (G.p.millis() - lastNetUpdate < netDeltaT) return;
 		lastNetUpdate = G.p.millis();
-
+		PVector mexicanPos = null;
+		
+		
+		for(GameObject go : gos) {
+			if(go.getClass() == Mexican.class) {
+				Mexican m = (Mexican)go;
+				if(m.getOwnerID() == netClient.get_playerID()) {
+					mexicanPos = go.get_pos().copy();
+				}
+			}
+		}
+		
+		
 		// Prepare to send movement vector to server
 		float movementX = 0, movementY = 0;
 		if (G.keys[G.KEY_FORWARDS]) movementY -= 1;
 		if (G.keys[G.KEY_BACKWARDS]) movementY += 1;
 		if (G.keys[G.KEY_RIGHT]) movementX += 1;
 		if (G.keys[G.KEY_LEFT]) movementX -= 1;
+		
+		//if(mexicanPos.x > G.p.mouseX)movementX -= 1;
+		//Delse movementX += 1;
 
 		ArrayList<Float> floatValues = new ArrayList<Float>();
 		floatValues.add(movementX);
