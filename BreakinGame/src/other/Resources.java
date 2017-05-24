@@ -17,14 +17,14 @@ public class Resources {
 				"SFX:Game:MexicanAttack4", "/Assets/Audio/SFX/game/MexicanAttack_4.mp3", 
 				"SFX:Game:MexicanAttack5", "/Assets/Audio/SFX/game/MexicanAttack_5.mp3", 
 				"SFX:Game:MexicanLost", "/Assets/Audio/SFX/game/MexicanLost.mp3", 
-				"SFX:Menu:Back", "/Assets/Audio/SFX/menu/back.wav", 
-				"SFX:Menu:Hover", "/Assets/Audio/SFX/menu/hover.wav",
-				"SFX:Menu:Next", "/Assets/Audio/SFX/menu/next.wav",
-				"SFX:Menu:Buzzer", "/Assets/Audio/SFX/menu/buzzer.wav",
+				"SFX:Menu:Back", "/Assets/Audio/SFX/menu/back.mp3", 
+				"SFX:Menu:Hover", "/Assets/Audio/SFX/menu/hover.mp3",
+				"SFX:Menu:Next", "/Assets/Audio/SFX/menu/next.mp3",
+				"SFX:Menu:Buzzer", "/Assets/Audio/SFX/menu/buzzer.mp3",
 				
 				//Music
 				"Music:Trump", "/Assets/Audio/Music/Trump.mp3", 
-				"Music:MainMenu", "/Assets/Audio/Music/bgmMainMenu.wav" };
+				"Music:MainMenu", "/Assets/Audio/Music/bgmMainMenu.mp3" };
 				
 				
 		imageFiles = new String[] {
