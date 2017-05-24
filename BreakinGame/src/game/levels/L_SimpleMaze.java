@@ -2,7 +2,7 @@ package game.levels;
 
 import java.util.ArrayList;
 import game.actors.EndIndicator;
-import game.actors.IronBrick;
+import game.actors.bricks.IronBrick;
 import other.G;
 
 

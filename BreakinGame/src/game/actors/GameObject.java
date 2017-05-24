@@ -12,9 +12,9 @@ import processing.core.PVector;
 public abstract class GameObject {
 
 	// Each actor within the game inherits from the GameObject object.
-	NetworkEntity ne;
-	Collider c;
-	int lastUpdate;
+	protected NetworkEntity ne;
+	protected Collider c;
+	protected int lastUpdate;
 
 
 

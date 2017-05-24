@@ -1,4 +1,4 @@
-package game.actors;
+package graphics;
 
 import other.G;
 
@@ -24,7 +24,7 @@ public class Trail {
 	}
 	
 	
-	void disp(int x, int y){
+	public void disp(int x, int y){
 		
 		
 		

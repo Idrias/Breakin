@@ -1,6 +1,7 @@
-package game.actors;
+package game.actors.bricks;
 
 import java.util.ArrayList;
+import game.actors.GameObject;
 import network.utilities.NetworkEntity;
 import other.G;
 import other.Helper;
@@ -8,16 +9,16 @@ import processing.core.PVector;
 
 
 
-public class TNTBrick extends GameObject {
+public class IronBrick extends GameObject {
 
-	public TNTBrick(int networkID) {
+	public IronBrick(int networkID) {
 		// Server calls this
-		super(TNTBrick.class, networkID);
+		super(IronBrick.class, networkID);
 	}
 
 
 
-	public TNTBrick(NetworkEntity ne) {
+	public IronBrick(NetworkEntity ne) {
 		// Client calls this
 		super(ne);
 	}
@@ -25,10 +26,11 @@ public class TNTBrick extends GameObject {
 
 	
 	@Override
-	public TNTBrick setDefaultValues() {
+	public IronBrick setDefaultValues() {
 		float defaultWidth = 1;
 		float defaultHeight = 1;
 		set_size(defaultWidth, defaultHeight);
+		//c = new RectangularCollider(get_pos(), defaultWidth, defaultHeight);
 		return this;
 	}
 
@@ -37,9 +39,8 @@ public class TNTBrick extends GameObject {
 	public void draw() {
 		PVector pos = Helper.GameToDrawPos(get_pos());
 		PVector size = Helper.GameToDrawSize(get_size());
-		G.sprite.dispSprite("Static:TNTBrick", (int) pos.x, (int) pos.y, (int) size.x, (int) size.y);
-		//Rakete anzeigen
-		//G.sprite.dispAnimation("Anim:Rocket", (int) pos.x, (int) pos.y, size.x, size.y*2, 50, 4);
+		G.sprite.dispSprite("Static:IronBrick", (int) pos.x, (int) pos.y, (int) size.x, (int) size.y);
+
 		G.p.fill(255, 0, 0);
 	}
 

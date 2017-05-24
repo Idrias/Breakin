@@ -1,6 +1,7 @@
-package game.actors;
+package game.actors.bricks;
 
 import java.util.ArrayList;
+import game.actors.GameObject;
 import game.actors.colliders.PolygonCollider;
 import network.utilities.NetworkEntity;
 import other.G;

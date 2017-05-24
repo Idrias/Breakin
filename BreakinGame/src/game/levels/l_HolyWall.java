@@ -1,9 +1,9 @@
 package game.levels;
 
 import game.actors.EndIndicator;
-import game.actors.IronBrick;
-import game.actors.SimpleBrick;
-import game.actors.TNTBrick;
+import game.actors.bricks.IronBrick;
+import game.actors.bricks.SimpleBrick;
+import game.actors.bricks.TNTBrick;
 import other.G;
 
 

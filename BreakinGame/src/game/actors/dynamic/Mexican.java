@@ -1,6 +1,7 @@
-package game.actors;
+package game.actors.dynamic;
 
 import java.util.ArrayList;
+import game.actors.GameObject;
 import game.actors.colliders.Collider;
 import game.actors.colliders.CollisionReport;
 import game.actors.colliders.PolygonCollider;
