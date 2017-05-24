@@ -16,6 +16,7 @@ import network.utilities.NetworkCommand;
 import network.utilities.NetworkContainer;
 import network.utilities.NetworkEntity;
 import other.G;
+import other.Helper;
 import processing.core.PVector;
 
 
@@ -246,7 +247,8 @@ public class GameClient {
 					// ABSCHIEBEN!
 					Mexican m = (Mexican) g;
 					if (m.getOwnerID() == netClient.get_playerID()) {
-						m.set_pos(G.p.mouseX, movementY);
+						
+						m.set_pos(Helper.DrawToGamePos(new PVector(G.p.mouseX, 800)));
 					}
 				}
 			}
