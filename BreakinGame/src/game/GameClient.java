@@ -2,7 +2,8 @@ package game;
 
 import java.net.ConnectException;
 import java.util.ArrayList;
-import game.actors.*;
+import game.actors.Dummy;
+import game.actors.GameObject;
 import game.actors.bricks.IronBrick;
 import game.actors.bricks.SimpleBrick;
 import game.actors.bricks.TNTBrick;
@@ -16,7 +17,6 @@ import network.utilities.NetworkCommand;
 import network.utilities.NetworkContainer;
 import network.utilities.NetworkEntity;
 import other.G;
-import other.Helper;
 import processing.core.PVector;
 
 

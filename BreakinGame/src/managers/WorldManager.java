@@ -5,7 +5,6 @@ import game.levels.L_SimpleMaze;
 import game.levels.L_SimpleWall;
 import game.levels.L_Test;
 import game.levels.Level;
-import game.levels.L_HolyWall;
 import other.G;
 
 
