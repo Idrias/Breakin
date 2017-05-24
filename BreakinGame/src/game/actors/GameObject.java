@@ -106,6 +106,7 @@ public abstract class GameObject {
 
 	public GameObject set_pos(PVector pos) {
 		if (pos != null) ne.set_pos(pos);
+		if (c != null) c.set_center(pos);
 		return this;
 	}
 
