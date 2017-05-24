@@ -5,7 +5,6 @@ import game.actors.EndIndicator;
 import game.actors.GameObject;
 import game.actors.Mexican;
 import game.actors.Sombrero;
-import game.actors.colliders.RectangularCollider;
 import game.levels.Level;
 import managers.WorldManager;
 import network.NetServer;

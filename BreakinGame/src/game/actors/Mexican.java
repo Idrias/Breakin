@@ -3,11 +3,10 @@ package game.actors;
 import java.util.ArrayList;
 import game.actors.colliders.Collider;
 import game.actors.colliders.CollisionReport;
-import game.actors.colliders.RectangularCollider;
+import game.actors.colliders.PolygonCollider;
 import network.utilities.NetworkEntity;
 import other.G;
 import other.Helper;
-import processing.core.PApplet;
 import processing.core.PVector;
 
 
@@ -48,7 +47,17 @@ public class Mexican extends GameObject {
 		//hitBoxPos.x += hitBoxOffsetX;
 		//hitBoxPos.y += hitBoxOffsetY;
 
-		set_collider(new RectangularCollider(hitBoxPos, hitBoxSize.x, hitBoxSize.y));
+		set_collider(
+				new PolygonCollider(get_pos().copy())
+				.addPointRelative(1, 0)
+				.addPointRelative(0, -1)
+				.addPointRelative(-1, 0)
+				.addPointRelative(0, 1)
+				.addPointRelative(2, 1)
+		);
+
+		System.out.println("POS: " + get_pos());
+		System.out.println("CENTER: " + c.get_center());
 		return this;
 	}
 
@@ -105,7 +114,7 @@ public class Mexican extends GameObject {
 		
 		PVector pos = Helper.GameToDrawPos(get_pos());
 		PVector size = Helper.GameToDrawSize(get_size());
-		
+		c.draw();
 		G.sprite.dispAnimation("Anim:Mexican", (int) pos.x, (int) pos.y, size.x, size.y, 130, 4);
                 
 

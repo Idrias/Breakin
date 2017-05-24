@@ -46,7 +46,6 @@ public class Sombrero extends GameObject {
 			PVector size = Helper.GameToDrawSize(get_size());
 			trail.disp(G.p.mouseX, G.p.mouseY);
 			
-			G.println("Dummy");
 			G.sprite.dispAnimation("Anim:Sombrero", G.p.mouseX, G.p.mouseY, size.x, size.y, 80, 4);
 		}
 
