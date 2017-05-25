@@ -46,7 +46,6 @@ public class PolygonCollider extends Collider {
 
 
 	private PolygonCollider addPoint(float x, float y) {
-		System.out.println("ADDING POINT AT " + x + " " + y);
 		points.add(new PVector(x, y));
 		return this;
 	}

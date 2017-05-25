@@ -2,6 +2,7 @@ package game.actors.colliders;
 
 import java.util.ArrayList;
 import game.actors.GameObject;
+import other.G;
 import processing.core.PVector;
 
 
@@ -40,8 +41,8 @@ public abstract class Collider {
 
 
 
-	public void registerHit(GameObject other, float overlap) {
-		hits.add(new CollisionReport(other, overlap));
+	public void registerHit(GameObject other, PVector otherSurface) {
+		hits.add(new CollisionReport(other, otherSurface));
 	}
 
 
@@ -76,8 +77,9 @@ public abstract class Collider {
 
 			if (c1.getClass() == PolygonCollider.class && c2.getClass() == PolygonCollider.class) {
 				if (poly_poly_collision((PolygonCollider) c1, (PolygonCollider) c2)) {
-					c1.registerHit(other, 1);
-					c2.registerHit(me, 1);
+					PVector hitdir = poly_poly_hitdir((PolygonCollider) c1, (PolygonCollider) c2);
+					c1.registerHit(other, hitdir);
+					c2.registerHit(me, hitdir);
 					return true;
 				}
 			}
@@ -90,8 +92,8 @@ public abstract class Collider {
 
 	static boolean poly_poly_collision(PolygonCollider c1, PolygonCollider c2) {
 		
-		ArrayList<PVector> a = c1.get_points();
-		ArrayList<PVector> b = c2.get_points();
+		ArrayList<PVector> b = c1.get_points();
+		ArrayList<PVector> a = c2.get_points();
 		
 		// go through each of the vertices, plus the next vertex in the list
 		int next = 0;
@@ -105,7 +107,7 @@ public abstract class Collider {
 			// get the PVectors at our current position
 			// this makes our if statement a little cleaner
 			PVector vc = a.get(current); // c for "current"
-			PVector vn = b.get(current); // n for "next"
+			PVector vn = a.get(next); // n for "next"
 
 			// now we can use these two points (a line) to compare to the
 			// other polygon's vertices using polyLine()
@@ -114,8 +116,8 @@ public abstract class Collider {
 			if (collision) return true;
 
 			// optional: check if the 2nd polygon is INSIDE the first
-			collision = poly_point_collision(a, b.get(0).x, b.get(0).y);
-			if (collision) return true;
+			//collision = poly_point_collision(a, b.get(0).x, b.get(0).y);
+			//if (collision) return true;
 		}
 
 		return false;
@@ -196,4 +198,41 @@ public abstract class Collider {
 		return collision;
 	}
 
+	
+	
+	static PVector poly_poly_hitdir(PolygonCollider c1, PolygonCollider c2) {
+		
+		ArrayList<PVector> b = c1.get_points();
+		ArrayList<PVector> a = c2.get_points();
+		
+		// go through each of the vertices, plus the next vertex in the list
+		int next = 0;
+		for (int current = 0; current < a.size(); current++) {
+
+			// get next vertex in list
+			// if we've hit the end, wrap around to 0
+			next = current + 1;
+			if (next == a.size()) next = 0;
+
+			// get the PVectors at our current position
+			// this makes our if statement a little cleaner
+			PVector vc = a.get(current); // c for "current"
+			PVector vn = a.get(next); // n for "next"
+
+			// now we can use these two points (a line) to compare to the
+			// other polygon's vertices using polyLine()
+			//System.out.println(b);
+			boolean collision = poly_line_collision(b, vc.x, vc.y, vn.x, vn.y);
+			if (collision) {
+				PVector dir = new PVector(vn.x - vc.x, vn.y - vc.y).normalize();
+				return dir;
+			}
+
+			// optional: check if the 2nd polygon is INSIDE the first
+			//collision = poly_point_collision(a, b.get(0).x, b.get(0).y);
+			//if (collision) return new PVector(0, 0);
+		}
+
+		return null;
+	}
 }

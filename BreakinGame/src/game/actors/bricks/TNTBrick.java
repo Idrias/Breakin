@@ -1,7 +1,5 @@
 package game.actors.bricks;
 
-import java.util.ArrayList;
-import game.actors.GameObject;
 import network.utilities.NetworkEntity;
 import other.G;
 import other.Helper;
@@ -21,16 +19,6 @@ public class TNTBrick extends SimpleBrick {
 	public TNTBrick(NetworkEntity ne) {
 		// Client calls this
 		super(ne);
-	}
-
-
-	
-	@Override
-	public TNTBrick setDefaultValues() {
-		float defaultWidth = 1;
-		float defaultHeight = 1;
-		set_size(defaultWidth, defaultHeight);
-		return this;
 	}
 
 

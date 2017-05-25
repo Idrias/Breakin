@@ -8,13 +8,13 @@ public class ParallaxDesert {
 	
 	public ParallaxDesert(){
 		G.audio.stopAll();
-		G.audio.loop("Music:InGame");
+		//G.audio.loop("Music:InGame");
 	}
 	
 	public ParallaxDesert(int _speed){
 		speed = _speed;
 		G.audio.stopAll();
-		G.audio.loop("Music:InGame");
+		//G.audio.loop("Music:InGame");
 	}
 	
 	public void disp(){

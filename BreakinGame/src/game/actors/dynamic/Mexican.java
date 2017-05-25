@@ -47,7 +47,7 @@ public class Mexican extends GameObject {
 		//hitBoxPos.y += hitBoxOffsetY;
 
 		set_collider(
-				new PolygonCollider(get_pos().copy())
+				new PolygonCollider(hitBoxPos)
 				.addPointRelative(0, -0.3f)  //A
 				.addPointRelative(-0.138f, -0.217f) // C
 				.addPointRelative(-0.139f, 0.183f) //D!
@@ -66,8 +66,7 @@ public class Mexican extends GameObject {
 	@Override
 	public void update(ArrayList<GameObject> others) {
 
-		int deltaT = G.p.millis() - lastUpdate;
-		lastUpdate = G.p.millis();
+		int deltaT = getDeltaT();
 		c.set_center(get_pos());
 
 		ArrayList<CollisionReport> hits = c.get_hits();

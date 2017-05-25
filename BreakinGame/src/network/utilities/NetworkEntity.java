@@ -22,6 +22,7 @@ public class NetworkEntity implements Serializable {
 	PVector pos;
 	PVector speed;
 	PVector size;
+	float weight = 1;
 	HashMap<String, Float> values;
 
 
@@ -68,6 +69,12 @@ public class NetworkEntity implements Serializable {
 
 
 
+	public float get_weight() {
+		return weight;
+	}
+
+
+
 	public void set_pos(PVector pos) {
 		this.pos = pos;
 	}
@@ -82,6 +89,12 @@ public class NetworkEntity implements Serializable {
 
 	public void set_size(PVector size) {
 		this.size = size;
+	}
+
+
+
+	public void set_weight(float weight) {
+		this.weight = weight;
 	}
 
 

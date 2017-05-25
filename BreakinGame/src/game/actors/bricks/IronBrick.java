@@ -22,17 +22,6 @@ public class IronBrick extends SimpleBrick {
 	}
 
 
-	
-	@Override
-	public IronBrick setDefaultValues() {
-		float defaultWidth = 1;
-		float defaultHeight = 1;
-		set_size(defaultWidth, defaultHeight);
-		//c = new RectangularCollider(get_pos(), defaultWidth, defaultHeight);
-		return this;
-	}
-
-
 
 	public void draw() {
 		PVector pos = Helper.GameToDrawPos(get_pos());

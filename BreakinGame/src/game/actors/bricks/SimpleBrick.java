@@ -3,6 +3,7 @@ package game.actors.bricks;
 import java.util.ArrayList;
 import game.actors.GameObject;
 import game.actors.colliders.PolygonCollider;
+import game.actors.colliders.NotCollider;
 import network.utilities.NetworkEntity;
 import other.G;
 import other.Helper;
@@ -38,7 +39,6 @@ public class SimpleBrick extends GameObject {
 		float defaultHeight = 1;
 		set_size(defaultWidth, defaultHeight);
 		
-		System.out.println(get_pos());
 		set_collider(
 				new PolygonCollider(get_pos().copy())
 				.addPointRelative(-0.5f, 0.5f)
@@ -46,7 +46,7 @@ public class SimpleBrick extends GameObject {
 				.addPointRelative(0.5f, -0.5f)
 				.addPointRelative(-0.5f, -0.5f)
 		);
-		
+		set_weight(1000);
 		return this;
 	}
 

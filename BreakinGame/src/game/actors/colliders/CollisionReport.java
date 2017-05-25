@@ -6,23 +6,21 @@ import processing.core.PVector;
 public class CollisionReport {
 	
 	GameObject other;
+	PVector otherSurface;
 	PVector attackVector;
-	float overlap;
 	
-	public CollisionReport(GameObject other, float overlap) {
+	public CollisionReport(GameObject other, PVector otherSurface) {
 		// TODO Auto-generated constructor stub
 		this.other = other;
-		this.attackVector = other.get_speed();
-		this.overlap = overlap;
+		this.attackVector = other.get_speed().copy();
+		this.otherSurface = otherSurface;
 	}
 
 	public PVector generateResponseVector(GameObject me) {
-		// F = m * a
-		// TODO
-		//return attackVector.mult(-1).normalize().mult(overlap);
 		return attackVector;
-		
 	}
+
+	public PVector get_otherSurface() { return otherSurface.copy(); }
 }
 
 

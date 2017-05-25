@@ -40,27 +40,26 @@ public abstract class GameObject {
 
 	public PVector simpleMove(ArrayList<GameObject> others) {
 		// Move with gravity -> general downwards movement
-		int deltaT = G.p.millis() - lastUpdate;
-		PVector pos = get_pos();
+		int deltaT = getDeltaT();
+		PVector pos = get_pos().copy();
 
 		set_speed(0, G.gravity);
-		PVector speed = get_speed();
+		PVector speed = get_speed().copy();
 
 		if (pos != null && speed != null) {
 			pos.x += speed.x * deltaT;
 			pos.y += speed.y * deltaT;
-			
-			
-			//TODO add reaction to collisions
-			
+
+
+			// TODO add reaction to collisions
+
 			c.set_center(pos);
-			//TODO//Collider.checkCollision(this, others);
-			
-			lastUpdate = G.p.millis();
+			Collider.checkCollision(this, others);
+			c.clearHits();
+			set_pos(pos);
 			return pos;
 		}
-		
-		lastUpdate = G.p.millis();
+
 		return null;
 	}
 
@@ -126,6 +125,13 @@ public abstract class GameObject {
 
 
 
+	public GameObject set_weight(float weight) {
+		ne.set_weight(weight);
+		return this;
+	}
+
+
+
 	public NetworkEntity get_ne() {
 		return ne;
 	}
@@ -133,19 +139,25 @@ public abstract class GameObject {
 
 
 	public PVector get_speed() {
-		return ne.get_speed() == null ? new PVector(0, 0) : ne.get_speed();
+		return ne.get_speed() == null ? new PVector(0, 0) : ne.get_speed().copy();
 	}
 
 
 
 	public PVector get_size() {
-		return ne.get_size() == null ? new PVector(0, 0) : ne.get_size();
+		return ne.get_size() == null ? new PVector(0, 0) : ne.get_size().copy();
 	}
 
 
 
 	public PVector get_pos() {
-		return ne.get_pos() == null ? new PVector(0, 0) : ne.get_pos();
+		return ne.get_pos() == null ? new PVector(0, 0) : ne.get_pos().copy();
+	}
+
+
+
+	public float get_weight() {
+		return ne.get_weight();
 	}
 
 
@@ -156,19 +168,24 @@ public abstract class GameObject {
 
 
 
-	public void touch() {
+	public int getDeltaT() {
+		int deltaT = G.p.millis() - lastUpdate;
 		lastUpdate = G.p.millis();
+		return deltaT;
 	}
 
-	
+
+
 	public GameObject setDefaultValues() {
 		c = new NotCollider();
 		set_size(1, 1);
 		return this;
 	}
-	
+
+
+
 	///////////////////////////////////////////////////////////////////////////
-	
+
 	abstract public void update(ArrayList<GameObject> others);
 
 
