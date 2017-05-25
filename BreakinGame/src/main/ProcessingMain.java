@@ -23,7 +23,7 @@ public class ProcessingMain extends PApplet {
 
 
 	public void setup() {
-		frameRate(144);
+		frameRate(60);
 		noCursor();
 		shapeMode(CENTER);
 		textureMode(NORMAL);

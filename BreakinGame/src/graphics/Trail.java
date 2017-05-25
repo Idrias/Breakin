@@ -24,7 +24,7 @@ public class Trail {
 	}
 	
 	
-	public void disp(int x, int y){
+	public void disp(int x, int y, int r, int g, int b){
 		
 		
 		
@@ -40,7 +40,7 @@ public class Trail {
 		  }
 		  
 		  //DRAW OUTER TRAIL
-		  G.p.stroke(30, 255, 30);    //G.p.stroke(outerTrailColor);         
+		  G.p.stroke(r, g, b);    //G.p.stroke(outerTrailColor);         
 		  for (int i = 0; i < outerTrailLength - 1; i++) {
 		    G.p.line(trailX[i], trailY[i], trailX[i + 1], trailY[i + 1]);
 		    G.p.strokeWeight(outerTrailWeight - (outerTrailWeight / outerTrailLength) * (i + 1));

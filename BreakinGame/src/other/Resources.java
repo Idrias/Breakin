@@ -40,7 +40,10 @@ public class Resources {
 				"Static:TNTBrick", "/Assets/Graphics/Static_Sprites/TNTBrick.png",
 				
 				// Animated
-				"Anim:Mexican", "/Assets/Graphics/Spritesheets/Juan_2.png", 
+				"Anim:Mexican_Green", "/Assets/Graphics/Spritesheets/Juan_2.png",
+				"Anim:Mexican_Blue", "/Assets/Graphics/Spritesheets/Pepe_2.png",
+				"Anim:Mexican_Orange", "/Assets/Graphics/Spritesheets/Antonio_2.png",
+				"Anim:Mexican_Pink", "/Assets/Graphics/Spritesheets/Jesus_2.png",
 				"Anim:Sombrero", "/Assets/Graphics/Spritesheets/Sombrero_2.png",
 				"Anim:Rocket", "/Assets/Graphics/Spritesheets/rocket_2.png",
 				"Anim:Helicopter", "/Assets/Graphics/Spritesheets/Helicopter_2.png",

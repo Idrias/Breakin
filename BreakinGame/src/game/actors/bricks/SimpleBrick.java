@@ -55,7 +55,7 @@ public class SimpleBrick extends GameObject {
 	public void draw() {
 		PVector pos = Helper.GameToDrawPos(get_pos());
 		PVector size = Helper.GameToDrawSize(get_size());
-		c.draw();
+		//c.draw();
 		G.sprite.dispSprite("Static:SimpleBrick", (int) pos.x, (int) pos.y, (int) size.x, (int) size.y);
 		G.p.fill(255, 0, 0);
 	}

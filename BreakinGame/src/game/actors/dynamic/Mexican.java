@@ -14,8 +14,6 @@ import processing.core.PVector;
 
 public class Mexican extends GameObject {
 	
-	
-	
 	public Mexican(NetworkEntity ne) {
 		super(ne);
 		setDefaultValues();
@@ -117,8 +115,8 @@ public class Mexican extends GameObject {
 		PVector pos = Helper.GameToDrawPos(get_pos());
 		PVector size = Helper.GameToDrawSize(get_size());
 		c.draw();
-		G.sprite.dispAnimation("Anim:Mexican", (int) pos.x, (int) pos.y, size.x, size.y, 130, 4);
-                
+		G.sprite.dispAnimation("Anim:Mexican_Pink", (int) pos.x, (int) pos.y, size.x, size.y, 130, 4);
+        
 		
 		/* TODO DEV Debug Tool for finding hitbox points!
 		PVector mouse = Helper.DrawToGamePos(new PVector(G.p.mouseX, G.p.mouseY));
