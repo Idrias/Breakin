@@ -40,9 +40,10 @@ public class Sombrero extends GameObject {
 		float defaultWidth = 0.7f * 9 / 16;
 		float defaultHeight = 0.7f;
 		set_size(defaultWidth, defaultHeight);
-		set_pos(G.playarea_width/2, G.playarea_height/2);
-		set_speed(G.sombrerospeed, -G.sombrerospeed);
-		
+		//set_pos(G.playarea_width/2, G.playarea_height/2);
+		//set_speed(G.sombrerospeed, -G.sombrerospeed);
+		set_pos(G.playarea_width/2, 0);
+		set_speed(-G.sombrerospeed*1.2f, G.sombrerospeed/1.3f);
 		set_collider(
 				new PolygonCollider(get_pos().copy())
 				.addPointRelative(-0.1844f, 0f)
@@ -76,9 +77,10 @@ public class Sombrero extends GameObject {
 				PVector normSurf = otherSurface.copy().rotate(PApplet.HALF_PI);
 				G.println(normSurf);
 				
-				float angle = PVector.angleBetween(normSurf, get_speed());
+				float angle = (G.p.HALF_PI - PVector.angleBetween(normSurf, get_speed()) % G.p.HALF_PI);
+				G.println("-------");
 				G.println("Angle: " + G.p.degrees(angle));
-				PVector newS = get_speed().rotate(angle*-2);
+				PVector newS = get_speed().rotate(2*angle).mult(-1);
 				
 				G.p.println("Old Speed: " + get_speed());
 				set_speed(newS);
@@ -89,6 +91,24 @@ public class Sombrero extends GameObject {
 				c = new NotCollider();
 			}
 			c.clearHits();
+		}
+		
+		if(G.p.mousePressed) {
+			PVector mouse = Helper.DrawToGamePos(new PVector(G.p.mouseX, G.p.mouseY));
+			set_pos(mouse);
+			set_collider(
+					new PolygonCollider(get_pos().copy())
+					.addPointRelative(-0.1844f, 0f)
+					.addPointRelative(-0.1844f, 0.2667f)
+					.addPointRelative(0f, 0.35f)
+					.addPointRelative(0.1844f, 0.2667f)
+					.addPointRelative(0.1844f, 0f)
+					.addPointRelative(0f, -0.1167f)
+			);
+			c.set_center(mouse);
+			
+			if(G.p.frameCount % 20 == 0 && G.p.mouseButton == PApplet.RIGHT)
+			set_speed(get_speed().rotate(G.p.radians(10)));
 		}
 	}
 
@@ -104,6 +124,11 @@ public class Sombrero extends GameObject {
 		
 		trail.disp((int)pos.x, (int)pos.y);
 		G.sprite.dispAnimation("Anim:Sombrero", (int) pos.x, (int) pos.y, size.x, size.y, 80, 4);
+		
+		PVector speed = Helper.GameToDrawPos(get_speed()).mult(1000);
+		G.p.stroke(255, 0, 0);
+		G.p.strokeWeight(3);
+		G.p.line(pos.x, pos.y, pos.x + speed.x, pos.y+speed.y);
 		// G.sprite.dispAnimation("Anim:Helicopter", G.p.mouseX, G.p.mouseY,
 		// size.x*6, size.y*6, 40, 4);
 		

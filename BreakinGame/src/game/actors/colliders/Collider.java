@@ -116,8 +116,8 @@ public abstract class Collider {
 			if (collision) return true;
 
 			// optional: check if the 2nd polygon is INSIDE the first
-			collision = poly_point_collision(a, b.get(0).x, b.get(0).y);
-			if (collision) return true;
+			//collision = poly_point_collision(a, b.get(0).x, b.get(0).y);
+			//if (collision) return true;
 		}
 
 		return false;
@@ -229,8 +229,8 @@ public abstract class Collider {
 			}
 
 			// optional: check if the 2nd polygon is INSIDE the first
-			collision = poly_point_collision(a, b.get(0).x, b.get(0).y);
-			if (collision) return new PVector(0, 0);
+			//collision = poly_point_collision(a, b.get(0).x, b.get(0).y);
+			//if (collision) return new PVector(0, 0);
 		}
 
 		return null;

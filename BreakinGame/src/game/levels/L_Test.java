@@ -23,6 +23,9 @@ public class L_Test extends Level {
 	static public final int m4 = 4;
 	String[] model4= new String[] { "oooooooxooooooo", "ooooooooooooooo", "ooooooooooooooo","ooooooooooooooo", "ooooooooooooooo","ooooooooooooooo", "ooooooooooooooo",};
 
+	static public final int m5 = 5;
+	String[] model5 = new String[] { "xooooooxoooooox", "xooooooooooooox", "xooooooooooooox","xooooooooooooox", "xooooooooooooox","xooooooooooooox", "xooooooooooooox",};
+	
 	public L_Test(int m) {
 		String[] model;
 		if (m == m1)
@@ -33,6 +36,8 @@ public class L_Test extends Level {
 			model = model3;
 		else if (m == m4)
 			model = model4;
+		else if (m == m5)
+			model = model5;
 		else
 			return;
 		
