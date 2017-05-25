@@ -61,6 +61,26 @@ public class Sombrero extends GameObject {
 
 
 	public void update(ArrayList<GameObject> others) {
+		/*
+		 * First check if we got hit by someone else
+		 * */
+		ArrayList<CollisionReport> enemyhits = c.get_hits();
+		if(!enemyhits.isEmpty()) {
+			// OMG! We got hit!
+			CollisionReport lastHit = enemyhits.get(enemyhits.size() - 1);
+			PVector attackVector = lastHit.generateResponseVector(this);
+
+			// TODO
+			int y = 0;
+			while (Collider.checkCollision(this, others)) {
+				set_pos(get_pos().add(attackVector));
+				y++; if(y>10) break;
+			}
+
+			set_pos(get_pos().add(attackVector.mult(10)));
+			c.clearHits();
+		}
+		
 		int deltaT = getDeltaT(); 
 		PVector movement = get_speed().mult(deltaT); 
 		
@@ -75,7 +95,6 @@ public class Sombrero extends GameObject {
 				CollisionReport lastHit = hits.get(hits.size()-1);
 				PVector otherSurface = lastHit.get_otherSurface();
 				PVector normSurf = otherSurface.copy().rotate(PApplet.HALF_PI);
-				G.println(normSurf);
 				
 				float angle = (G.p.HALF_PI - PVector.angleBetween(normSurf, get_speed()) % G.p.HALF_PI);
 				float anglepure = PVector.angleBetween(normSurf, get_speed());
@@ -98,7 +117,13 @@ public class Sombrero extends GameObject {
 				G.p.println("Other surface: " + otherSurface);
 				G.p.println("Normal surface: " + normSurf);
 				
-				c = new NotCollider();
+				int i = 0;
+				while(Collider.checkCollision(this, others)) {
+					set_pos(get_pos().add(get_speed().mult(10)));
+					c.set_center(get_pos());
+					i++;
+					if(i>10) break;
+				}
 			}
 			c.clearHits();
 		}
