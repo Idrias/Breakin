@@ -287,7 +287,7 @@ public class GameServer {
 		phase = PHASE_INGAME;
 		
 		for(GameObject go : gameObjects) {
-			go.touch();
+			go.getDeltaT();
 		}
 		
 		ArrayList<Float> floatArgs = new ArrayList<Float>();

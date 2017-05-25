@@ -2,10 +2,15 @@ package game.actors.dynamic;
 
 import java.util.ArrayList;
 import game.actors.GameObject;
+import game.actors.colliders.Collider;
+import game.actors.colliders.CollisionReport;
+import game.actors.colliders.PolygonCollider;
+import game.actors.colliders.NotCollider;
 import graphics.Trail;
 import network.utilities.NetworkEntity;
 import other.G;
 import other.Helper;
+import processing.core.PApplet;
 import processing.core.PVector;
 
 
@@ -35,20 +40,62 @@ public class Sombrero extends GameObject {
 		float defaultWidth = 0.7f * 9 / 16;
 		float defaultHeight = 0.7f;
 		set_size(defaultWidth, defaultHeight);
-
+		set_pos(G.playarea_width/2, G.playarea_height/2);
+		set_speed(G.sombrerospeed, -G.sombrerospeed);
+		
+		set_collider(
+				new PolygonCollider(get_pos().copy())
+				.addPointRelative(-0.1844f, 0f)
+				.addPointRelative(-0.1844f, 0.2667f)
+				.addPointRelative(0f, 0.35f)
+				.addPointRelative(0.1844f, 0.2667f)
+				.addPointRelative(0.1844f, 0f)
+				.addPointRelative(0f, -0.1167f)
+		);
+		
+		
 		return this;
 	}
 
 
 
 	public void update(ArrayList<GameObject> others) {
-		simpleMove(others);
+		int deltaT = getDeltaT(); 
+		PVector movement = get_speed().mult(deltaT); 
+		
+		set_pos(get_pos().add(movement));
+		
+		c.set_center(get_pos());
+		
+		boolean collided = Collider.checkCollision(this, others);
+		if(collided) {
+			ArrayList<CollisionReport> hits = c.get_hits();
+			if(hits.size() > 0) {
+				CollisionReport lastHit = hits.get(hits.size()-1);
+				PVector otherSurface = lastHit.get_otherSurface();
+				PVector normSurf = otherSurface.copy().rotate(PApplet.HALF_PI);
+				G.println(normSurf);
+				
+				float angle = PVector.angleBetween(normSurf, get_speed());
+				G.println("Angle: " + G.p.degrees(angle));
+				PVector newS = get_speed().rotate(angle*-2);
+				
+				G.p.println("Old Speed: " + get_speed());
+				set_speed(newS);
+				G.p.println("New Speed: " + get_speed());
+				G.p.println("Other surface: " + otherSurface);
+				G.p.println("Normal surface: " + normSurf);
+				
+				c = new NotCollider();
+			}
+			c.clearHits();
+		}
 	}
 
 
 
 	public void draw() {
-
+		c.draw();
 		if (trail == null) trail = new Trail(0); // Edit Line 43 in Trail.java
 													// to enable colored Trails
 
@@ -59,6 +106,15 @@ public class Sombrero extends GameObject {
 		G.sprite.dispAnimation("Anim:Sombrero", (int) pos.x, (int) pos.y, size.x, size.y, 80, 4);
 		// G.sprite.dispAnimation("Anim:Helicopter", G.p.mouseX, G.p.mouseY,
 		// size.x*6, size.y*6, 40, 4);
+		
+		/*
+		// TODO DEV Debug Tool for finding hitbox points!
+		PVector mouse = Helper.DrawToGamePos(new PVector(G.p.mouseX, G.p.mouseY));
+		if(get_pos().y > 0)
+		G.p.println("Mouse is ingame at: " + mouse, "Relative to Block: " + mouse.sub(get_pos()));
+		G.p.fill(255,0,0);
+		G.p.ellipse(G.p.mouseX, G.p.mouseY, 5, 5);
+		*/
 	}
 
 }

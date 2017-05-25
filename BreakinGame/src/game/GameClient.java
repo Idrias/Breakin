@@ -17,7 +17,6 @@ import network.utilities.NetworkCommand;
 import network.utilities.NetworkContainer;
 import network.utilities.NetworkEntity;
 import other.G;
-import processing.core.PVector;
 
 
 
@@ -215,18 +214,6 @@ public class GameClient {
 	void net_prepare_commands() {
 		if (G.p.millis() - lastNetUpdate < netDeltaT) return;
 		lastNetUpdate = G.p.millis();
-		PVector mexicanPos = null;
-
-
-		for (GameObject go : gos) {
-			if (go.getClass() == Mexican.class) {
-				Mexican m = (Mexican) go;
-				if (m.getOwnerID() == netClient.get_playerID()) {
-					mexicanPos = go.get_pos()
-							.copy();
-				}
-			}
-		}
 
 
 		// Prepare to send movement vector to server

@@ -50,6 +50,7 @@ public class Helper {
 		return new PVector((drawPos.x*G.playarea_width)/G.p.width, (drawPos.y*G.playarea_height)/G.p.height);
 	}
 
+	
 	public static PVector GameToDrawPos(PVector gamePos) {
 		float limitingFactor;
 		if(G.p.width > G.p.height) limitingFactor = G.p.height;

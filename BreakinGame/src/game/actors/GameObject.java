@@ -40,11 +40,11 @@ public abstract class GameObject {
 
 	public PVector simpleMove(ArrayList<GameObject> others) {
 		// Move with gravity -> general downwards movement
-		int deltaT = G.p.millis() - lastUpdate;
-		PVector pos = get_pos();
+		int deltaT = getDeltaT();
+		PVector pos = get_pos().copy();
 
 		set_speed(0, G.gravity);
-		PVector speed = get_speed();
+		PVector speed = get_speed().copy();
 
 		if (pos != null && speed != null) {
 			pos.x += speed.x * deltaT;
@@ -55,12 +55,11 @@ public abstract class GameObject {
 
 			c.set_center(pos);
 			Collider.checkCollision(this, others);
-
-			lastUpdate = G.p.millis();
+			c.clearHits();
+			set_pos(pos);
 			return pos;
 		}
 
-		lastUpdate = G.p.millis();
 		return null;
 	}
 
@@ -140,19 +139,19 @@ public abstract class GameObject {
 
 
 	public PVector get_speed() {
-		return ne.get_speed() == null ? new PVector(0, 0) : ne.get_speed();
+		return ne.get_speed() == null ? new PVector(0, 0) : ne.get_speed().copy();
 	}
 
 
 
 	public PVector get_size() {
-		return ne.get_size() == null ? new PVector(0, 0) : ne.get_size();
+		return ne.get_size() == null ? new PVector(0, 0) : ne.get_size().copy();
 	}
 
 
 
 	public PVector get_pos() {
-		return ne.get_pos() == null ? new PVector(0, 0) : ne.get_pos();
+		return ne.get_pos() == null ? new PVector(0, 0) : ne.get_pos().copy();
 	}
 
 
@@ -169,8 +168,10 @@ public abstract class GameObject {
 
 
 
-	public void touch() {
+	public int getDeltaT() {
+		int deltaT = G.p.millis() - lastUpdate;
 		lastUpdate = G.p.millis();
+		return deltaT;
 	}
 
 
