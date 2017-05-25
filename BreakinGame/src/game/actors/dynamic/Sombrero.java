@@ -78,8 +78,18 @@ public class Sombrero extends GameObject {
 				G.println(normSurf);
 				
 				float angle = (G.p.HALF_PI - PVector.angleBetween(normSurf, get_speed()) % G.p.HALF_PI);
+				float anglepure = PVector.angleBetween(normSurf, get_speed());
+				float angleSurf = (G.p.HALF_PI - PVector.angleBetween(otherSurface, get_speed()) % G.p.HALF_PI);
+				float angleSurfpure = PVector.angleBetween(otherSurface, get_speed());
+				
 				G.println("-------");
 				G.println("Angle: " + G.p.degrees(angle));
+				G.println("Angle Pure: " + G.p.degrees(anglepure));
+				G.println("");
+				G.println("AngleSurf: " + G.p.degrees(angleSurf));
+				G.println("AngleSurf Pure: " + G.p.degrees(angleSurfpure));
+				
+				if(angleSurfpure < PApplet.HALF_PI) angle *= -1;
 				PVector newS = get_speed().rotate(2*angle).mult(-1);
 				
 				G.p.println("Old Speed: " + get_speed());

@@ -60,7 +60,7 @@ public class G {
 														// do we want to send
 														// updates from server
 														// to client?
-	final public static boolean CLIENTSIDE_PREDICTIONS = true; // Should the
+	final public static boolean CLIENTSIDE_PREDICTIONS = false; // Should the
 	final public static boolean KEYBOARD_PREDICTIONS = true;	// gameclient
 																// predict
 																// movements?
