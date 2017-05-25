@@ -73,11 +73,14 @@ public class Sombrero extends GameObject {
 			// TODO
 			int y = 0;
 			while (Collider.checkCollision(this, others)) {
+				G.println("OH NO!");
 				set_pos(get_pos().add(attackVector));
+				c.set_center(get_pos());
 				y++; if(y>10) break;
 			}
 
 			set_pos(get_pos().add(attackVector.mult(10)));
+			c.set_center(get_pos());
 			c.clearHits();
 		}
 		
@@ -119,7 +122,7 @@ public class Sombrero extends GameObject {
 				
 				int i = 0;
 				while(Collider.checkCollision(this, others)) {
-					set_pos(get_pos().add(get_speed().mult(10)));
+					set_pos(get_pos().add(get_speed().mult(100)));
 					c.set_center(get_pos());
 					i++;
 					if(i>10) break;
@@ -157,7 +160,7 @@ public class Sombrero extends GameObject {
 		PVector pos = Helper.GameToDrawPos(get_pos());
 		PVector size = Helper.GameToDrawSize(get_size());
 		
-		trail.disp((int)pos.x, (int)pos.y);
+		//trail.disp((int)pos.x, (int)pos.y);
 		G.sprite.dispAnimation("Anim:Sombrero", (int) pos.x, (int) pos.y, size.x, size.y, 80, 4);
 		
 		PVector speed = Helper.GameToDrawPos(get_speed()).mult(1000);

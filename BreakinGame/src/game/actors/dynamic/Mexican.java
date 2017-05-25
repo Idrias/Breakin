@@ -48,12 +48,12 @@ public class Mexican extends GameObject {
 
 		set_collider(
 				new PolygonCollider(hitBoxPos)
-				.addPointRelative(0, -0.3f)  //A
-				.addPointRelative(-0.138f, -0.217f) // C
+				//.addPointRelative(0, -0.3f)  //A
+				.addPointRelative(-0.138f, -0.3f) // C
 				.addPointRelative(-0.139f, 0.183f) //D!
 				.addPointRelative(0, 0.383f) // F
 				.addPointRelative(0.139f, 0.183f) //E!
-				.addPointRelative(0.138f, -0.217f) //B
+				.addPointRelative(0.138f, -0.3f) //B
 		);
 
 		System.out.println("POS: " + get_pos());
@@ -75,10 +75,13 @@ public class Mexican extends GameObject {
 			PVector attackVector = lastHit.generateResponseVector(this);
 
 			// TODO
-			while (Collider.checkCollision(this, others))
+			while (Collider.checkCollision(this, others)) {
 				set_pos(get_pos().add(attackVector));
+				c.set_center(get_pos());
+			}
 
 			set_pos(get_pos().add(attackVector.mult(10)));
+			c.set_center(get_pos());
 			c.clearHits();
 		}
 
@@ -96,12 +99,14 @@ public class Mexican extends GameObject {
 		c.set_center(posAfter);
 
 		// COLLISION TEST
+		/*
 		boolean collided = Collider.checkCollision(this, others);
 		if (collided) {
 			set_pos(posBefore);
 			c.set_center(posBefore);
 			c.clearHits();
 		}
+		*/
 
 	}
 
